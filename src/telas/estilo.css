@@ -1,0 +1,13 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.titulo {
+    -fx-font-size: 24px;
+}
+
+FlowPane {
+    -fx-padding: 0 30px 15px 30px;
+    -fx-hgap: 15px;
+    -fx-vgap: 15px;
+}

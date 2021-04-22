@@ -8,3 +8,5 @@ nbproject/build-impl.xml
 nbproject/genfiles.properties
 nbproject/project.properties
 nbproject/project.xml
+/build/
+nbproject/private/retriever/catalog.xml

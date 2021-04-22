@@ -12,24 +12,28 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <MenuBar>
         <menus>
           <Menu mnemonicParsing="false" text="Clientes">
             <items>
+                  <MenuItem mnemonicParsing="false" text="Cadastrar" />
               <MenuItem mnemonicParsing="false" text="Gerenciar" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Veículos">
             <items>
+                  <MenuItem mnemonicParsing="false" text="Cadastrar" />
               <MenuItem mnemonicParsing="false" text="Gerenciar" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Locação">
             <items>
+                  <MenuItem mnemonicParsing="false" text="Cadastrar" />
+                  <MenuItem mnemonicParsing="false" text="Devolver" />
               <MenuItem mnemonicParsing="false" text="Gerenciar" />
+                  <MenuItem mnemonicParsing="false" text="Renovar" />
             </items>
           </Menu>
         </menus>
