@@ -18,28 +18,28 @@
       <StackPane prefHeight="69.0" prefWidth="600.0">
          <children>
             <Label styleClass="titulo" stylesheets="@estilo.css" text="Cadastro de Cliente - Dados Principais" />
-            <ImageView fitHeight="70.0" fitWidth="112.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT" />
+            <ImageView fitHeight="70.0" fitWidth="91.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT" />
          </children>
       </StackPane>
-      <FlowPane prefHeight="330.0" prefWidth="600.0" stylesheets="@estilo.css">
+      <FlowPane alignment="CENTER" prefHeight="330.0" prefWidth="600.0" stylesheets="@estilo.css">
          <children>
             <TextField fx:id="txtNome" prefHeight="26.0" prefWidth="341.0" promptText="Nome do cliente" />
             <DatePicker fx:id="dateNascimento" prefHeight="26.0" prefWidth="183.0" promptText="Data de nascimento" />
             <TextField fx:id="txtEndereco" prefHeight="26.0" prefWidth="341.0" promptText="Endereço (Ex: Rua Fulano de Tal, 123)" />
-            <ComboBox fx:id="cbStatus" prefHeight="26.0" prefWidth="183.0" promptText="Status" />
-            <Label text="Pessoa:" />
+            <ComboBox fx:id="cbStatus" prefHeight="26.0" prefWidth="181.0" promptText="Status" />
+            <Label prefHeight="18.0" prefWidth="47.0" text="Pessoa:" />
             <RadioButton fx:id="rbFisica" mnemonicParsing="false" selected="true" text="Física">
                <toggleGroup>
                   <ToggleGroup fx:id="tgTipoPessoa" />
                </toggleGroup>
             </RadioButton>
             <RadioButton fx:id="rbJuridica" mnemonicParsing="false" text="Jurídica" toggleGroup="$tgTipoPessoa" />
-            <TextField fx:id="txtRegistro" prefHeight="26.0" prefWidth="343.0" promptText="RG" />
-            <TextField fx:id="txtCpf" prefHeight="26.0" prefWidth="152.0" promptText="CPF" />
+            <TextField fx:id="txtRegistro" prefHeight="26.0" prefWidth="334.0" promptText="RG" />
+            <TextField fx:id="txtCpf" prefHeight="26.0" prefWidth="148.0" promptText="CPF" />
             <TextField fx:id="txtNomeFantasia" disable="true" prefHeight="26.0" prefWidth="208.0" promptText="Nome Fantasia" />
             <TextField fx:id="txtInscricaoEstadual" disable="true" promptText="Inscrição Estadual" />
             <TextArea fx:id="txaObservacoes" prefHeight="87.0" prefWidth="540.0" promptText="Observações" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="540.0" text="Prosseguir" />
+            <Button disable="true" mnemonicParsing="false" prefHeight="26.0" prefWidth="540.0" text="Avançar" />
          </children>
       </FlowPane>
    </children>

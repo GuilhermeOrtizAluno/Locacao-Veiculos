@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaCadastroCliente1Controller">
+   <children>
+      <StackPane prefHeight="69.0" prefWidth="600.0">
+         <children>
+            <Label styleClass="titulo" stylesheets="@estilo.css" text="Cadastro de Cliente - Condutores" />
+            <ImageView fitHeight="70.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_RIGHT" />
+            <Button mnemonicParsing="false" text="Voltar" StackPane.alignment="CENTER_LEFT" />
+         </children>
+         <VBox.margin>
+            <Insets left="30.0" right="30.0" />
+         </VBox.margin>
+      </StackPane>
+      <AnchorPane prefHeight="330.0" prefWidth="600.0">
+         <children>
+            <Button disable="true" layoutX="30.0" layoutY="269.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="540.0" text="Concluir" />
+            <ListView layoutX="30.0" layoutY="41.0" prefHeight="214.0" prefWidth="446.0" />
+            <Button layoutX="491.0" layoutY="41.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="78.0" text="Cadastrar" />
+            <Button disable="true" layoutX="491.0" layoutY="78.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="78.0" text="Editar" />
+            <Button disable="true" layoutX="491.0" layoutY="116.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="78.0" text="Remover" />
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>
