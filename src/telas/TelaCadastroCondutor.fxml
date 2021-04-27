@@ -14,14 +14,14 @@
    <children>
       <StackPane>
          <children>
-            <ImageView fitHeight="70.0" fitWidth="112.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT" />
-            <Label styleClass="titulo" stylesheets="@estilo.css" text="Cadastro de Condutor" StackPane.alignment="CENTER_RIGHT" />
+            <Label styleClass="titulo" stylesheets="@estilo.css" text="Cadastro de Condutor" StackPane.alignment="CENTER_LEFT" />
+            <ImageView fitHeight="70.0" fitWidth="91.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT" />
          </children>
          <padding>
-            <Insets right="30.0" />
+            <Insets left="30.0" right="30.0" />
          </padding>
       </StackPane>
-      <FlowPane prefHeight="270.0" prefWidth="294.0" stylesheets="@estilo.css">
+      <FlowPane alignment="CENTER" prefHeight="270.0" prefWidth="294.0" stylesheets="@estilo.css">
          <children>
             <TextField fx:id="txtNome" prefHeight="26.0" prefWidth="338.0" promptText="Número da habilitação" />
             <ComboBox prefHeight="26.0" prefWidth="338.0" promptText="Tipo de habilitação" />
