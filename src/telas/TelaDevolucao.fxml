@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaDevolucaoController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaDevolucaoController">
    <children>
       <StackPane prefHeight="70.0" prefWidth="600.0">
          <children>
-            <Label styleClass="titulo" stylesheets="@estilo.css" text="Devolução" />
+            <Label styleClass="titulo" text="Devolução" />
             <ImageView fitHeight="70.0" fitWidth="112.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT" />
             <Button mnemonicParsing="false" text="Voltar" StackPane.alignment="CENTER_LEFT" />
          </children>

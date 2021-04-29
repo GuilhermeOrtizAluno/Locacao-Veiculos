@@ -1,0 +1,38 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.bg-primary{
+    -fx-background-color: #00984A;
+}
+
+.bg-secondary{
+    -fx-background-color: #00FF7C;
+}
+
+.bg-white{
+    -fx-background-color: white;
+}
+
+.titulo {
+    -fx-font-size: 24px;
+}
+
+.principalEspacado {
+    -fx-padding: 0 30px 15px 30px;
+}
+
+FlowPane {
+    -fx-hgap: 15px;
+    -fx-vgap: 15px;
+}
+
+Button{
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-color: #00FF7C;
+}
+
+Label{
+    -fx-text-fill: white;
+}
