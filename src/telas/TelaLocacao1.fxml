@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.gluonhq.charm.glisten.control.Icon?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -13,8 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="287.0" prefWidth="260.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/15.0.1" fx:controller="controles.TelaLocacaoController">
+<AnchorPane id="AnchorPane" prefHeight="287.0" prefWidth="260.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaLocacaoController">
    <children>
       <VBox prefHeight="310.0" prefWidth="260.0">
          <children>
@@ -36,41 +34,27 @@
                   </Pane>
                </children>
             </HBox>
-            <HBox prefHeight="49.0" prefWidth="240.0">
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="244.0" text="Cliente" />
+            <ComboBox disable="true" prefHeight="25.0" prefWidth="240.0" promptText="Condutor">
+               <VBox.margin>
+                  <Insets bottom="7.0" top="7.0" />
+               </VBox.margin>
+            </ComboBox>
+            <TextField promptText="Veiculo" />
+            <HBox prefHeight="34.0" prefWidth="240.0">
                <children>
-                  <Pane prefHeight="49.0" prefWidth="225.0">
-                     <children>
-                        <TextField layoutX="1.0" layoutY="12.0" prefHeight="25.0" prefWidth="163.0" promptText="Cliente" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="58.0" prefWidth="98.0">
-                     <children>
-                        <Icon content="SD_STORAGE" layoutX="7.0" layoutY="11.0" prefHeight="28.0" prefWidth="26.0" style="-fx-border-color: white;" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="58.0" prefWidth="95.0">
-                     <children>
-                        <Icon content="LOCATION_ON" layoutX="4.0" layoutY="16.0" />
-                     </children>
-                  </Pane>
+                  <TextField prefHeight="26.0" prefWidth="93.0" promptText="Quantidade">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <ComboBox prefHeight="26.0" prefWidth="143.0" promptText="Diárias, semanas..." />
                </children>
+               <VBox.margin>
+                  <Insets bottom="7.0" top="7.0" />
+               </VBox.margin>
             </HBox>
-            <TextField promptText="Condutor">
-               <VBox.margin>
-                  <Insets bottom="7.0" />
-               </VBox.margin>
-            </TextField>
-            <ComboBox prefHeight="28.0" prefWidth="250.0" promptText="Veiculo">
-               <VBox.margin>
-                  <Insets bottom="7.0" top="7.0" />
-               </VBox.margin>
-            </ComboBox>
-            <ComboBox prefHeight="28.0" prefWidth="258.0" promptText="Tipo Locação">
-               <VBox.margin>
-                  <Insets bottom="7.0" top="7.0" />
-               </VBox.margin>
-            </ComboBox>
-            <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="284.0" text="Locar">
+            <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="284.0" text="Proximo">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>

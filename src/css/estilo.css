@@ -30,6 +30,9 @@ FlowPane {
 Button{
     -fx-text-fill: white;
     -fx-font-weight: bold;
+    -fx-background-color: #008540;
+}
+Button:hover{
     -fx-background-color: #00FF7C;
 }
 
