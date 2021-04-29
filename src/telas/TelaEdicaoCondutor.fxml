@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="338.0" prefWidth="400.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaEdicaoCondutor">
+   <children>
+      <StackPane prefHeight="65.0" prefWidth="400.0">
+         <children>
+            <Label styleClass="titulo" text="Edição de Condutor" StackPane.alignment="CENTER_LEFT" />
+            <ImageView fitHeight="70.0" fitWidth="91.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
+               <image>
+                  <Image url="@../../imgs/logo.png" />
+               </image></ImageView>
+         </children>
+         <padding>
+            <Insets left="30.0" right="30.0" />
+         </padding>
+      </StackPane>
+      <FlowPane alignment="CENTER" prefHeight="270.0" prefWidth="294.0">
+         <children>
+            <TextField fx:id="txtNome" prefHeight="26.0" prefWidth="338.0" promptText="Número da habilitação" />
+            <ComboBox prefHeight="26.0" prefWidth="338.0" promptText="Tipo de habilitação" />
+            <TextField prefHeight="26.0" prefWidth="338.0" promptText="Email de contato" />
+            <TextField prefHeight="26.0" prefWidth="338.0" promptText="Telefone 1" />
+            <TextField prefHeight="26.0" prefWidth="338.0" promptText="Telefone 2" />
+            <Button disable="true" mnemonicParsing="false" prefHeight="26.0" prefWidth="338.0" text="Concluir" />
+         </children>
+      </FlowPane>
+   </children>
+</VBox>
