@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane id="AnchorPane" prefHeight="290.0" prefWidth="702.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/15.0.1" fx:controller="controles.TelaCadastroVeiculoController">
+   <children>
+      <FlowPane layoutX="6.0">
+         <children>
+            <Pane prefHeight="46.0" prefWidth="655.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="-1.0" prefHeight="46.0" prefWidth="656.0" styleClass="titulo" text="Cadastro de Veiculo" textAlignment="CENTER" />
+               </children>
+            </Pane>
+            <TextField promptText="Renavan" />
+            <TextField prefHeight="25.0" prefWidth="103.0" promptText="Nº Placa" />
+            <TextField prefHeight="25.0" prefWidth="163.0" promptText="Modelo" />
+            <TextField prefHeight="25.0" prefWidth="196.0" promptText="Marca" />
+            <TextField prefHeight="25.0" prefWidth="78.0" promptText="Ano" />
+            <TextField prefHeight="25.0" prefWidth="124.0" promptText="Valor Indenização" />
+            <TextField prefHeight="25.0" prefWidth="163.0" promptText="Previa manutenção" />
+            <TextField prefHeight="25.0" prefWidth="246.0" promptText="Quilometragem" />
+            <TextField prefHeight="25.0" prefWidth="78.0" promptText="Valor Diaria" />
+            <TextField prefHeight="25.0" prefWidth="90.0" promptText="Valor Semanal" />
+            <TextField prefHeight="25.0" prefWidth="99.0" promptText="Valor Quinzenal" />
+            <TextField prefHeight="25.0" prefWidth="82.0" promptText="Valor Mensal" />
+            <TextField prefHeight="25.0" prefWidth="98.0" promptText="Preço Hora" />
+            <TextField prefHeight="25.0" prefWidth="132.0" promptText="Preço Hora Excedente" />
+            <TextField promptText="Imagem" />
+            <TextField prefHeight="25.0" prefWidth="492.0" promptText="Informações tecnica" />
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="656.0" text="Cadastrar" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+         </padding>
+      </FlowPane>
+   </children>
+</AnchorPane>
