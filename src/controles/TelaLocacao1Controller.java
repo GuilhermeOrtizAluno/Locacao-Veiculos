@@ -14,7 +14,7 @@ import javafx.fxml.Initializable;
  *
  * @author gui_o
  */
-public class TelaLocacaoController implements Initializable {
+public class TelaLocacao1Controller implements Initializable {
 
     /**
      * Initializes the controller class.
