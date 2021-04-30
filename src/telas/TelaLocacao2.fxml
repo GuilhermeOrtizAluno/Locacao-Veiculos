@@ -71,7 +71,7 @@
             <Font size="14.0" />
          </font></Label>
       <TextArea layoutX="328.0" layoutY="230.0" prefHeight="100.0" prefWidth="233.0" promptText="Observações" />
-      <Button layoutX="35.0" layoutY="349.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="529.0" text="Confirmar" />
+      <Button layoutX="35.0" layoutY="349.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="529.0" text="Concluir" />
       <ImageView fitHeight="131.0" fitWidth="242.0" layoutX="327.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../imgs/focus.jpg" />

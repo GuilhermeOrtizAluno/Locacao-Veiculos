@@ -52,7 +52,7 @@
          </font>
       </Label>
       <TextField layoutX="130.0" layoutY="287.0" prefHeight="26.0" prefWidth="64.0" promptText="Ex: 2" />
-      <Button disable="true" layoutX="40.0" layoutY="347.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="530.0" text="Finalizar" />
+      <Button disable="true" layoutX="40.0" layoutY="347.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="530.0" text="Concluir" />
       <ComboBox layoutX="208.0" layoutY="287.0" prefHeight="26.0" prefWidth="164.0" promptText="Diárias, semanas..." />
       <Label layoutX="39.0" layoutY="185.0" text="Diária (R$ 15,00) - Semanal (R$ 100,00) - Quinzenal (R$ 200,00) - Mensal (R$ 405,00)">
          <font>

@@ -70,6 +70,6 @@
       </Label>
       <TextField layoutX="28.0" layoutY="344.0" prefHeight="26.0" prefWidth="150.0" promptText="Nova quilometragem" />
       <Button layoutX="339.0" layoutY="344.0" mnemonicParsing="false" text="Pagamento realizado" />
-      <Button layoutX="481.0" layoutY="343.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="86.0" text="Finalizar" />
+      <Button layoutX="481.0" layoutY="343.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="86.0" text="Concluir" />
    </children>
 </AnchorPane>
