@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gluonhq.charm.glisten.control.AutoCompleteTextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/15.0.1" fx:controller="controles.TelaBuscaController">
+   <children>
+      <StackPane prefHeight="69.0" prefWidth="600.0">
+         <children>
+            <Label styleClass="titulo" stylesheets="@estilo.css" text="Busca de clientes" />
+            <ImageView fitHeight="70.0" fitWidth="112.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT" />
+         </children>
+      </StackPane>
+      <AutoCompleteTextField layoutX="30.0" layoutY="70.0" prefHeight="26.0" prefWidth="417.0" promptText="Nome do cliente ou número do contrato" />
+      <Button alignment="CENTER" layoutX="462.0" layoutY="69.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.0" text="Pesquisar" />
+      <ListView layoutX="30.0" layoutY="114.0" prefHeight="253.0" prefWidth="539.0" />
+   </children>
+</AnchorPane>
