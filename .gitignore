@@ -1,12 +1,12 @@
-# nbproject/private/config.properties
-# nbproject/private/jshell.history
-# nbproject/private/private.properties
-# nbproject/private/private.xml
-# manifest.mf
-# build.xml
-# nbproject/build-impl.xml
-# nbproject/genfiles.properties
-# nbproject/project.properties
-# nbproject/project.xml
-# /build/
-# nbproject/private/retriever/catalog.xml
+nbproject/private/config.properties
+nbproject/private/jshell.history
+nbproject/private/private.properties
+nbproject/private/private.xml
+manifest.mf
+build.xml
+nbproject/build-impl.xml
+nbproject/genfiles.properties
+nbproject/project.properties
+nbproject/project.xml
+build
+nbproject/private/retriever/catalog.xml
