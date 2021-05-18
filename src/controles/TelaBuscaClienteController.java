@@ -14,7 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
@@ -22,10 +22,10 @@ import javafx.stage.Stage;
  *
  * @author luanl
  */
-public class TelaCadastroCliente2Controller implements Initializable {
+public class TelaBuscaClienteController implements Initializable {
 
     @FXML
-    private VBox root;
+    private AnchorPane root;
 
     /**
      * Initializes the controller class.
@@ -34,42 +34,26 @@ public class TelaCadastroCliente2Controller implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
-    
+
     /**
-    *
-    */
-    public void inicializaDados()
-    {
+     *
+     */
+    void inicializaDados() {
     }
 
 
     @FXML
-    private void cadastrarCliente(ActionEvent event) {
+    private void buscaCliente(ActionEvent event) {
     }
 
     @FXML
-    private void cadastrarCondutor(ActionEvent event) {
-    }
-
-    @FXML
-    private void editarCondutor(ActionEvent event) {
-    }
-
-    @FXML
-    private void removerCondutor(ActionEvent event) {
-    }
-
-    @FXML
-    private void mudarTelaCadastroCliente1(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(
-            getClass().getResource("/./telas/TelaCadastroCliente1.fxml")
+    private void mudarTelaInicial(ActionEvent event) throws IOException {
+        Parent parent = FXMLLoader.load(
+            getClass().getResource("/./telas/TelaInicial.fxml")
         );
-        Parent parent = fxmlLoader.load();
-        
-        TelaCadastroCliente1Controller controller = fxmlLoader.getController();
-        controller.inicializaDados();
         
         Stage stage = (Stage) root.getScene().getWindow();
         stage.setScene( new Scene(parent) );
     }
+    
 }

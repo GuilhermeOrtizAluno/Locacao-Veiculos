@@ -15,15 +15,25 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaCadastroCliente1Controller">
+<VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaCadastroCliente1Controller">
    <children>
       <StackPane prefHeight="69.0" prefWidth="600.0">
          <children>
-            <Label styleClass="titulo" text="Cadastro de Cliente - Dados Principais" StackPane.alignment="CENTER_LEFT" />
-            <ImageView fitHeight="70.0" fitWidth="91.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
+            <Button mnemonicParsing="false" onAction="#mudarTelaInicial" StackPane.alignment="CENTER_LEFT">
+               <graphic>
+                  <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/outline_arrow_back_black_24dp.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label styleClass="titulo" text="Cadastro do Cliente" StackPane.alignment="CENTER" />
+            <ImageView fitHeight="55.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
                <image>
-                  <Image url="@../../imgs/logo.png" />
-               </image></ImageView>
+                  <Image url="@../imgs/logo.png" />
+               </image>
+            </ImageView>
          </children>
          <padding>
             <Insets left="30.0" right="30.0" />
@@ -46,8 +56,8 @@
             <TextField fx:id="txtCpf" prefHeight="26.0" prefWidth="148.0" promptText="CPF" />
             <TextField fx:id="txtNomeFantasia" disable="true" prefHeight="26.0" prefWidth="208.0" promptText="Nome Fantasia" />
             <TextField fx:id="txtInscricaoEstadual" disable="true" promptText="Inscrição Estadual" />
-            <TextArea fx:id="txaObservacoes" prefHeight="87.0" prefWidth="540.0" promptText="Observações" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="540.0" text="Avançar" />
+            <TextArea fx:id="txtObservacoes" prefHeight="87.0" prefWidth="540.0" promptText="Observações (opcional)" />
+            <Button disable="true" mnemonicParsing="false" onAction="#mudarTelaCadastroCliente2" prefHeight="26.0" prefWidth="540.0" text="Avançar" />
          </children>
       </FlowPane>
    </children>
