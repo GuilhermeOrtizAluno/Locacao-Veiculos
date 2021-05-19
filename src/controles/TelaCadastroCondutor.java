@@ -7,14 +7,19 @@ package controles;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
  *
  * @author luanl
  */
-public class TelaBuscaController implements Initializable {
+public class TelaCadastroCondutor implements Initializable {
+
+    @FXML
+    private TextField txtNome;
 
     /**
      * Initializes the controller class.

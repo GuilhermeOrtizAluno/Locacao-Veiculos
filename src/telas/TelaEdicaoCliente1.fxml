@@ -15,14 +15,23 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaEdicaoCliente1Controller">
+<VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaEdicaoCliente1Controller">
    <children>
       <StackPane prefHeight="69.0" prefWidth="600.0">
          <children>
-            <Label styleClass="titulo" text="Edição de Cliente - Dados Principais" StackPane.alignment="CENTER_LEFT" />
-            <ImageView fitHeight="70.0" fitWidth="91.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
+            <Button mnemonicParsing="false" onAction="#mudarTelaInicial" StackPane.alignment="CENTER_LEFT">
+               <graphic>
+                  <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/outline_arrow_back_black_24dp.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label styleClass="titulo" text="Edição de Cliente" StackPane.alignment="CENTER" />
+            <ImageView fitHeight="55.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
                <image>
-                  <Image url="@../../imgs/logo.png" />
+                  <Image url="@../imgs/logo.png" />
                </image></ImageView>
          </children>
          <padding>
@@ -31,23 +40,23 @@
       </StackPane>
       <FlowPane alignment="CENTER" prefHeight="330.0" prefWidth="600.0">
          <children>
-            <TextField fx:id="txtNome" prefHeight="26.0" prefWidth="341.0" promptText="Nome do cliente" />
-            <DatePicker fx:id="dateNascimento" prefHeight="26.0" prefWidth="183.0" promptText="Data de nascimento" />
-            <TextField fx:id="txtEndereco" prefHeight="26.0" prefWidth="341.0" promptText="Endereço (Ex: Rua Fulano de Tal, 123)" />
-            <ComboBox fx:id="cbStatus" prefHeight="26.0" prefWidth="181.0" promptText="Status" />
+            <TextField fx:id="txtNome" disable="true" prefHeight="26.0" prefWidth="341.0" promptText="Nome do cliente" />
+            <DatePicker fx:id="dateNascimento" disable="true" prefHeight="26.0" prefWidth="183.0" promptText="Data de nascimento" />
+            <TextField fx:id="txtEndereco" disable="true" prefHeight="26.0" prefWidth="341.0" promptText="Endereço (Ex: Rua Fulano de Tal, 123)" />
+            <ComboBox fx:id="cbStatus" disable="true" prefHeight="26.0" prefWidth="181.0" promptText="Status" />
             <Label prefHeight="18.0" prefWidth="47.0" text="Pessoa:" />
-            <RadioButton fx:id="rbFisica" mnemonicParsing="false" selected="true" text="Física">
+            <RadioButton fx:id="rbFisica" disable="true" mnemonicParsing="false" text="Física">
                <toggleGroup>
                   <ToggleGroup fx:id="tgTipoPessoa" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="rbJuridica" mnemonicParsing="false" text="Jurídica" toggleGroup="$tgTipoPessoa" />
-            <TextField fx:id="txtRegistro" prefHeight="26.0" prefWidth="334.0" promptText="RG" />
-            <TextField fx:id="txtCpf" prefHeight="26.0" prefWidth="148.0" promptText="CPF" />
-            <TextField fx:id="txtNomeFantasia" disable="true" prefHeight="26.0" prefWidth="208.0" promptText="Nome Fantasia" />
-            <TextField fx:id="txtInscricaoEstadual" disable="true" promptText="Inscrição Estadual" />
-            <TextArea fx:id="txaObservacoes" prefHeight="87.0" prefWidth="540.0" promptText="Observações" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="540.0" text="Avançar" />
+            <RadioButton fx:id="rbJuridica" disable="true" mnemonicParsing="false" text="Jurídica" toggleGroup="$tgTipoPessoa" />
+            <TextField fx:id="txtRegistro" disable="true" prefHeight="26.0" prefWidth="334.0" promptText="RG" />
+            <TextField fx:id="txtCpf" disable="true" prefHeight="26.0" prefWidth="148.0" promptText="CPF" />
+            <TextField fx:id="txtInscricaoEstadual" disable="true" prefHeight="26.0" prefWidth="180.0" promptText="Inscrição Estadual" />
+            <ComboBox disable="true" prefHeight="26.0" prefWidth="180.0" promptText="Motivo do bloqueio" />
+            <TextArea fx:id="txaObservacoes" disable="true" prefHeight="87.0" prefWidth="540.0" promptText="Observações" />
+            <Button mnemonicParsing="false" onAction="#mudarTelaEdicaoCliente2" prefHeight="26.0" prefWidth="542.0" text="Avançar" />
          </children>
       </FlowPane>
    </children>

@@ -9,37 +9,37 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <MenuBar styleClass="bg-primary">
-        <menus>
-          <Menu mnemonicParsing="false" text="Clientes">
-            <items>
+<BorderPane fx:id="root" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaInicialController">
+   <top>
+      <MenuBar styleClass="bg-primary" BorderPane.alignment="CENTER">
+         <menus>
+            <Menu mnemonicParsing="false" text="Clientes">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#mudarTelaCadastroCliente1" text="Cadastrar" />
+                  <MenuItem mnemonicParsing="false" onAction="#mudarTelaBuscaCliente" text="Editar" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Veículos">
+               <items>
                   <MenuItem mnemonicParsing="false" text="Cadastrar" />
-              <MenuItem mnemonicParsing="false" text="Editar" />
-                  <MenuItem mnemonicParsing="false" text="Excluir" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Veículos">
-            <items>
-                  <MenuItem mnemonicParsing="false" text="Cadastrar" />
-              <MenuItem mnemonicParsing="false" text="Editar" />
-                  <MenuItem mnemonicParsing="false" text="Excluir" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Locação">
-            <items>
+                  <MenuItem mnemonicParsing="false" text="Editar" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Locação">
+               <items>
                   <MenuItem mnemonicParsing="false" text="Alugar" />
                   <MenuItem mnemonicParsing="false" text="Devolver" />
                   <MenuItem mnemonicParsing="false" text="Renovar" />
-            </items>
-          </Menu>
-        </menus>
+               </items>
+            </Menu>
+         </menus>
       </MenuBar>
-      <AnchorPane prefHeight="436.0" prefWidth="600.0">
+   </top>
+   <center>
+      <AnchorPane prefHeight="436.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="28.0" layoutY="14.0" style="-fx-text-fill: black;" text="Os mais alugados do mês">
                <font>
@@ -48,14 +48,14 @@
             </Label>
             <ComboBox layoutX="341.0" layoutY="19.0" prefWidth="150.0" promptText="Filtrar por..." />
             <BarChart layoutX="7.0" layoutY="49.0" prefHeight="318.0" prefWidth="585.0">
-              <xAxis>
-                <CategoryAxis side="BOTTOM" />
-              </xAxis>
-              <yAxis>
-                <NumberAxis side="LEFT" />
-              </yAxis>
+               <xAxis>
+                  <CategoryAxis side="BOTTOM" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis side="LEFT" />
+               </yAxis>
             </BarChart>
          </children>
       </AnchorPane>
-   </children>
-</VBox>
+   </center>
+</BorderPane>

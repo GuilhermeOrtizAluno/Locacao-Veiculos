@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # nbproject/private/config.properties
 # nbproject/private/jshell.history
 # nbproject/private/private.properties
@@ -11,3 +12,14 @@
 # /build/
 # nbproject/private/retriever/catalog.xml
 /dist/
+=======
+dist
+build
+nbproject
+controlesJpa
+src/entidades/Cliente.java
+src/entidades/Condutor.java
+src/entidades/Locacao.java
+src/entidades/Tipohabilitacao.java
+src/entidades/Veiculo.java
+>>>>>>> Criacao-funcionalidades-luan
