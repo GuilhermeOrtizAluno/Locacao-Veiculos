@@ -23,11 +23,13 @@ public class CondutorDAO {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("INSERT INTO condutor (numeroHabilitacao, tel1, tel2, email)VALUES(?,?,?,?)");
+            stmt = con.prepareStatement("INSERT INTO condutor (numeroHabilitacao, telefone1, telefone2, email, idCliente, idTipoHabilitacao)VALUES(?,?,?,?,?,?)");
             stmt.setString(1, hab);
             stmt.setString(2, tel1);
             stmt.setString(3, tel2);
             stmt.setString(4, email);
+            stmt.setString(5, "1");
+            stmt.setString(6, "1");
 
             stmt.executeUpdate();
 

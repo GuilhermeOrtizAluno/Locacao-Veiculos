@@ -24,6 +24,9 @@ import temp.ConnectionFactory;
  */
 public class TelaCadastroCondutorController implements Initializable {
 
+    public TelaCadastroCondutorController() {
+    }
+
     private String hab, email, tel1, tel2, tipo; 
 
     @FXML
