@@ -53,8 +53,8 @@
             <RadioButton fx:id="rbJuridica" disable="true" mnemonicParsing="false" text="Jurídica" toggleGroup="$tgTipoPessoa" />
             <TextField fx:id="txtRegistro" disable="true" prefHeight="26.0" prefWidth="334.0" promptText="RG" />
             <TextField fx:id="txtCpf" disable="true" prefHeight="26.0" prefWidth="148.0" promptText="CPF" />
-            <TextField fx:id="txtNomeFantasia" disable="true" prefHeight="26.0" prefWidth="208.0" promptText="Nome Fantasia" />
-            <TextField fx:id="txtInscricaoEstadual" disable="true" promptText="Inscrição Estadual" />
+            <TextField fx:id="txtInscricaoEstadual" disable="true" prefHeight="26.0" prefWidth="180.0" promptText="Inscrição Estadual" />
+            <ComboBox disable="true" prefHeight="26.0" prefWidth="180.0" promptText="Motivo do bloqueio" />
             <TextArea fx:id="txaObservacoes" disable="true" prefHeight="87.0" prefWidth="540.0" promptText="Observações" />
             <Button mnemonicParsing="false" onAction="#mudarTelaEdicaoCliente2" prefHeight="26.0" prefWidth="542.0" text="Avançar" />
          </children>

@@ -63,7 +63,6 @@ public class Cliente implements Serializable {
     @Basic(optional = false)
     @Column(name = "endereco")
     private String endereco;
-    @Basic(optional = false)
     @Column(name = "observacao")
     private String observacao;
     @Column(name = "motivoBloqueio")
@@ -89,13 +88,12 @@ public class Cliente implements Serializable {
         this.idCliente = idCliente;
     }
 
-    public Cliente(Integer idCliente, String nome, Date dataNascimento, String status, String endereco, String observacao, String tipoCliente) {
+    public Cliente(Integer idCliente, String nome, Date dataNascimento, String status, String endereco, String tipoCliente) {
         this.idCliente = idCliente;
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.status = status;
         this.endereco = endereco;
-        this.observacao = observacao;
         this.tipoCliente = tipoCliente;
     }
 

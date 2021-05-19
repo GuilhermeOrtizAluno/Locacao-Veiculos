@@ -40,7 +40,7 @@
          <children>
             <Button disable="true" layoutX="30.0" layoutY="286.0" mnemonicParsing="false" onAction="#cadastrarCliente" prefHeight="26.0" prefWidth="540.0" text="Concluir" />
             <ListView layoutX="30.0" layoutY="41.0" prefHeight="222.0" prefWidth="446.0" />
-            <Button layoutX="491.0" layoutY="41.0" mnemonicParsing="false" onAction="#cadastrarCondutor" prefHeight="26.0" prefWidth="78.0" text="Cadastrar" />
+            <Button layoutX="491.0" layoutY="41.0" mnemonicParsing="false" onAction="#mudarTelaCadastroCondutor" prefHeight="26.0" prefWidth="78.0" text="Cadastrar" />
             <Button disable="true" layoutX="491.0" layoutY="78.0" mnemonicParsing="false" onAction="#editarCondutor" prefHeight="26.0" prefWidth="78.0" text="Editar" />
             <Button disable="true" layoutX="491.0" layoutY="116.0" mnemonicParsing="false" onAction="#removerCondutor" prefHeight="26.0" prefWidth="78.0" text="Remover" />
          </children>

@@ -21,7 +21,7 @@ public abstract class ClasseDAO<T> {
     private EntityManagerFactory emf;
     
     public void setEntityManagerFactory() {
-        this.emf = Persistence.createEntityManagerFactory("ProjetoFinal");
+        this.emf = Persistence.createEntityManagerFactory("LocacaoVeiculoPU");
     }
     
     public abstract void add(T objeto) throws Exception;

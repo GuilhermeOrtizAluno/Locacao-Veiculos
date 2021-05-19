@@ -37,14 +37,9 @@ public class TelaInicialController implements Initializable {
 
     @FXML
     private void mudarTelaCadastroCliente1(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(
+        Parent parent = FXMLLoader.load(
             getClass().getResource("/./telas/TelaCadastroCliente1.fxml")
         );
-        Parent parent = fxmlLoader.load();
-        
-        TelaCadastroCliente1Controller controller = fxmlLoader.getController();
-        controller.inicializaDados();
-        
         Stage stage = (Stage) root.getScene().getWindow();
         stage.setScene( new Scene(parent) );
     }

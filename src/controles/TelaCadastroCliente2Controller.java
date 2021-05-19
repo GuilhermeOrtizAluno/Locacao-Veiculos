@@ -5,6 +5,7 @@
  */
 package controles;
 
+import entidades.Cliente;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -26,6 +27,8 @@ public class TelaCadastroCliente2Controller implements Initializable {
 
     @FXML
     private VBox root;
+    
+    private Cliente cliente;
 
     /**
      * Initializes the controller class.
@@ -38,8 +41,9 @@ public class TelaCadastroCliente2Controller implements Initializable {
     /**
     *
     */
-    public void inicializaDados()
+    public void inicializaDados(Cliente cliente)
     {
+        this.cliente = cliente;
     }
 
 
@@ -47,9 +51,6 @@ public class TelaCadastroCliente2Controller implements Initializable {
     private void cadastrarCliente(ActionEvent event) {
     }
 
-    @FXML
-    private void cadastrarCondutor(ActionEvent event) {
-    }
 
     @FXML
     private void editarCondutor(ActionEvent event) {
@@ -67,7 +68,17 @@ public class TelaCadastroCliente2Controller implements Initializable {
         Parent parent = fxmlLoader.load();
         
         TelaCadastroCliente1Controller controller = fxmlLoader.getController();
-        controller.inicializaDados();
+        controller.inicializaDados(cliente);
+        
+        Stage stage = (Stage) root.getScene().getWindow();
+        stage.setScene( new Scene(parent) );
+    }
+
+    @FXML
+    private void mudarTelaCadastroCondutor(ActionEvent event) throws IOException {
+        Parent parent = FXMLLoader.load(
+            getClass().getResource("/./telas/TelaCadastroCondutor.fxml")
+        );
         
         Stage stage = (Stage) root.getScene().getWindow();
         stage.setScene( new Scene(parent) );

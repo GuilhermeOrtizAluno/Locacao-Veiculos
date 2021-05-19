@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -8,25 +9,42 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaCadastroCliente1Controller">
+<VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaCadastroCliente1Controller">
    <children>
       <StackPane prefHeight="69.0" prefWidth="600.0">
          <children>
-            <Label styleClass="titulo" stylesheets="@estilo.css" text="Cadastro de Cliente - Dados Principais" />
-            <ImageView fitHeight="70.0" fitWidth="91.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT" />
+            <Button mnemonicParsing="false" onAction="#mudarTelaInicial" StackPane.alignment="CENTER_LEFT">
+               <graphic>
+                  <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/outline_arrow_back_black_24dp.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label styleClass="titulo" text="Cadastro do Cliente" StackPane.alignment="CENTER" />
+            <ImageView fitHeight="55.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
+               <image>
+                  <Image url="@../../imgs/logo.png" />
+               </image>
+            </ImageView>
          </children>
+         <padding>
+            <Insets left="30.0" right="30.0" />
+         </padding>
       </StackPane>
-      <FlowPane alignment="CENTER" prefHeight="330.0" prefWidth="600.0" stylesheets="@estilo.css">
+      <FlowPane alignment="CENTER" prefHeight="330.0" prefWidth="600.0">
          <children>
-            <TextField fx:id="txtNome" prefHeight="26.0" prefWidth="341.0" promptText="Nome do cliente" />
-            <DatePicker fx:id="dateNascimento" prefHeight="26.0" prefWidth="183.0" promptText="Data de nascimento" />
-            <TextField fx:id="txtEndereco" prefHeight="26.0" prefWidth="341.0" promptText="Endereço (Ex: Rua Fulano de Tal, 123)" />
-            <ComboBox fx:id="cbStatus" prefHeight="26.0" prefWidth="181.0" promptText="Status" />
+            <TextField fx:id="txtNome" onKeyTyped="#checaCamposVazios" prefHeight="26.0" prefWidth="341.0" promptText="Nome do cliente" />
+            <DatePicker fx:id="dateNascimento" editable="false" onAction="#checaCamposVazios" prefHeight="26.0" prefWidth="183.0" promptText="Data de nascimento" />
+            <TextField fx:id="txtEndereco" onKeyTyped="#checaCamposVazios" prefHeight="26.0" prefWidth="341.0" promptText="Endereço (Ex: Rua Fulano de Tal, 123)" />
+            <ComboBox fx:id="cbStatus" onAction="#checaCamposVazios" prefHeight="26.0" prefWidth="181.0" promptText="Status do cliente" />
             <Label prefHeight="18.0" prefWidth="47.0" text="Pessoa:" />
             <RadioButton fx:id="rbFisica" mnemonicParsing="false" selected="true" text="Física">
                <toggleGroup>
@@ -34,12 +52,11 @@
                </toggleGroup>
             </RadioButton>
             <RadioButton fx:id="rbJuridica" mnemonicParsing="false" text="Jurídica" toggleGroup="$tgTipoPessoa" />
-            <TextField fx:id="txtRegistro" prefHeight="26.0" prefWidth="334.0" promptText="RG" />
-            <TextField fx:id="txtCpf" prefHeight="26.0" prefWidth="148.0" promptText="CPF" />
-            <TextField fx:id="txtNomeFantasia" disable="true" prefHeight="26.0" prefWidth="208.0" promptText="Nome Fantasia" />
-            <TextField fx:id="txtInscricaoEstadual" disable="true" promptText="Inscrição Estadual" />
-            <TextArea fx:id="txaObservacoes" prefHeight="87.0" prefWidth="540.0" promptText="Observações" />
-            <Button disable="true" mnemonicParsing="false" prefHeight="26.0" prefWidth="540.0" text="Avançar" />
+            <TextField fx:id="txtRegistro" onKeyTyped="#checaCamposVazios" prefHeight="26.0" prefWidth="334.0" promptText="RG (somente dígitos)" />
+            <TextField fx:id="txtCpf" onKeyTyped="#checaCamposVazios" prefHeight="26.0" prefWidth="251.0" promptText="CPF (somente dígitos)" />
+            <TextField fx:id="txtInscricaoEstadual" disable="true" onKeyTyped="#checaCamposVazios" prefHeight="26.0" prefWidth="272.0" promptText="Inscrição Estadual (somente dígitos)" />
+            <TextArea fx:id="txtObservacoes" prefHeight="87.0" prefWidth="540.0" promptText="Observações (opcional)" />
+            <Button fx:id="btAvancar" disable="true" mnemonicParsing="false" onAction="#mudarTelaCadastroCliente2" prefHeight="26.0" prefWidth="540.0" text="Preencha os campos para avançar" />
          </children>
       </FlowPane>
    </children>
