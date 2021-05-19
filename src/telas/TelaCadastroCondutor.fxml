@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="338.0" prefWidth="400.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaCadastroCondutor">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="338.0" prefWidth="400.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaCadastroCondutorController">
    <children>
       <StackPane prefHeight="65.0" prefWidth="400.0">
          <children>
@@ -29,10 +29,10 @@
          <children>
             <TextField fx:id="tfHabilitacao" prefHeight="26.0" prefWidth="338.0" promptText="Número da habilitação" />
             <ComboBox fx:id="cbTipoHailitacao" prefHeight="26.0" prefWidth="338.0" promptText="Tipo de habilitação" />
-            <TextField fx:id="tEmail" prefHeight="26.0" prefWidth="338.0" promptText="Email de contato" />
+            <TextField fx:id="tfEmail" prefHeight="26.0" prefWidth="338.0" promptText="Email de contato" />
             <TextField fx:id="tfTel1" prefHeight="26.0" prefWidth="338.0" promptText="Telefone 1" />
             <TextField fx:id="tfTel2" prefHeight="26.0" prefWidth="338.0" promptText="Telefone 2" />
-            <Button fx:id="bCadastar" disable="true" mnemonicParsing="false" onAction="#hundleCadastar" prefHeight="26.0" prefWidth="338.0" text="Concluir" />
+            <Button fx:id="bCadastrar" mnemonicParsing="false" onAction="#hundleCadastrar" prefHeight="26.0" prefWidth="338.0" text="Concluir" />
          </children>
       </FlowPane>
    </children>
