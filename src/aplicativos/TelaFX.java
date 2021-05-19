@@ -23,7 +23,7 @@ public class TelaFX extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         Parent parent = FXMLLoader.load( 
-            getClass().getClassLoader().getResource("telas/TelaInicial.fxml") 
+            getClass().getClassLoader().getResource("telas/TelaCadastroCondutor.fxml") 
         );
         
         scene = new Scene(parent);

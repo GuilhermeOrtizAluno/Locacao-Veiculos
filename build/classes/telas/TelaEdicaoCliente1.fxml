@@ -15,11 +15,11 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaCadastroCliente1Controller">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaEdicaoCliente1Controller">
    <children>
       <StackPane prefHeight="69.0" prefWidth="600.0">
          <children>
-            <Label styleClass="titulo" text="Cadastro de Cliente - Dados Principais" StackPane.alignment="CENTER_LEFT" />
+            <Label styleClass="titulo" text="Edição de Cliente - Dados Principais" StackPane.alignment="CENTER_LEFT" />
             <ImageView fitHeight="70.0" fitWidth="91.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
                <image>
                   <Image url="@../../imgs/logo.png" />

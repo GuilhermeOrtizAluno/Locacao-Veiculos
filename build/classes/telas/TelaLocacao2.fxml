@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="574.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaLocacao2Controller">
+   <children>
+      <StackPane prefHeight="70.0" prefWidth="610.0">
+         <children>
+            <Label styleClass="titulo" text="Nova Locação - Confirmação" StackPane.alignment="CENTER_LEFT" />
+            <ImageView fitHeight="70.0" fitWidth="91.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
+               <image>
+                  <Image url="@../../imgs/logo.png" />
+               </image>
+            </ImageView>
+         </children>
+         <padding>
+            <Insets left="30.0" right="30.0" />
+         </padding>
+      </StackPane>
+      <Label layoutX="37.0" layoutY="74.0" text="Marca:  Ford">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="172.0" layoutY="74.0" text="Modelo: Focus">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label layoutX="38.0" layoutY="100.0" text="Ano: 2011">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label layoutX="173.0" layoutY="100.0" text="Nº Placa: AIO-5080">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label layoutX="37.0" layoutY="127.0" text="Renavan: 255946520">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label layoutX="37.0" layoutY="154.0" text="Quilometragem: 70.000 km">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label layoutX="38.0" layoutY="182.0" text="Tempo de locação:  1 semana ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="35.0" layoutY="230.0" text="Valor da locação: R$ 200,00">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label layoutX="36.0" layoutY="255.0" text="Valor do seguro: R$ 7,50">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField layoutX="115.0" layoutY="283.0" prefHeight="26.0" prefWidth="150.0" promptText="R$ 0,00" />
+      <Label layoutX="35.0" layoutY="317.0" text="Valor Total:  207,50">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <TextArea layoutX="328.0" layoutY="230.0" prefHeight="100.0" prefWidth="233.0" promptText="Observações" />
+      <Button layoutX="35.0" layoutY="349.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="529.0" text="Concluir" />
+      <ImageView fitHeight="131.0" fitWidth="242.0" layoutX="327.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../imgs/focus.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="35.0" layoutY="286.0" text="Acréscimos:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

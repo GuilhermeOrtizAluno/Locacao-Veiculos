@@ -27,12 +27,12 @@
       </StackPane>
       <FlowPane alignment="CENTER" prefHeight="270.0" prefWidth="294.0">
          <children>
-            <TextField fx:id="txtNome" prefHeight="26.0" prefWidth="338.0" promptText="Número da habilitação" />
-            <ComboBox prefHeight="26.0" prefWidth="338.0" promptText="Tipo de habilitação" />
-            <TextField prefHeight="26.0" prefWidth="338.0" promptText="Email de contato" />
-            <TextField prefHeight="26.0" prefWidth="338.0" promptText="Telefone 1" />
-            <TextField prefHeight="26.0" prefWidth="338.0" promptText="Telefone 2" />
-            <Button disable="true" mnemonicParsing="false" prefHeight="26.0" prefWidth="338.0" text="Concluir" />
+            <TextField fx:id="tfHabilitacao" prefHeight="26.0" prefWidth="338.0" promptText="Número da habilitação" />
+            <ComboBox fx:id="cbTipoHailitacao" prefHeight="26.0" prefWidth="338.0" promptText="Tipo de habilitação" />
+            <TextField fx:id="tEmail" prefHeight="26.0" prefWidth="338.0" promptText="Email de contato" />
+            <TextField fx:id="tfTel1" prefHeight="26.0" prefWidth="338.0" promptText="Telefone 1" />
+            <TextField fx:id="tfTel2" prefHeight="26.0" prefWidth="338.0" promptText="Telefone 2" />
+            <Button fx:id="bCadastar" disable="true" mnemonicParsing="false" onAction="#hundleCadastar" prefHeight="26.0" prefWidth="338.0" text="Concluir" />
          </children>
       </FlowPane>
    </children>
