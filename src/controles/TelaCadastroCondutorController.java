@@ -5,7 +5,10 @@
  */
 package controles;
 
+import DAO.CondutorDAO;
+import entidades.Cliente;
 import entidades.Condutor;
+import entidades.Tipohabilitacao;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.ResourceBundle;
@@ -15,7 +18,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javax.swing.JOptionPane;
-import temp.CondutorDAO;
 import temp.ConnectionFactory;
 
 /**
@@ -41,7 +43,7 @@ public class TelaCadastroCondutorController implements Initializable {
     private Button bCadastrar;
     
     @FXML
-    private void hundleCadastrar(){
+    private void hundleCadastrar() throws Exception{
         String sHab = tfHabilitacao.getText();
         String sEmail = tfEmail.getText();
         String sTel1 = tfTel1.getText();
@@ -75,32 +77,22 @@ public class TelaCadastroCondutorController implements Initializable {
             return;
         }
         
+        Cliente teste = new Cliente();
+        teste.setIdCliente(1);
+        
+        Tipohabilitacao teste2 = new Tipohabilitacao();
+        teste2.setIdTipoHabilitacao(1);
+        
         Condutor condutor = new Condutor();
         condutor.setEmail(sEmail);
         condutor.setNumeroHabilitacao(sTipoHab);
         condutor.setTelefone1(sTel1);
         condutor.setTelefone2(sTel2);
-        condutor.setIdCliente(1);
-        condutor.setIdTipoHabilitacao("1");
+        condutor.setIdCliente(teste);
+        condutor.setIdTipoHabilitacao(teste2);
         
         CondutorDAO condutorDAO = new CondutorDAO();
-        condutorDAO.create(hab, email, tel1, tel2, tipo);
-    }
-    
-        public String getHab() {
-        return hab;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getTel1() {
-        return tel1;
-    }
-
-    public String getTel2() {
-        return tel2;
+        condutorDAO.add(condutor);
     }
     
     public void cleanFields(){
