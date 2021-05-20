@@ -5,6 +5,7 @@
  */
 package controles;
 
+import entidades.Condutor;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.ResourceBundle;
@@ -26,8 +27,6 @@ public class TelaCadastroCondutorController implements Initializable {
 
     public TelaCadastroCondutorController() {
     }
-
-    private String hab, email, tel1, tel2, tipo; 
 
     @FXML
     private TextField tfHabilitacao,
@@ -76,11 +75,13 @@ public class TelaCadastroCondutorController implements Initializable {
             return;
         }
         
-        hab = sHab;
-        email = sEmail;
-        tel1 = sTel1;
-        tel2 = sTel2;
-        tipo = sTipoHab;
+        Condutor condutor = new Condutor();
+        condutor.setEmail(sEmail);
+        condutor.setNumeroHabilitacao(sTipoHab);
+        condutor.setTelefone1(sTel1);
+        condutor.setTelefone2(sTel2);
+        condutor.setIdCliente(1);
+        condutor.setIdTipoHabilitacao("1");
         
         CondutorDAO condutorDAO = new CondutorDAO();
         condutorDAO.create(hab, email, tel1, tel2, tipo);

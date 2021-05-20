@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package aplicativos;
 
 import java.io.IOException;
@@ -23,7 +18,7 @@ public class TelaFX extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         Parent parent = FXMLLoader.load( 
-            getClass().getClassLoader().getResource("telas/TelaCadastroCondutor.fxml") 
+            getClass().getClassLoader().getResource("telas/TelaInicial.fxml") 
         );
         
         scene = new Scene(parent);

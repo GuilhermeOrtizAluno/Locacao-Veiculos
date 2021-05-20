@@ -5,7 +5,6 @@
  */
 package temp;
 
-import controles.TelaRenovacaoController;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

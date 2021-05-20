@@ -12,26 +12,24 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <MenuBar styleClass="bg-primary">
-        <menus>
-          <Menu mnemonicParsing="false" text="Clientes">
-            <items>
+<BorderPane fx:id="root" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaInicialController">
+   <top>
+      <MenuBar styleClass="bg-primary" BorderPane.alignment="CENTER">
+         <menus>
+            <Menu mnemonicParsing="false" text="Clientes">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#mudarTelaCadastroCliente1" text="Cadastrar" />
+                  <MenuItem mnemonicParsing="false" onAction="#mudarTelaBuscaCliente" text="Editar" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Veículos">
+               <items>
                   <MenuItem mnemonicParsing="false" text="Cadastrar" />
-              <MenuItem mnemonicParsing="false" text="Editar" />
-                  <MenuItem mnemonicParsing="false" text="Excluir" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Veículos">
-            <items>
-                  <MenuItem mnemonicParsing="false" text="Cadastrar" />
-              <MenuItem mnemonicParsing="false" text="Editar" />
-                  <MenuItem mnemonicParsing="false" text="Excluir" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Locação">
-            <items>
+                  <MenuItem mnemonicParsing="false" text="Editar" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Locação">
+               <items>
                   <MenuItem mnemonicParsing="false" text="Alugar" />
                   <MenuItem mnemonicParsing="false" text="Devolver" />
                   <MenuItem mnemonicParsing="false" text="Renovar" />
