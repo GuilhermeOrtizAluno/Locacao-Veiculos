@@ -5,18 +5,12 @@
  */
 package controles;
 
-import DAO.ClienteDAO;
 import DAO.CondutorDAO;
-import DAO.TipoHabilitacaoDAO;
-import entidades.Alerta;
 import entidades.Cliente;
 import entidades.Condutor;
-import entidades.Tipohabilitacao;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,7 +21,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -120,13 +113,13 @@ public class TelaCadastroCliente2Controller implements Initializable {
     @FXML
     private void mudarTelaCadastroCondutor(ActionEvent event)
         throws IOException, Exception {
-//        Parent parent = FXMLLoader.load(
-//            getClass().getResource("/./telas/TelaCadastroCondutor.fxml")
-//        );
-//        
-//        Stage stage = (Stage) root.getScene().getWindow();
-//        stage.setScene( new Scene(parent) );
-        TipoHabilitacaoDAO tipoHabilitacaoDAO = new TipoHabilitacaoDAO();
+           Parent parent = FXMLLoader.load(
+           getClass().getResource("/./telas/TelaCadastroCondutor.fxml")
+        );
+        
+        Stage stage = (Stage) root.getScene().getWindow();
+        stage.setScene( new Scene(parent) );
+        /*TipoHabilitacaoDAO tipoHabilitacaoDAO = new TipoHabilitacaoDAO();
         Tipohabilitacao habilitacao = new Tipohabilitacao();
         habilitacao.setTipoA(true);
         tipoHabilitacaoDAO.add(habilitacao);
@@ -137,7 +130,7 @@ public class TelaCadastroCliente2Controller implements Initializable {
         condutor.setIdTipoHabilitacao(habilitacao);
         
         listaCondutores.add(condutor);
-        btCadastrarCliente.setDisable(false);
+        btCadastrarCliente.setDisable(false);*/
     }
 
     @FXML

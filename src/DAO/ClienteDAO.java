@@ -36,11 +36,7 @@ public class ClienteDAO extends ClasseDAO<Cliente> {
 
     @Override
     public void remove(int id) throws NonexistentEntityException {
-        try {
-            clienteJpa.destroy( (int)id );
-        } catch (IllegalOrphanException e) {
-            throw new NonexistentEntityException( e.getMessage() );
-        }
+        clienteJpa.destroy( (int)id );
     }
 
     @Override

@@ -8,31 +8,43 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="338.0" prefWidth="400.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaCadastroCondutorController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="444.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaCadastroCondutorController">
    <children>
-      <StackPane prefHeight="65.0" prefWidth="400.0">
+      <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Label styleClass="titulo" text="Cadastro de Condutor" StackPane.alignment="CENTER_LEFT" />
-            <ImageView fitHeight="70.0" fitWidth="91.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
+            <ImageView fitHeight="32.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../imgs/logo.png" />
-               </image></ImageView>
+                  <Image url="@../imgs/outline_arrow_back_black_24dp.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="15.0" top="18.0" />
+               </HBox.margin>
+            </ImageView>
+            <Label prefHeight="35.0" prefWidth="277.0" styleClass="titulo" text="Cadastro de Condutor">
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin></Label>
+            <ImageView fitHeight="70.0" fitWidth="91.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imgs/logo.png" />
+               </image>
+               <HBox.margin>
+                  <Insets top="10.0" />
+               </HBox.margin>
+            </ImageView>
          </children>
-         <padding>
-            <Insets left="30.0" right="30.0" />
-         </padding>
-      </StackPane>
-      <FlowPane alignment="CENTER" prefHeight="270.0" prefWidth="294.0">
+      </HBox>
+      <FlowPane alignment="CENTER" prefHeight="223.0" prefWidth="444.0">
          <children>
-            <TextField fx:id="tfHabilitacao" prefHeight="26.0" prefWidth="338.0" promptText="Número da habilitação" />
-            <ComboBox fx:id="cbTipoHailitacao" prefHeight="26.0" prefWidth="338.0" promptText="Tipo de habilitação" />
-            <TextField fx:id="tfEmail" prefHeight="26.0" prefWidth="338.0" promptText="Email de contato" />
-            <TextField fx:id="tfTel1" prefHeight="26.0" prefWidth="338.0" promptText="Telefone 1" />
-            <TextField fx:id="tfTel2" prefHeight="26.0" prefWidth="338.0" promptText="Telefone 2" />
-            <Button fx:id="bCadastrar" mnemonicParsing="false" onAction="#hundleCadastrar" prefHeight="26.0" prefWidth="338.0" text="Concluir" />
+            <TextField fx:id="tfHabilitacao" onKeyTyped="#checaCamposVazios" prefHeight="26.0" prefWidth="179.0" promptText="Número da habilitação" />
+            <ComboBox fx:id="cbTipoHailitacao" prefHeight="26.0" prefWidth="145.0" promptText="Tipo de habilitação" />
+            <TextField fx:id="tfEmail" onKeyTyped="#checaCamposVazios" prefHeight="26.0" prefWidth="338.0" promptText="Email de contato" />
+            <TextField fx:id="tfTel1" onKeyTyped="#checaCamposVazios" prefHeight="26.0" prefWidth="161.0" promptText="Telefone 1" />
+            <TextField fx:id="tfTel2" onKeyTyped="#checaCamposVazios" prefHeight="26.0" prefWidth="165.0" promptText="Telefone 2" />
+            <Button fx:id="bCadastrar" disable="true" mnemonicParsing="false" onAction="#hundleCadastrar" prefHeight="26.0" prefWidth="338.0" text="Concluir" />
          </children>
       </FlowPane>
    </children>

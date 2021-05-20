@@ -23,7 +23,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author luanl
+ * @author guilherme.santos
  */
 @Entity
 @Table(name = "condutor")

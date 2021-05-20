@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaCadastroCliente1Controller">
+<VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaCadastroCliente1Controller">
    <children>
       <StackPane prefHeight="69.0" prefWidth="600.0">
          <children>
@@ -43,8 +43,8 @@
          <children>
             <TextField fx:id="txtNome" onKeyTyped="#checaCamposVazios" prefHeight="26.0" prefWidth="341.0" promptText="Nome do cliente" />
             <DatePicker fx:id="dateNascimento" editable="false" onAction="#checaCamposVazios" prefHeight="26.0" prefWidth="183.0" promptText="Data de nascimento" />
-            <TextField fx:id="txtEndereco" onKeyTyped="#checaCamposVazios" prefHeight="26.0" prefWidth="341.0" promptText="Endereço (Ex: Rua Fulano de Tal, 123)" />
-            <ComboBox fx:id="cbStatus" onAction="#checaCamposVazios" prefHeight="26.0" prefWidth="181.0" promptText="Status do cliente" />
+            <TextField fx:id="txtEndereco" onKeyTyped="#checaCamposVazios" prefHeight="26.0" prefWidth="216.0" promptText="Endereço (Ex: Rua Fulano de Tal, 123)" />
+            <ComboBox fx:id="cbStatus" onAction="#checaCamposVazios" prefHeight="26.0" prefWidth="310.0" promptText="Status do cliente" />
             <Label prefHeight="18.0" prefWidth="47.0" text="Pessoa:" />
             <RadioButton fx:id="rbFisica" mnemonicParsing="false" selected="true" text="Física">
                <toggleGroup>

@@ -6,9 +6,7 @@
 package entidades;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,12 +14,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
  *
- * @author luanl
+ * @author guilherme.santos
  */
 @Entity
 @Table(name = "tipohabilitacao")
@@ -32,7 +29,8 @@ import javax.persistence.Table;
     @NamedQuery(name = "Tipohabilitacao.findByTipoB", query = "SELECT t FROM Tipohabilitacao t WHERE t.tipoB = :tipoB"),
     @NamedQuery(name = "Tipohabilitacao.findByTipoC", query = "SELECT t FROM Tipohabilitacao t WHERE t.tipoC = :tipoC"),
     @NamedQuery(name = "Tipohabilitacao.findByTipoD", query = "SELECT t FROM Tipohabilitacao t WHERE t.tipoD = :tipoD"),
-    @NamedQuery(name = "Tipohabilitacao.findByTipoE", query = "SELECT t FROM Tipohabilitacao t WHERE t.tipoE = :tipoE")})
+    @NamedQuery(name = "Tipohabilitacao.findByTipoE", query = "SELECT t FROM Tipohabilitacao t WHERE t.tipoE = :tipoE"),
+    @NamedQuery(name = "Tipohabilitacao.findByIdCondutorHabilitacao", query = "SELECT t FROM Tipohabilitacao t WHERE t.idCondutorHabilitacao = :idCondutorHabilitacao")})
 public class Tipohabilitacao implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,8 +54,9 @@ public class Tipohabilitacao implements Serializable {
     @Basic(optional = false)
     @Column(name = "tipoE")
     private boolean tipoE;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoHabilitacao")
-    private Collection<Condutor> condutorCollection;
+    @Basic(optional = false)
+    @Column(name = "idCondutorHabilitacao")
+    private int idCondutorHabilitacao;
 
     public Tipohabilitacao() {
     }
@@ -66,13 +65,14 @@ public class Tipohabilitacao implements Serializable {
         this.idTipoHabilitacao = idTipoHabilitacao;
     }
 
-    public Tipohabilitacao(Integer idTipoHabilitacao, boolean tipoA, boolean tipoB, boolean tipoC, boolean tipoD, boolean tipoE) {
+    public Tipohabilitacao(Integer idTipoHabilitacao, boolean tipoA, boolean tipoB, boolean tipoC, boolean tipoD, boolean tipoE, int idCondutorHabilitacao) {
         this.idTipoHabilitacao = idTipoHabilitacao;
         this.tipoA = tipoA;
         this.tipoB = tipoB;
         this.tipoC = tipoC;
         this.tipoD = tipoD;
         this.tipoE = tipoE;
+        this.idCondutorHabilitacao = idCondutorHabilitacao;
     }
 
     public Integer getIdTipoHabilitacao() {
@@ -123,12 +123,12 @@ public class Tipohabilitacao implements Serializable {
         this.tipoE = tipoE;
     }
 
-    public Collection<Condutor> getCondutorCollection() {
-        return condutorCollection;
+    public int getIdCondutorHabilitacao() {
+        return idCondutorHabilitacao;
     }
 
-    public void setCondutorCollection(Collection<Condutor> condutorCollection) {
-        this.condutorCollection = condutorCollection;
+    public void setIdCondutorHabilitacao(int idCondutorHabilitacao) {
+        this.idCondutorHabilitacao = idCondutorHabilitacao;
     }
 
     @Override

@@ -24,7 +24,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author luanl
+ * @author guilherme.santos
  */
 @Entity
 @Table(name = "cliente")

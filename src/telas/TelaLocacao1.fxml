@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="287.0" prefWidth="260.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaLocacao1Controller">
+<AnchorPane id="AnchorPane" prefHeight="287.0" prefWidth="260.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaLocacao1Controller">
    <children>
       <VBox prefHeight="310.0" prefWidth="260.0">
          <children>
@@ -20,7 +20,7 @@
                <children>
                   <ImageView fitHeight="43.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
                      <image>
-                        <Image url="@../../imgs/logo.png" />
+                        <Image url="@../imgs/logo.png" />
                      </image>
                   </ImageView>
                   <Label styleClass="titulo" text="Nova Locação" StackPane.alignment="CENTER_LEFT" />

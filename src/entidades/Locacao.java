@@ -12,15 +12,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
  *
- * @author luanl
+ * @author guilherme.santos
  */
 @Entity
 @Table(name = "locacao")
@@ -36,7 +34,9 @@ import javax.persistence.Table;
     @NamedQuery(name = "Locacao.findByHoraExcedente", query = "SELECT l FROM Locacao l WHERE l.horaExcedente = :horaExcedente"),
     @NamedQuery(name = "Locacao.findBySeguro", query = "SELECT l FROM Locacao l WHERE l.seguro = :seguro"),
     @NamedQuery(name = "Locacao.findByAcresimo", query = "SELECT l FROM Locacao l WHERE l.acresimo = :acresimo"),
-    @NamedQuery(name = "Locacao.findByTexto", query = "SELECT l FROM Locacao l WHERE l.texto = :texto")})
+    @NamedQuery(name = "Locacao.findByTexto", query = "SELECT l FROM Locacao l WHERE l.texto = :texto"),
+    @NamedQuery(name = "Locacao.findByIdCondutorLocacao", query = "SELECT l FROM Locacao l WHERE l.idCondutorLocacao = :idCondutorLocacao"),
+    @NamedQuery(name = "Locacao.findByIdVeiculo", query = "SELECT l FROM Locacao l WHERE l.idVeiculo = :idVeiculo")})
 public class Locacao implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -75,12 +75,12 @@ public class Locacao implements Serializable {
     @Basic(optional = false)
     @Column(name = "texto")
     private String texto;
-    @JoinColumn(name = "idCondutor", referencedColumnName = "idCondutor")
-    @ManyToOne(optional = false)
-    private Condutor idCondutor;
-    @JoinColumn(name = "idVeiculo", referencedColumnName = "idVeiculo")
-    @ManyToOne(optional = false)
-    private Veiculo idVeiculo;
+    @Basic(optional = false)
+    @Column(name = "idCondutorLocacao")
+    private int idCondutorLocacao;
+    @Basic(optional = false)
+    @Column(name = "idVeiculo")
+    private int idVeiculo;
 
     public Locacao() {
     }
@@ -89,7 +89,7 @@ public class Locacao implements Serializable {
         this.idLocacao = idLocacao;
     }
 
-    public Locacao(Integer idLocacao, boolean contratoAberto, double diaria, double semanal, double quinzenal, double mensal, double hora, double horaExcedente, double seguro, double acresimo, String texto) {
+    public Locacao(Integer idLocacao, boolean contratoAberto, double diaria, double semanal, double quinzenal, double mensal, double hora, double horaExcedente, double seguro, double acresimo, String texto, int idCondutorLocacao, int idVeiculo) {
         this.idLocacao = idLocacao;
         this.contratoAberto = contratoAberto;
         this.diaria = diaria;
@@ -101,6 +101,8 @@ public class Locacao implements Serializable {
         this.seguro = seguro;
         this.acresimo = acresimo;
         this.texto = texto;
+        this.idCondutorLocacao = idCondutorLocacao;
+        this.idVeiculo = idVeiculo;
     }
 
     public Integer getIdLocacao() {
@@ -191,19 +193,19 @@ public class Locacao implements Serializable {
         this.texto = texto;
     }
 
-    public Condutor getIdCondutor() {
-        return idCondutor;
+    public int getIdCondutorLocacao() {
+        return idCondutorLocacao;
     }
 
-    public void setIdCondutor(Condutor idCondutor) {
-        this.idCondutor = idCondutor;
+    public void setIdCondutorLocacao(int idCondutorLocacao) {
+        this.idCondutorLocacao = idCondutorLocacao;
     }
 
-    public Veiculo getIdVeiculo() {
+    public int getIdVeiculo() {
         return idVeiculo;
     }
 
-    public void setIdVeiculo(Veiculo idVeiculo) {
+    public void setIdVeiculo(int idVeiculo) {
         this.idVeiculo = idVeiculo;
     }
 

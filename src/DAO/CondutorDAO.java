@@ -36,11 +36,7 @@ public class CondutorDAO extends ClasseDAO<Condutor> {
 
     @Override
     public void remove(int id) throws NonexistentEntityException {
-        try {
-            condutorJpa.destroy( (int)id );
-        } catch (IllegalOrphanException e) {
-            throw new NonexistentEntityException( e.getMessage() );
-        }
+        condutorJpa.destroy( (int)id );
     }
 
     @Override
