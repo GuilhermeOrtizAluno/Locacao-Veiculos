@@ -5,51 +5,51 @@
  */
 package DAO;
 
-import controlesJpa.ClienteJpaController;
+import controlesJpa.CondutorJpaController;
 import controlesJpa.exceptions.IllegalOrphanException;
 import controlesJpa.exceptions.NonexistentEntityException;
-import entidades.Cliente;
+import entidades.Condutor;
 import java.util.List;
 
 /**
  *
  * @author luanl
  */
-public class ClienteDAO extends ClasseDAO<Cliente> {
+public class CondutorDAO extends ClasseDAO<Condutor> {
 
-    private final ClienteJpaController clienteJpa;
+    private final CondutorJpaController condutorJpa;
 
-    public ClienteDAO() {
+    public CondutorDAO() {
         this.setEntityManagerFactory();
-        this.clienteJpa = new ClienteJpaController( this.getEmf() );
+        this.condutorJpa = new CondutorJpaController( this.getEmf() );
     }
 
     @Override
-    public void add(Cliente objeto) throws Exception {
-        clienteJpa.create(objeto);
+    public void add(Condutor objeto) throws Exception {
+        condutorJpa.create(objeto);
     }
 
     @Override
-    public void edit(Cliente objeto) throws Exception {
-        clienteJpa.edit(objeto);
+    public void edit(Condutor objeto) throws Exception {
+        condutorJpa.edit(objeto);
     }
 
     @Override
     public void remove(int id) throws NonexistentEntityException {
         try {
-            clienteJpa.destroy( (int)id );
+            condutorJpa.destroy( (int)id );
         } catch (IllegalOrphanException e) {
             throw new NonexistentEntityException( e.getMessage() );
         }
     }
 
     @Override
-    public List<Cliente> getAll() {
-        return clienteJpa.findClienteEntities();
+    public List<Condutor> getAll() {
+        return condutorJpa.findCondutorEntities();
     }
 
     @Override
     public int getQuantos() {
-        return clienteJpa.getClienteCount();
+        return condutorJpa.getCondutorCount();
     }
 }

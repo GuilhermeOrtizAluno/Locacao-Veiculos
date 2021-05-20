@@ -3,9 +3,9 @@
   <persistence-unit name="LocacaoVeiculoPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>entidades.Tipohabilitacao</class>
+    <class>entidades.Locacao</class>
     <class>entidades.Condutor</class>
     <class>entidades.Veiculo</class>
-    <class>entidades.Locacao</class>
     <class>entidades.Cliente</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/projeto?zeroDateTimeBehavior=CONVERT_TO_NULL"/>

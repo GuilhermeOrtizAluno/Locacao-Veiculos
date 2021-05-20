@@ -5,51 +5,51 @@
  */
 package DAO;
 
-import controlesJpa.ClienteJpaController;
+import controlesJpa.TipohabilitacaoJpaController;
 import controlesJpa.exceptions.IllegalOrphanException;
 import controlesJpa.exceptions.NonexistentEntityException;
-import entidades.Cliente;
+import entidades.Tipohabilitacao;
 import java.util.List;
 
 /**
  *
  * @author luanl
  */
-public class ClienteDAO extends ClasseDAO<Cliente> {
+public class TipoHabilitacaoDAO extends ClasseDAO<Tipohabilitacao> {
 
-    private final ClienteJpaController clienteJpa;
+    private final TipohabilitacaoJpaController tipoHabilitacaoJpa;
 
-    public ClienteDAO() {
+    public TipoHabilitacaoDAO() {
         this.setEntityManagerFactory();
-        this.clienteJpa = new ClienteJpaController( this.getEmf() );
+        this.tipoHabilitacaoJpa = new TipohabilitacaoJpaController( this.getEmf() );
     }
 
     @Override
-    public void add(Cliente objeto) throws Exception {
-        clienteJpa.create(objeto);
+    public void add(Tipohabilitacao objeto) throws Exception {
+        tipoHabilitacaoJpa.create(objeto);
     }
 
     @Override
-    public void edit(Cliente objeto) throws Exception {
-        clienteJpa.edit(objeto);
+    public void edit(Tipohabilitacao objeto) throws Exception {
+        tipoHabilitacaoJpa.edit(objeto);
     }
 
     @Override
     public void remove(int id) throws NonexistentEntityException {
         try {
-            clienteJpa.destroy( (int)id );
+            tipoHabilitacaoJpa.destroy( (int)id );
         } catch (IllegalOrphanException e) {
             throw new NonexistentEntityException( e.getMessage() );
         }
     }
 
     @Override
-    public List<Cliente> getAll() {
-        return clienteJpa.findClienteEntities();
+    public List<Tipohabilitacao> getAll() {
+        return tipoHabilitacaoJpa.findTipohabilitacaoEntities();
     }
 
     @Override
     public int getQuantos() {
-        return clienteJpa.getClienteCount();
+        return tipoHabilitacaoJpa.getTipohabilitacaoCount();
     }
 }
