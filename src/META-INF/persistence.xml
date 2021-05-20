@@ -2,11 +2,11 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="LocacaoVeiculoPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>entidades.Veiculo</class>
-    <class>entidades.Cliente</class>
-    <class>entidades.Tipohabilitacao</class>
     <class>entidades.Condutor</class>
     <class>entidades.Locacao</class>
+    <class>entidades.Cliente</class>
+    <class>entidades.Veiculo</class>
+    <class>entidades.Tipohabilitacao</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/locacao?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

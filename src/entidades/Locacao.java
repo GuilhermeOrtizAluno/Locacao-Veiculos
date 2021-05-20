@@ -6,6 +6,7 @@
 package entidades;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -30,13 +33,14 @@ import javax.persistence.Table;
     @NamedQuery(name = "Locacao.findBySemanal", query = "SELECT l FROM Locacao l WHERE l.semanal = :semanal"),
     @NamedQuery(name = "Locacao.findByQuinzenal", query = "SELECT l FROM Locacao l WHERE l.quinzenal = :quinzenal"),
     @NamedQuery(name = "Locacao.findByMensal", query = "SELECT l FROM Locacao l WHERE l.mensal = :mensal"),
-    @NamedQuery(name = "Locacao.findByHora", query = "SELECT l FROM Locacao l WHERE l.hora = :hora"),
-    @NamedQuery(name = "Locacao.findByHoraExcedente", query = "SELECT l FROM Locacao l WHERE l.horaExcedente = :horaExcedente"),
     @NamedQuery(name = "Locacao.findBySeguro", query = "SELECT l FROM Locacao l WHERE l.seguro = :seguro"),
     @NamedQuery(name = "Locacao.findByAcresimo", query = "SELECT l FROM Locacao l WHERE l.acresimo = :acresimo"),
     @NamedQuery(name = "Locacao.findByTexto", query = "SELECT l FROM Locacao l WHERE l.texto = :texto"),
-    @NamedQuery(name = "Locacao.findByIdCondutorLocacao", query = "SELECT l FROM Locacao l WHERE l.idCondutorLocacao = :idCondutorLocacao"),
-    @NamedQuery(name = "Locacao.findByIdVeiculo", query = "SELECT l FROM Locacao l WHERE l.idVeiculo = :idVeiculo")})
+    @NamedQuery(name = "Locacao.findByDiarias", query = "SELECT l FROM Locacao l WHERE l.diarias = :diarias"),
+    @NamedQuery(name = "Locacao.findBySemanas", query = "SELECT l FROM Locacao l WHERE l.semanas = :semanas"),
+    @NamedQuery(name = "Locacao.findByQuinzenas", query = "SELECT l FROM Locacao l WHERE l.quinzenas = :quinzenas"),
+    @NamedQuery(name = "Locacao.findByMeses", query = "SELECT l FROM Locacao l WHERE l.meses = :meses"),
+    @NamedQuery(name = "Locacao.findByDataEmprestimo", query = "SELECT l FROM Locacao l WHERE l.dataEmprestimo = :dataEmprestimo")})
 public class Locacao implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -61,26 +65,35 @@ public class Locacao implements Serializable {
     @Column(name = "mensal")
     private double mensal;
     @Basic(optional = false)
-    @Column(name = "hora")
-    private double hora;
-    @Basic(optional = false)
-    @Column(name = "horaExcedente")
-    private double horaExcedente;
-    @Basic(optional = false)
     @Column(name = "seguro")
     private double seguro;
-    @Basic(optional = false)
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "acresimo")
-    private double acresimo;
-    @Basic(optional = false)
+    private Double acresimo;
     @Column(name = "texto")
     private String texto;
     @Basic(optional = false)
-    @Column(name = "idCondutorLocacao")
-    private int idCondutorLocacao;
+    @Column(name = "diarias")
+    private int diarias;
     @Basic(optional = false)
-    @Column(name = "idVeiculo")
-    private int idVeiculo;
+    @Column(name = "semanas")
+    private int semanas;
+    @Basic(optional = false)
+    @Column(name = "quinzenas")
+    private int quinzenas;
+    @Basic(optional = false)
+    @Column(name = "meses")
+    private int meses;
+    @Basic(optional = false)
+    @Column(name = "dataEmprestimo")
+    @Temporal(TemporalType.DATE)
+    private Date dataEmprestimo;
+    @JoinColumn(name = "idCondutorLocacao", referencedColumnName = "idCondutor")
+    @ManyToOne(optional = false)
+    private Condutor idCondutorLocacao;
+    @JoinColumn(name = "idVeiculo", referencedColumnName = "idVeiculo")
+    @ManyToOne(optional = false)
+    private Veiculo idVeiculo;
 
     public Locacao() {
     }
@@ -89,20 +102,19 @@ public class Locacao implements Serializable {
         this.idLocacao = idLocacao;
     }
 
-    public Locacao(Integer idLocacao, boolean contratoAberto, double diaria, double semanal, double quinzenal, double mensal, double hora, double horaExcedente, double seguro, double acresimo, String texto, int idCondutorLocacao, int idVeiculo) {
+    public Locacao(Integer idLocacao, boolean contratoAberto, double diaria, double semanal, double quinzenal, double mensal, double seguro, int diarias, int semanas, int quinzenas, int meses, Date dataEmprestimo) {
         this.idLocacao = idLocacao;
         this.contratoAberto = contratoAberto;
         this.diaria = diaria;
         this.semanal = semanal;
         this.quinzenal = quinzenal;
         this.mensal = mensal;
-        this.hora = hora;
-        this.horaExcedente = horaExcedente;
         this.seguro = seguro;
-        this.acresimo = acresimo;
-        this.texto = texto;
-        this.idCondutorLocacao = idCondutorLocacao;
-        this.idVeiculo = idVeiculo;
+        this.diarias = diarias;
+        this.semanas = semanas;
+        this.quinzenas = quinzenas;
+        this.meses = meses;
+        this.dataEmprestimo = dataEmprestimo;
     }
 
     public Integer getIdLocacao() {
@@ -153,22 +165,6 @@ public class Locacao implements Serializable {
         this.mensal = mensal;
     }
 
-    public double getHora() {
-        return hora;
-    }
-
-    public void setHora(double hora) {
-        this.hora = hora;
-    }
-
-    public double getHoraExcedente() {
-        return horaExcedente;
-    }
-
-    public void setHoraExcedente(double horaExcedente) {
-        this.horaExcedente = horaExcedente;
-    }
-
     public double getSeguro() {
         return seguro;
     }
@@ -177,11 +173,11 @@ public class Locacao implements Serializable {
         this.seguro = seguro;
     }
 
-    public double getAcresimo() {
+    public Double getAcresimo() {
         return acresimo;
     }
 
-    public void setAcresimo(double acresimo) {
+    public void setAcresimo(Double acresimo) {
         this.acresimo = acresimo;
     }
 
@@ -193,11 +189,51 @@ public class Locacao implements Serializable {
         this.texto = texto;
     }
 
-    public int getIdCondutorLocacao() {
+    public int getDiarias() {
+        return diarias;
+    }
+
+    public void setDiarias(int diarias) {
+        this.diarias = diarias;
+    }
+
+    public int getSemanas() {
+        return semanas;
+    }
+
+    public void setSemanas(int semanas) {
+        this.semanas = semanas;
+    }
+
+    public int getQuinzenas() {
+        return quinzenas;
+    }
+
+    public void setQuinzenas(int quinzenas) {
+        this.quinzenas = quinzenas;
+    }
+
+    public int getMeses() {
+        return meses;
+    }
+
+    public void setMeses(int meses) {
+        this.meses = meses;
+    }
+
+    public Date getDataEmprestimo() {
+        return dataEmprestimo;
+    }
+
+    public void setDataEmprestimo(Date dataEmprestimo) {
+        this.dataEmprestimo = dataEmprestimo;
+    }
+
+    public Condutor getIdCondutorLocacao() {
         return idCondutorLocacao;
     }
 
-    public void setIdCondutorLocacao(int idCondutorLocacao) {
+    public void setIdCondutorLocacao(Condutor idCondutorLocacao) {
         this.idCondutorLocacao = idCondutorLocacao;
     }
 

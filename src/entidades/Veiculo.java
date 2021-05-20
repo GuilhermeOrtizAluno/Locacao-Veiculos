@@ -33,8 +33,6 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Veiculo.findBySemanal", query = "SELECT v FROM Veiculo v WHERE v.semanal = :semanal"),
     @NamedQuery(name = "Veiculo.findByQuinzenal", query = "SELECT v FROM Veiculo v WHERE v.quinzenal = :quinzenal"),
     @NamedQuery(name = "Veiculo.findByMensal", query = "SELECT v FROM Veiculo v WHERE v.mensal = :mensal"),
-    @NamedQuery(name = "Veiculo.findByHora", query = "SELECT v FROM Veiculo v WHERE v.hora = :hora"),
-    @NamedQuery(name = "Veiculo.findByHoraExcedente", query = "SELECT v FROM Veiculo v WHERE v.horaExcedente = :horaExcedente"),
     @NamedQuery(name = "Veiculo.findByValorSeguro", query = "SELECT v FROM Veiculo v WHERE v.valorSeguro = :valorSeguro"),
     @NamedQuery(name = "Veiculo.findByPlaca", query = "SELECT v FROM Veiculo v WHERE v.placa = :placa"),
     @NamedQuery(name = "Veiculo.findByMarca", query = "SELECT v FROM Veiculo v WHERE v.marca = :marca"),
@@ -68,12 +66,6 @@ public class Veiculo implements Serializable {
     @Basic(optional = false)
     @Column(name = "mensal")
     private double mensal;
-    @Basic(optional = false)
-    @Column(name = "hora")
-    private double hora;
-    @Basic(optional = false)
-    @Column(name = "horaExcedente")
-    private double horaExcedente;
     @Basic(optional = false)
     @Column(name = "valorSeguro")
     private double valorSeguro;
@@ -113,15 +105,13 @@ public class Veiculo implements Serializable {
         this.idVeiculo = idVeiculo;
     }
 
-    public Veiculo(Integer idVeiculo, String renavam, double diaria, double semanal, double quinzenal, double mensal, double hora, double horaExcedente, double valorSeguro, String placa, String marca, String modelo, String anoFabricacao, double valorIndenizacao, Date proximaManutencao, int quilometragemAtual, String informacoesTecnicas, String imagem) {
+    public Veiculo(Integer idVeiculo, String renavam, double diaria, double semanal, double quinzenal, double mensal, double valorSeguro, String placa, String marca, String modelo, String anoFabricacao, double valorIndenizacao, Date proximaManutencao, int quilometragemAtual, String informacoesTecnicas, String imagem) {
         this.idVeiculo = idVeiculo;
         this.renavam = renavam;
         this.diaria = diaria;
         this.semanal = semanal;
         this.quinzenal = quinzenal;
         this.mensal = mensal;
-        this.hora = hora;
-        this.horaExcedente = horaExcedente;
         this.valorSeguro = valorSeguro;
         this.placa = placa;
         this.marca = marca;
@@ -180,22 +170,6 @@ public class Veiculo implements Serializable {
 
     public void setMensal(double mensal) {
         this.mensal = mensal;
-    }
-
-    public double getHora() {
-        return hora;
-    }
-
-    public void setHora(double hora) {
-        this.hora = hora;
-    }
-
-    public double getHoraExcedente() {
-        return horaExcedente;
-    }
-
-    public void setHoraExcedente(double horaExcedente) {
-        this.horaExcedente = horaExcedente;
     }
 
     public double getValorSeguro() {

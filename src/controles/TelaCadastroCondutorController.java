@@ -176,4 +176,9 @@ public class TelaCadastroCondutorController implements Initializable {
         inicializaDados(c, listaCondutores);
     }    
     
+    public void inicializaDados(Cliente cliente,
+        ObservableList<Condutor> listaCondutores, Button btCadastrarCliente) {
+       
+    }
+    
 }

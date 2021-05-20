@@ -6,7 +6,6 @@
 package DAO;
 
 import controlesJpa.TipohabilitacaoJpaController;
-import controlesJpa.exceptions.IllegalOrphanException;
 import controlesJpa.exceptions.NonexistentEntityException;
 import entidades.Tipohabilitacao;
 import java.util.List;

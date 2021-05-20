@@ -24,15 +24,15 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Veículos">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Cadastrar" />
-                  <MenuItem mnemonicParsing="false" text="Editar" />
+                  <MenuItem mnemonicParsing="false" onAction="#mudarTelaCadastroVeiculo" text="Cadastrar" />
+                  <MenuItem mnemonicParsing="false" onAction="#mudarTelaBuscaVeiculo" text="Editar" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Locação">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Alugar" />
-                  <MenuItem mnemonicParsing="false" text="Devolver" />
-                  <MenuItem mnemonicParsing="false" text="Renovar" />
+                  <MenuItem mnemonicParsing="false" onAction="#mudarTelaLocacao1" text="Alugar" />
+                  <MenuItem mnemonicParsing="false" onAction="#devolver" text="Devolver" />
+                  <MenuItem mnemonicParsing="false" onAction="#renovar" text="Renovar" />
                </items>
             </Menu>
          </menus>
@@ -41,12 +41,12 @@
    <center>
       <AnchorPane prefHeight="436.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="28.0" layoutY="14.0" style="-fx-text-fill: black;" text="Os mais alugados do mês">
+            <Label layoutX="28.0" layoutY="14.0" style="-fx-text-fill: black;" text="Os mais alugados">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <ComboBox layoutX="341.0" layoutY="19.0" prefWidth="150.0" promptText="Filtrar por..." />
+            <ComboBox fx:id="cbFiltrarGráfico" layoutX="341.0" layoutY="19.0" prefWidth="150.0" promptText="Filtrar por..." />
             <BarChart layoutX="7.0" layoutY="49.0" prefHeight="318.0" prefWidth="585.0">
                <xAxis>
                   <CategoryAxis side="BOTTOM" />

@@ -36,7 +36,25 @@ public class LocacaoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Condutor idCondutorLocacao = locacao.getIdCondutorLocacao();
+            if (idCondutorLocacao != null) {
+                idCondutorLocacao = em.getReference(idCondutorLocacao.getClass(), idCondutorLocacao.getIdCondutor());
+                locacao.setIdCondutorLocacao(idCondutorLocacao);
+            }
+            Veiculo idVeiculo = locacao.getIdVeiculo();
+            if (idVeiculo != null) {
+                idVeiculo = em.getReference(idVeiculo.getClass(), idVeiculo.getIdVeiculo());
+                locacao.setIdVeiculo(idVeiculo);
+            }
             em.persist(locacao);
+            if (idCondutorLocacao != null) {
+                idCondutorLocacao.getLocacaoCollection().add(locacao);
+                idCondutorLocacao = em.merge(idCondutorLocacao);
+            }
+            if (idVeiculo != null) {
+                idVeiculo.getLocacaoCollection().add(locacao);
+                idVeiculo = em.merge(idVeiculo);
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -50,7 +68,36 @@ public class LocacaoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Locacao persistentLocacao = em.find(Locacao.class, locacao.getIdLocacao());
+            Condutor idCondutorLocacaoOld = persistentLocacao.getIdCondutorLocacao();
+            Condutor idCondutorLocacaoNew = locacao.getIdCondutorLocacao();
+            Veiculo idVeiculoOld = persistentLocacao.getIdVeiculo();
+            Veiculo idVeiculoNew = locacao.getIdVeiculo();
+            if (idCondutorLocacaoNew != null) {
+                idCondutorLocacaoNew = em.getReference(idCondutorLocacaoNew.getClass(), idCondutorLocacaoNew.getIdCondutor());
+                locacao.setIdCondutorLocacao(idCondutorLocacaoNew);
+            }
+            if (idVeiculoNew != null) {
+                idVeiculoNew = em.getReference(idVeiculoNew.getClass(), idVeiculoNew.getIdVeiculo());
+                locacao.setIdVeiculo(idVeiculoNew);
+            }
             locacao = em.merge(locacao);
+            if (idCondutorLocacaoOld != null && !idCondutorLocacaoOld.equals(idCondutorLocacaoNew)) {
+                idCondutorLocacaoOld.getLocacaoCollection().remove(locacao);
+                idCondutorLocacaoOld = em.merge(idCondutorLocacaoOld);
+            }
+            if (idCondutorLocacaoNew != null && !idCondutorLocacaoNew.equals(idCondutorLocacaoOld)) {
+                idCondutorLocacaoNew.getLocacaoCollection().add(locacao);
+                idCondutorLocacaoNew = em.merge(idCondutorLocacaoNew);
+            }
+            if (idVeiculoOld != null && !idVeiculoOld.equals(idVeiculoNew)) {
+                idVeiculoOld.getLocacaoCollection().remove(locacao);
+                idVeiculoOld = em.merge(idVeiculoOld);
+            }
+            if (idVeiculoNew != null && !idVeiculoNew.equals(idVeiculoOld)) {
+                idVeiculoNew.getLocacaoCollection().add(locacao);
+                idVeiculoNew = em.merge(idVeiculoNew);
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -79,6 +126,16 @@ public class LocacaoJpaController implements Serializable {
                 locacao.getIdLocacao();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The locacao with id " + id + " no longer exists.", enfe);
+            }
+            Condutor idCondutorLocacao = locacao.getIdCondutorLocacao();
+            if (idCondutorLocacao != null) {
+                idCondutorLocacao.getLocacaoCollection().remove(locacao);
+                idCondutorLocacao = em.merge(idCondutorLocacao);
+            }
+            Veiculo idVeiculo = locacao.getIdVeiculo();
+            if (idVeiculo != null) {
+                idVeiculo.getLocacaoCollection().remove(locacao);
+                idVeiculo = em.merge(idVeiculo);
             }
             em.remove(locacao);
             em.getTransaction().commit();

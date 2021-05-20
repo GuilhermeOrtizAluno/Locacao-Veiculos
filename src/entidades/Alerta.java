@@ -13,23 +13,21 @@ import javafx.scene.control.Alert;
  */
 public class Alerta {
     
-    public static void mostrarErroBanco()
-    {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(
-            "Erro com o banco de dados!"
-        );
-        alert.setHeaderText(
-            "Erro na comunicação com o banco de dados, dado não foi inserido."
-        );
-        alert.showAndWait();
-    }
-    
-    public static void mostrarCampoInvalido(String header)
-    {
+    public static void mostraAlerta(String title, String header) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Campo inválido!");
         alert.setHeaderText(header);
         alert.showAndWait();
+    }
+    
+    public static void mostrarErroBanco() {
+        mostraAlerta(
+            "Erro com o banco de dados!", 
+            "Erro na comunicação com o banco de dados, dado não foi inserido."
+        );
+    }
+    
+    public static void mostrarCampoInvalido(String header) {
+        mostraAlerta("Campo inválido!", header);
     }
 }

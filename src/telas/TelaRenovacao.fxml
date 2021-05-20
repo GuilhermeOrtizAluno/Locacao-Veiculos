@@ -1,47 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.gluonhq.charm.glisten.control.Icon?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaRenovacaoController">
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="400.0" prefWidth="600.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaRenovacaoController">
    <children>
       <StackPane prefHeight="70.0" prefWidth="600.0">
          <children>
-            <Label styleClass="titulo" text="Renovação" />
-            <ImageView fitHeight="70.0" fitWidth="112.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT" />
-            <Button mnemonicParsing="false" StackPane.alignment="CENTER_LEFT">
+            <Button mnemonicParsing="false" onAction="#mudarTelaBuscaLocacao" StackPane.alignment="CENTER_LEFT">
                <graphic>
-                  <Icon content="STAY_PRIMARY_LANDSCAPE" />
-               </graphic></Button>
+                  <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/outline_arrow_back_black_24dp.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label styleClass="titulo" text="Renovação" />
+            <ImageView fitHeight="55.0" fitWidth="115.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
+               <image>
+                  <Image url="@../imgs/logo.png" />
+               </image></ImageView>
          </children>
          <padding>
             <Insets left="30.0" right="30.0" />
          </padding>
       </StackPane>
-      <Label layoutX="39.0" layoutY="85.0" text="Carro: Chevrolet Onix ABC-1001">
+      <Label fx:id="lbCarro" layoutX="39.0" layoutY="85.0" text="Carro: ">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="39.0" layoutY="110.0" text="Data de empréstimo: 13/04/2021 - 14:56">
+      <Label fx:id="lbDataEmprestimo" layoutX="39.0" layoutY="110.0" text="Data de empréstimo: ">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="38.0" layoutY="135.0" text="Data de vencimento: 22/04/2021 - 14:56">
+      <Label fx:id="lbDataVencimento" layoutX="38.0" layoutY="135.0" text="Data de vencimento: ">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="39.0" layoutY="160.0" text="Custo por semana: R$ 115,00">
+      <Label fx:id="lbTempoLocacao" layoutX="40.0" layoutY="161.0" text="Tempo de locação: 0 diárias - 0 semanas - 0 quinzenas - 0 meses">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbCustos" layoutX="41.0" layoutY="188.0" text="Diária (R$ 0,00) - Semanal (R$ 0,00) - Quinzenal (R$ 0,00) - Mensal (R$ 0,00)">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbTotal" layoutX="41.0" layoutY="213.0" text="Total atual: R$ 0,00">
          <font>
             <Font size="14.0" />
          </font>
@@ -51,18 +69,8 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="130.0" layoutY="287.0" prefHeight="26.0" prefWidth="64.0" promptText="Ex: 2" />
-      <Button disable="true" layoutX="40.0" layoutY="347.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="530.0" text="Concluir" />
-      <ComboBox layoutX="208.0" layoutY="287.0" prefHeight="26.0" prefWidth="164.0" promptText="Diárias, semanas..." />
-      <Label layoutX="39.0" layoutY="185.0" text="Diária (R$ 15,00) - Semanal (R$ 100,00) - Quinzenal (R$ 200,00) - Mensal (R$ 405,00)">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="40.0" layoutY="210.0" text="Tempo de locação: 0 diária - 1 semana - 0 quinzenas - 0 meses">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
+      <TextField fx:id="txtQuantidade" layoutX="130.0" layoutY="287.0" onKeyTyped="#checaEntradas" prefHeight="26.0" prefWidth="64.0" promptText="Ex: 2" />
+      <Button fx:id="btRenovar" disable="true" layoutX="40.0" layoutY="347.0" mnemonicParsing="false" onAction="#renovar" prefHeight="26.0" prefWidth="530.0" text="Concluir" />
+      <ComboBox fx:id="cbTempos" layoutX="208.0" layoutY="287.0" onAction="#checaEntradas" prefHeight="26.0" prefWidth="164.0" promptText="Diárias, semanas..." />
    </children>
 </AnchorPane>

@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -54,9 +56,9 @@ public class Tipohabilitacao implements Serializable {
     @Basic(optional = false)
     @Column(name = "tipoE")
     private boolean tipoE;
-    @Basic(optional = false)
-    @Column(name = "idCondutorHabilitacao")
-    private int idCondutorHabilitacao;
+    @JoinColumn(name = "idCondutorHabilitacao", referencedColumnName = "idCondutor")
+    @ManyToOne(optional = false)
+    private Condutor idCondutorHabilitacao;
 
     public Tipohabilitacao() {
     }
@@ -123,11 +125,11 @@ public class Tipohabilitacao implements Serializable {
         this.tipoE = tipoE;
     }
 
-    public int getIdCondutorHabilitacao() {
+    public Condutor getIdCondutorHabilitacao() {
         return idCondutorHabilitacao;
     }
 
-    public void setIdCondutorHabilitacao(int idCondutorHabilitacao) {
+    public void setIdCondutorHabilitacao(Condutor idCondutorHabilitacao) {
         this.idCondutorHabilitacao = idCondutorHabilitacao;
     }
 

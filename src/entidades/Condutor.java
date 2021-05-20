@@ -56,10 +56,9 @@ public class Condutor implements Serializable {
     @JoinColumn(name = "idCliente", referencedColumnName = "idCliente")
     @ManyToOne(optional = false)
     private Cliente idCliente;
-    @JoinColumn(name = "idTipoHabilitacao", referencedColumnName = "idTipoHabilitacao")
-    @ManyToOne(optional = false)
-    private Tipohabilitacao idTipoHabilitacao;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCondutor")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCondutorHabilitacao")
+    private Collection<Tipohabilitacao> tipohabilitacaoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCondutorLocacao")
     private Collection<Locacao> locacaoCollection;
 
     public Condutor() {
@@ -124,12 +123,12 @@ public class Condutor implements Serializable {
         this.idCliente = idCliente;
     }
 
-    public Tipohabilitacao getIdTipoHabilitacao() {
-        return idTipoHabilitacao;
+    public Collection<Tipohabilitacao> getTipohabilitacaoCollection() {
+        return tipohabilitacaoCollection;
     }
 
-    public void setIdTipoHabilitacao(Tipohabilitacao idTipoHabilitacao) {
-        this.idTipoHabilitacao = idTipoHabilitacao;
+    public void setTipohabilitacaoCollection(Collection<Tipohabilitacao> tipohabilitacaoCollection) {
+        this.tipohabilitacaoCollection = tipohabilitacaoCollection;
     }
 
     public Collection<Locacao> getLocacaoCollection() {

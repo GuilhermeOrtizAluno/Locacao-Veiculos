@@ -15,6 +15,11 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import entidades.Condutor;
+import entidades.Tipohabilitacao;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -36,7 +41,16 @@ public class TipohabilitacaoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Condutor idCondutorHabilitacao = tipohabilitacao.getIdCondutorHabilitacao();
+            if (idCondutorHabilitacao != null) {
+                idCondutorHabilitacao = em.getReference(idCondutorHabilitacao.getClass(), idCondutorHabilitacao.getIdCondutor());
+                tipohabilitacao.setIdCondutorHabilitacao(idCondutorHabilitacao);
+            }
             em.persist(tipohabilitacao);
+            if (idCondutorHabilitacao != null) {
+                idCondutorHabilitacao.getTipohabilitacaoCollection().add(tipohabilitacao);
+                idCondutorHabilitacao = em.merge(idCondutorHabilitacao);
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -50,7 +64,22 @@ public class TipohabilitacaoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Tipohabilitacao persistentTipohabilitacao = em.find(Tipohabilitacao.class, tipohabilitacao.getIdTipoHabilitacao());
+            Condutor idCondutorHabilitacaoOld = persistentTipohabilitacao.getIdCondutorHabilitacao();
+            Condutor idCondutorHabilitacaoNew = tipohabilitacao.getIdCondutorHabilitacao();
+            if (idCondutorHabilitacaoNew != null) {
+                idCondutorHabilitacaoNew = em.getReference(idCondutorHabilitacaoNew.getClass(), idCondutorHabilitacaoNew.getIdCondutor());
+                tipohabilitacao.setIdCondutorHabilitacao(idCondutorHabilitacaoNew);
+            }
             tipohabilitacao = em.merge(tipohabilitacao);
+            if (idCondutorHabilitacaoOld != null && !idCondutorHabilitacaoOld.equals(idCondutorHabilitacaoNew)) {
+                idCondutorHabilitacaoOld.getTipohabilitacaoCollection().remove(tipohabilitacao);
+                idCondutorHabilitacaoOld = em.merge(idCondutorHabilitacaoOld);
+            }
+            if (idCondutorHabilitacaoNew != null && !idCondutorHabilitacaoNew.equals(idCondutorHabilitacaoOld)) {
+                idCondutorHabilitacaoNew.getTipohabilitacaoCollection().add(tipohabilitacao);
+                idCondutorHabilitacaoNew = em.merge(idCondutorHabilitacaoNew);
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -79,6 +108,11 @@ public class TipohabilitacaoJpaController implements Serializable {
                 tipohabilitacao.getIdTipoHabilitacao();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The tipohabilitacao with id " + id + " no longer exists.", enfe);
+            }
+            Condutor idCondutorHabilitacao = tipohabilitacao.getIdCondutorHabilitacao();
+            if (idCondutorHabilitacao != null) {
+                idCondutorHabilitacao.getTipohabilitacaoCollection().remove(tipohabilitacao);
+                idCondutorHabilitacao = em.merge(idCondutorHabilitacao);
             }
             em.remove(tipohabilitacao);
             em.getTransaction().commit();
