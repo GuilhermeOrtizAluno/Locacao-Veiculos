@@ -10,6 +10,8 @@ import controlesJpa.exceptions.IllegalOrphanException;
 import controlesJpa.exceptions.NonexistentEntityException;
 import entidades.Cliente;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -36,7 +38,10 @@ public class ClienteDAO extends ClasseDAO<Cliente> {
 
     @Override
     public void remove(int id) throws NonexistentEntityException {
-        clienteJpa.destroy( (int)id );
+        try {
+            clienteJpa.destroy( (int)id );
+        } catch (IllegalOrphanException ex) {
+        }
     }
 
     @Override

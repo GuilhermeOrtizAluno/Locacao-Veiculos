@@ -5,50 +5,50 @@
  */
 package DAO;
 
-import controlesJpa.CondutorJpaController;
+import controlesJpa.VeiculoJpaController;
 import controlesJpa.exceptions.IllegalOrphanException;
 import controlesJpa.exceptions.NonexistentEntityException;
-import entidades.Condutor;
+import entidades.Veiculo;
 import java.util.List;
 
 /**
  *
  * @author luanl
  */
-public class CondutorDAO extends ClasseDAO<Condutor> {
+public class VeiculoDAO extends ClasseDAO<Veiculo> {
 
-    private final CondutorJpaController condutorJpa;
+    private final VeiculoJpaController veiculoJpa;
 
-    public CondutorDAO() {
+    public VeiculoDAO() {
         this.setEntityManagerFactory();
-        this.condutorJpa = new CondutorJpaController( this.getEmf() );
+        this.veiculoJpa = new VeiculoJpaController( this.getEmf() );
     }
 
     @Override
-    public void add(Condutor objeto) throws Exception {
-        condutorJpa.create(objeto);
+    public void add(Veiculo objeto) throws Exception {
+        veiculoJpa.create(objeto);
     }
 
     @Override
-    public void edit(Condutor objeto) throws Exception {
-        condutorJpa.edit(objeto);
+    public void edit(Veiculo objeto) throws Exception {
+        veiculoJpa.edit(objeto);
     }
 
     @Override
     public void remove(int id) throws NonexistentEntityException {
         try {
-            condutorJpa.destroy( (int)id );
+            veiculoJpa.destroy( (int)id );
         } catch (IllegalOrphanException ex) {
         }
     }
 
     @Override
-    public List<Condutor> getAll() {
-        return condutorJpa.findCondutorEntities();
+    public List<Veiculo> getAll() {
+        return veiculoJpa.findVeiculoEntities();
     }
 
     @Override
     public int getQuantos() {
-        return condutorJpa.getCondutorCount();
+        return veiculoJpa.getVeiculoCount();
     }
 }

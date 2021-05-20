@@ -10,6 +10,7 @@ import DAO.TipoHabilitacaoDAO;
 import controlesJpa.exceptions.NonexistentEntityException;
 import entidades.Cliente;
 import entidades.Condutor;
+import entidades.Tipohabilitacao;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;

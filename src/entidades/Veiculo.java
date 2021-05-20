@@ -6,8 +6,10 @@
 package entidades;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,13 +17,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
  *
- * @author guilherme.santos
+ * @author luanl
  */
 @Entity
 @Table(name = "veiculo")
@@ -97,6 +100,8 @@ public class Veiculo implements Serializable {
     @Basic(optional = false)
     @Column(name = "imagem")
     private String imagem;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idVeiculo")
+    private Collection<Locacao> locacaoCollection;
 
     public Veiculo() {
     }
@@ -250,6 +255,14 @@ public class Veiculo implements Serializable {
 
     public void setImagem(String imagem) {
         this.imagem = imagem;
+    }
+
+    public Collection<Locacao> getLocacaoCollection() {
+        return locacaoCollection;
+    }
+
+    public void setLocacaoCollection(Collection<Locacao> locacaoCollection) {
+        this.locacaoCollection = locacaoCollection;
     }
 
     @Override

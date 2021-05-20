@@ -15,14 +15,18 @@
    <children>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
-            <ImageView fitHeight="32.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../imgs/outline_arrow_back_black_24dp.png" />
-               </image>
+            <Button fx:id="bVoltar" mnemonicParsing="false" onAction="#hundleVoltar" prefHeight="25.0" prefWidth="37.0">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/outline_arrow_back_black_24dp.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
                <HBox.margin>
-                  <Insets right="15.0" top="18.0" />
+                  <Insets left="10.0" right="10.0" top="10.0" />
                </HBox.margin>
-            </ImageView>
+            </Button>
             <Label prefHeight="35.0" prefWidth="277.0" styleClass="titulo" text="Cadastro de Condutor">
                <HBox.margin>
                   <Insets top="15.0" />

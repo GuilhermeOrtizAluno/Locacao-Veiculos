@@ -5,20 +5,24 @@
  */
 package controlesJpa;
 
+import controlesJpa.exceptions.IllegalOrphanException;
 import controlesJpa.exceptions.NonexistentEntityException;
-import entidades.Veiculo;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import entidades.Locacao;
+import entidades.Veiculo;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author guilherme.santos
+ * @author luanl
  */
 public class VeiculoJpaController implements Serializable {
 
@@ -32,11 +36,29 @@ public class VeiculoJpaController implements Serializable {
     }
 
     public void create(Veiculo veiculo) {
+        if (veiculo.getLocacaoCollection() == null) {
+            veiculo.setLocacaoCollection(new ArrayList<Locacao>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Collection<Locacao> attachedLocacaoCollection = new ArrayList<Locacao>();
+            for (Locacao locacaoCollectionLocacaoToAttach : veiculo.getLocacaoCollection()) {
+                locacaoCollectionLocacaoToAttach = em.getReference(locacaoCollectionLocacaoToAttach.getClass(), locacaoCollectionLocacaoToAttach.getIdLocacao());
+                attachedLocacaoCollection.add(locacaoCollectionLocacaoToAttach);
+            }
+            veiculo.setLocacaoCollection(attachedLocacaoCollection);
             em.persist(veiculo);
+            for (Locacao locacaoCollectionLocacao : veiculo.getLocacaoCollection()) {
+                Veiculo oldIdVeiculoOfLocacaoCollectionLocacao = locacaoCollectionLocacao.getIdVeiculo();
+                locacaoCollectionLocacao.setIdVeiculo(veiculo);
+                locacaoCollectionLocacao = em.merge(locacaoCollectionLocacao);
+                if (oldIdVeiculoOfLocacaoCollectionLocacao != null) {
+                    oldIdVeiculoOfLocacaoCollectionLocacao.getLocacaoCollection().remove(locacaoCollectionLocacao);
+                    oldIdVeiculoOfLocacaoCollectionLocacao = em.merge(oldIdVeiculoOfLocacaoCollectionLocacao);
+                }
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -45,12 +67,45 @@ public class VeiculoJpaController implements Serializable {
         }
     }
 
-    public void edit(Veiculo veiculo) throws NonexistentEntityException, Exception {
+    public void edit(Veiculo veiculo) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Veiculo persistentVeiculo = em.find(Veiculo.class, veiculo.getIdVeiculo());
+            Collection<Locacao> locacaoCollectionOld = persistentVeiculo.getLocacaoCollection();
+            Collection<Locacao> locacaoCollectionNew = veiculo.getLocacaoCollection();
+            List<String> illegalOrphanMessages = null;
+            for (Locacao locacaoCollectionOldLocacao : locacaoCollectionOld) {
+                if (!locacaoCollectionNew.contains(locacaoCollectionOldLocacao)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Locacao " + locacaoCollectionOldLocacao + " since its idVeiculo field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            Collection<Locacao> attachedLocacaoCollectionNew = new ArrayList<Locacao>();
+            for (Locacao locacaoCollectionNewLocacaoToAttach : locacaoCollectionNew) {
+                locacaoCollectionNewLocacaoToAttach = em.getReference(locacaoCollectionNewLocacaoToAttach.getClass(), locacaoCollectionNewLocacaoToAttach.getIdLocacao());
+                attachedLocacaoCollectionNew.add(locacaoCollectionNewLocacaoToAttach);
+            }
+            locacaoCollectionNew = attachedLocacaoCollectionNew;
+            veiculo.setLocacaoCollection(locacaoCollectionNew);
             veiculo = em.merge(veiculo);
+            for (Locacao locacaoCollectionNewLocacao : locacaoCollectionNew) {
+                if (!locacaoCollectionOld.contains(locacaoCollectionNewLocacao)) {
+                    Veiculo oldIdVeiculoOfLocacaoCollectionNewLocacao = locacaoCollectionNewLocacao.getIdVeiculo();
+                    locacaoCollectionNewLocacao.setIdVeiculo(veiculo);
+                    locacaoCollectionNewLocacao = em.merge(locacaoCollectionNewLocacao);
+                    if (oldIdVeiculoOfLocacaoCollectionNewLocacao != null && !oldIdVeiculoOfLocacaoCollectionNewLocacao.equals(veiculo)) {
+                        oldIdVeiculoOfLocacaoCollectionNewLocacao.getLocacaoCollection().remove(locacaoCollectionNewLocacao);
+                        oldIdVeiculoOfLocacaoCollectionNewLocacao = em.merge(oldIdVeiculoOfLocacaoCollectionNewLocacao);
+                    }
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -68,7 +123,7 @@ public class VeiculoJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws NonexistentEntityException {
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -79,6 +134,17 @@ public class VeiculoJpaController implements Serializable {
                 veiculo.getIdVeiculo();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The veiculo with id " + id + " no longer exists.", enfe);
+            }
+            List<String> illegalOrphanMessages = null;
+            Collection<Locacao> locacaoCollectionOrphanCheck = veiculo.getLocacaoCollection();
+            for (Locacao locacaoCollectionOrphanCheckLocacao : locacaoCollectionOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Veiculo (" + veiculo + ") cannot be destroyed since the Locacao " + locacaoCollectionOrphanCheckLocacao + " in its locacaoCollection field has a non-nullable idVeiculo field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             em.remove(veiculo);
             em.getTransaction().commit();

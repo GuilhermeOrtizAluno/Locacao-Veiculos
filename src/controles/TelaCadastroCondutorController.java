@@ -1,11 +1,16 @@
 package controles;
 
+import DAO.CondutorDAO;
+import DAO.TipoHabilitacaoDAO;
+import entidades.Alerta;
 import entidades.Cliente;
 import entidades.Condutor;
 import entidades.Tipohabilitacao;
 import excecoes.EntradaInadequadaException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.collections.ObservableList;
@@ -15,7 +20,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import temp.CondutorDao;
 
 /**
  * FXML Controller class
@@ -26,9 +30,10 @@ public class TelaCadastroCondutorController implements Initializable {
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Constructor">  
-    public void inicializaDados(Cliente cliente, ObservableList<Condutor> listaCondutores) {
+    public void inicializaDados(Cliente cliente, ObservableList<Condutor> listaCondutores, Button btCadastrarCliente) {
         this.cliente = cliente;
         this.listaCondutores = listaCondutores;
+        this.btCadastrarCliente = btCadastrarCliente;
     }
     // </editor-fold>
     
@@ -36,6 +41,7 @@ public class TelaCadastroCondutorController implements Initializable {
     // <editor-fold defaultstate="collapsed" desc="Variables">  
     private Cliente cliente;
     private ObservableList<Condutor> listaCondutores;
+    private Button btCadastrarCliente;
 
     @FXML
     private TextField tfHabilitacao,
@@ -68,12 +74,14 @@ public class TelaCadastroCondutorController implements Initializable {
                 sEmail, 
                 sHab, 
                 sTel1, 
-                sTel2, 
-                createHabilitacao()
+                sTel2
             );
             cleanFields();
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch(EntradaInadequadaException e) {
+            Alerta.mostrarCampoInvalido( e.getMessage() );
+        }
+        catch (Exception e) {
+            Alerta.mostrarErroBanco();
         }
         
     }
@@ -101,9 +109,10 @@ public class TelaCadastroCondutorController implements Initializable {
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Functions">  
-    public Tipohabilitacao createHabilitacao(){
+    public Tipohabilitacao createHabilitacao(Condutor condutor){
         
         Tipohabilitacao habilitacao = new Tipohabilitacao();
+        habilitacao.setIdCondutorHabilitacao(condutor);
         habilitacao.setTipoA(true);
         
         //TODO
@@ -113,17 +122,23 @@ public class TelaCadastroCondutorController implements Initializable {
         return habilitacao;
     }
     
-    public void createCondutor(String email, String hab, String tel1, String tel2, Tipohabilitacao habilitacao){
+    public void createCondutor(String email, String hab, String tel1, String tel2){
         Condutor condutor = new Condutor();
         condutor.setEmail(email);
         condutor.setNumeroHabilitacao(hab);
         condutor.setTelefone1(tel1);
         condutor.setTelefone2(tel2);
         condutor.setIdCliente(cliente);
-        condutor.setIdTipoHabilitacao(habilitacao);
         
-        CondutorDao condutorDAO = new CondutorDao();
-        condutorDAO.create(condutor);
+        CondutorDAO condutorDAO = new CondutorDAO();
+        try {
+            condutorDAO.add(condutor);
+        } catch (Exception ex) {
+            Alerta.mostrarErroBanco();
+            return;
+        }
+        
+        createHabilitacao(condutor);
         
         //TODO
         //listaCondutores.add(condutor);
@@ -170,15 +185,5 @@ public class TelaCadastroCondutorController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initVariables();
-        
-        // TODO
-        Cliente c = new Cliente(1);
-        inicializaDados(c, listaCondutores);
-    }    
-    
-    public void inicializaDados(Cliente cliente,
-        ObservableList<Condutor> listaCondutores, Button btCadastrarCliente) {
-       
-    }
-    
+    }  
 }

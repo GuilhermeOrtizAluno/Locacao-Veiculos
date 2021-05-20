@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -21,7 +23,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author guilherme.santos
+ * @author luanl
  */
 @Entity
 @Table(name = "locacao")
@@ -237,11 +239,11 @@ public class Locacao implements Serializable {
         this.idCondutorLocacao = idCondutorLocacao;
     }
 
-    public int getIdVeiculo() {
+    public Veiculo getIdVeiculo() {
         return idVeiculo;
     }
 
-    public void setIdVeiculo(int idVeiculo) {
+    public void setIdVeiculo(Veiculo idVeiculo) {
         this.idVeiculo = idVeiculo;
     }
 

@@ -20,7 +20,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author guilherme.santos
+ * @author luanl
  */
 @Entity
 @Table(name = "tipohabilitacao")
@@ -31,8 +31,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "Tipohabilitacao.findByTipoB", query = "SELECT t FROM Tipohabilitacao t WHERE t.tipoB = :tipoB"),
     @NamedQuery(name = "Tipohabilitacao.findByTipoC", query = "SELECT t FROM Tipohabilitacao t WHERE t.tipoC = :tipoC"),
     @NamedQuery(name = "Tipohabilitacao.findByTipoD", query = "SELECT t FROM Tipohabilitacao t WHERE t.tipoD = :tipoD"),
-    @NamedQuery(name = "Tipohabilitacao.findByTipoE", query = "SELECT t FROM Tipohabilitacao t WHERE t.tipoE = :tipoE"),
-    @NamedQuery(name = "Tipohabilitacao.findByIdCondutorHabilitacao", query = "SELECT t FROM Tipohabilitacao t WHERE t.idCondutorHabilitacao = :idCondutorHabilitacao")})
+    @NamedQuery(name = "Tipohabilitacao.findByTipoE", query = "SELECT t FROM Tipohabilitacao t WHERE t.tipoE = :tipoE")})
 public class Tipohabilitacao implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -67,14 +66,13 @@ public class Tipohabilitacao implements Serializable {
         this.idTipoHabilitacao = idTipoHabilitacao;
     }
 
-    public Tipohabilitacao(Integer idTipoHabilitacao, boolean tipoA, boolean tipoB, boolean tipoC, boolean tipoD, boolean tipoE, int idCondutorHabilitacao) {
+    public Tipohabilitacao(Integer idTipoHabilitacao, boolean tipoA, boolean tipoB, boolean tipoC, boolean tipoD, boolean tipoE) {
         this.idTipoHabilitacao = idTipoHabilitacao;
         this.tipoA = tipoA;
         this.tipoB = tipoB;
         this.tipoC = tipoC;
         this.tipoD = tipoD;
         this.tipoE = tipoE;
-        this.idCondutorHabilitacao = idCondutorHabilitacao;
     }
 
     public Integer getIdTipoHabilitacao() {

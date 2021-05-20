@@ -1,11 +1,9 @@
 package controles;
 
-import entidades.Veiculo;
+import DAO.VeiculoDAO;
 import excecoes.EntradaInadequadaException;
 import java.net.URL;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,7 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import temp.VeiculoDao;
 
 /**
  * FXML Controller class
@@ -152,11 +149,11 @@ public class TelaCadastroVeiculoController implements Initializable {
         String imagem,
         String informacoesTecnicas
     ){
-        Veiculo veiculo = new Veiculo(null, renavam, diaria, semanal, quinzenal, mensal, hora, horaExcedente, 0, placa, marca, modelo, anoFabricacao, valorIndenizacao, Date.from(Instant.MIN), quilometragemAtual, informacoesTecnicas, imagem);
+        // Veiculo veiculo = new Veiculo(null, renavam, diaria, semanal, quinzenal, mensal, hora, horaExcedente, 0, placa, marca, modelo, anoFabricacao, valorIndenizacao, Date.from(Instant.MIN), quilometragemAtual, informacoesTecnicas, imagem);
         
         //TODO
-        VeiculoDao veiculoDao = new VeiculoDao();
-        veiculoDao.create(veiculo);
+        VeiculoDAO veiculoDao = new VeiculoDAO();
+        // veiculoDao.create(veiculo);
     }
     
     public void cleanFields(){

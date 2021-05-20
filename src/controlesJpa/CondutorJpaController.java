@@ -5,12 +5,9 @@
  */
 package controlesJpa;
 
+import controlesJpa.exceptions.IllegalOrphanException;
 import controlesJpa.exceptions.NonexistentEntityException;
-import entidades.Condutor;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
@@ -27,7 +24,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author guilherme.santos
+ * @author luanl
  */
 public class CondutorJpaController implements Serializable {
 
@@ -99,7 +96,7 @@ public class CondutorJpaController implements Serializable {
         }
     }
 
-    public void edit(Condutor condutor) throws NonexistentEntityException, Exception {
+    public void edit(Condutor condutor) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -197,7 +194,7 @@ public class CondutorJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws NonexistentEntityException {
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
