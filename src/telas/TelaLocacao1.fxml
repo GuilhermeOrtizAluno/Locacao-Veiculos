@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="287.0" prefWidth="260.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaLocacao1Controller">
+<AnchorPane id="AnchorPane" prefHeight="287.0" prefWidth="260.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaLocacao1Controller">
    <children>
       <VBox prefHeight="310.0" prefWidth="260.0">
          <children>
@@ -27,12 +27,12 @@
                </children>
             </StackPane>
             <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="244.0" text="Selecionar Cliente" />
-            <ComboBox disable="true" prefHeight="25.0" prefWidth="240.0" promptText="Selecionar Condutor">
+            <ComboBox fx:id="cbCondutor" disable="true" prefHeight="25.0" prefWidth="240.0" promptText="Selecionar Condutor">
                <VBox.margin>
                   <Insets bottom="7.0" top="7.0" />
                </VBox.margin>
             </ComboBox>
-            <TextField promptText="Insira o nome do veículo" />
+            <TextField fx:id="tfVeiculo" promptText="Insira o nome do veículo" />
             <Label text="Alugar por:">
                <VBox.margin>
                   <Insets top="10.0" />
@@ -40,18 +40,18 @@
             </Label>
             <HBox prefHeight="34.0" prefWidth="240.0">
                <children>
-                  <TextField prefHeight="26.0" prefWidth="78.0" promptText="Quantidade">
+                  <TextField fx:id="tdQtde" prefHeight="26.0" prefWidth="78.0" promptText="Quantidade">
                      <HBox.margin>
                         <Insets right="5.0" />
                      </HBox.margin>
                   </TextField>
-                  <ComboBox prefHeight="26.0" prefWidth="156.0" promptText="Diárias, semanas..." />
+                  <ComboBox fx:id="cbSemana" prefHeight="26.0" prefWidth="156.0" promptText="Diárias, semanas..." />
                </children>
                <VBox.margin>
                   <Insets bottom="7.0" top="7.0" />
                </VBox.margin>
             </HBox>
-            <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="284.0" text="Prosseguir">
+            <Button fx:id="bProsseguir" mnemonicParsing="false" onAction="#hundleProsseguir" prefHeight="32.0" prefWidth="284.0" text="Prosseguir">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>

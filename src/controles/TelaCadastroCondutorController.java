@@ -9,16 +9,13 @@ import entidades.Tipohabilitacao;
 import excecoes.EntradaInadequadaException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 
 /**
@@ -49,12 +46,15 @@ public class TelaCadastroCondutorController implements Initializable {
                         tfTel1, 
                         tfTel2;
     
-    @FXML 
-    private ComboBox cbTipoHailitacao;
+    @FXML
+    private CheckBox cbA, 
+                        cbB, 
+                        cbC, 
+                        cbD, 
+                        cbE;
     
     @FXML
-    private Button bCadastrar,
-                    bVoltar;
+    private Button bCadastrar;
     // </editor-fold>
     
     @SuppressWarnings("unchecked")
@@ -65,8 +65,6 @@ public class TelaCadastroCondutorController implements Initializable {
         String sEmail = tfEmail.getText();
         String sTel1 = tfTel1.getText();
         String sTel2 = tfTel2.getText();
-        //TODO
-        String sTipoHab = cbTipoHailitacao.getValue() == null ? "" : cbTipoHailitacao.getValue().toString();
          
         try { 
             checaEntradasInvalidas();
@@ -92,8 +90,7 @@ public class TelaCadastroCondutorController implements Initializable {
             !tfEmail.getText().isBlank() &&
             !tfHabilitacao.getText().isBlank() &&
             !tfTel1.getText().isBlank() &&
-            !tfTel2.getText().isBlank()/*&&
-            !cbTipoHailitacao.getEditor().getText().isEmpty()*/
+            (cbA.isSelected() || cbB.isSelected() || cbC.isSelected() || cbD.isSelected() || cbD.isSelected() || cbE.isSelected())
         ) {
             bCadastrar.setDisable(false);
         }
@@ -101,23 +98,22 @@ public class TelaCadastroCondutorController implements Initializable {
             bCadastrar.setDisable(true);
         }
     }
-    
-    @FXML
-    private void hundleVoltar(ActionEvent event) {
-    }
     // </editor-fold>
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Functions">  
-    public Tipohabilitacao createHabilitacao(Condutor condutor){
+    public Tipohabilitacao createHabilitacao(Condutor condutor) throws Exception{
         
         Tipohabilitacao habilitacao = new Tipohabilitacao();
         habilitacao.setIdCondutorHabilitacao(condutor);
-        habilitacao.setTipoA(true);
+        habilitacao.setTipoA(cbA.isSelected());
+        habilitacao.setTipoB(cbB.isSelected());
+        habilitacao.setTipoC(cbC.isSelected());
+        habilitacao.setTipoD(cbD.isSelected());
+        habilitacao.setTipoE(cbE.isSelected());
         
-        //TODO
-        //TipoHabilitacaoDAO tipoHabilitacaoDAO = new TipoHabilitacaoDAO();
-        //tipoHabilitacaoDAO.add(habilitacao);
+        TipoHabilitacaoDAO tipoHabilitacaoDAO = new TipoHabilitacaoDAO();
+        tipoHabilitacaoDAO.add(habilitacao);
         
         return habilitacao;
     }
@@ -133,15 +129,13 @@ public class TelaCadastroCondutorController implements Initializable {
         CondutorDAO condutorDAO = new CondutorDAO();
         try {
             condutorDAO.add(condutor);
+            condutor.getTipohabilitacaoCollection().add( createHabilitacao(condutor) );
         } catch (Exception ex) {
             Alerta.mostrarErroBanco();
             return;
         }
         
-        createHabilitacao(condutor);
-        
-        //TODO
-        //listaCondutores.add(condutor);
+        listaCondutores.add(condutor);
     }
     
     public void cleanFields(){
@@ -151,22 +145,11 @@ public class TelaCadastroCondutorController implements Initializable {
         tfTel2.setText("");
     }
     
-    public void initVariables(){
-        cbTipoHailitacao.getItems().addAll(
-            "A",
-            "B",
-            "C",
-            "D",
-            "E" 
-        );
-    }
     
     public void checaEntradasInvalidas() throws EntradaInadequadaException
     {
         conferePadrao("^[0-9]{11}$", tfTel1, "O Telefone1 deve ter 11 dígitos!");
         if(!tfTel2.getText().isEmpty())conferePadrao("^[0-9]{11}$", tfTel2, "O Telefone2 deve ter 11 dígitos!");
-        //TODO
-        //conferePadrao("^[0-9]{11}$", txtCpf, "O CPF deve ter 11 dígitos!");
         
     }
     
@@ -184,6 +167,5 @@ public class TelaCadastroCondutorController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        initVariables();
     }  
 }
