@@ -5,9 +5,15 @@
  */
 package controles;
 
+import entidades.Cliente;
+import entidades.Condutor;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
@@ -16,6 +22,9 @@ import javafx.fxml.Initializable;
  */
 public class TelaCadastroCondutorController implements Initializable {
 
+    @FXML
+    private TextField txtNome;
+
     /**
      * Initializes the controller class.
      */
@@ -23,5 +32,10 @@ public class TelaCadastroCondutorController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+    
+    public void inicializaDados(Cliente cliente,
+        ObservableList<Condutor> listaCondutores, Button btCadastrarCliente) {
+       
+    }
     
 }

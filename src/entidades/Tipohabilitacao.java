@@ -6,17 +6,16 @@
 package entidades;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -56,8 +55,9 @@ public class Tipohabilitacao implements Serializable {
     @Basic(optional = false)
     @Column(name = "tipoE")
     private boolean tipoE;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoHabilitacao")
-    private Collection<Condutor> condutorCollection;
+    @JoinColumn(name = "idCondutorHabilitacao", referencedColumnName = "idCondutor")
+    @ManyToOne(optional = false)
+    private Condutor idCondutorHabilitacao;
 
     public Tipohabilitacao() {
     }
@@ -123,12 +123,12 @@ public class Tipohabilitacao implements Serializable {
         this.tipoE = tipoE;
     }
 
-    public Collection<Condutor> getCondutorCollection() {
-        return condutorCollection;
+    public Condutor getIdCondutorHabilitacao() {
+        return idCondutorHabilitacao;
     }
 
-    public void setCondutorCollection(Collection<Condutor> condutorCollection) {
-        this.condutorCollection = condutorCollection;
+    public void setIdCondutorHabilitacao(Condutor idCondutorHabilitacao) {
+        this.idCondutorHabilitacao = idCondutorHabilitacao;
     }
 
     @Override

@@ -15,9 +15,9 @@ import javax.persistence.criteria.Root;
 import entidades.Cliente;
 import entidades.Condutor;
 import entidades.Tipohabilitacao;
-import entidades.Locacao;
 import java.util.ArrayList;
 import java.util.Collection;
+import entidades.Locacao;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -38,6 +38,9 @@ public class CondutorJpaController implements Serializable {
     }
 
     public void create(Condutor condutor) {
+        if (condutor.getTipohabilitacaoCollection() == null) {
+            condutor.setTipohabilitacaoCollection(new ArrayList<Tipohabilitacao>());
+        }
         if (condutor.getLocacaoCollection() == null) {
             condutor.setLocacaoCollection(new ArrayList<Locacao>());
         }
@@ -50,11 +53,12 @@ public class CondutorJpaController implements Serializable {
                 idCliente = em.getReference(idCliente.getClass(), idCliente.getIdCliente());
                 condutor.setIdCliente(idCliente);
             }
-            Tipohabilitacao idTipoHabilitacao = condutor.getIdTipoHabilitacao();
-            if (idTipoHabilitacao != null) {
-                idTipoHabilitacao = em.getReference(idTipoHabilitacao.getClass(), idTipoHabilitacao.getIdTipoHabilitacao());
-                condutor.setIdTipoHabilitacao(idTipoHabilitacao);
+            Collection<Tipohabilitacao> attachedTipohabilitacaoCollection = new ArrayList<Tipohabilitacao>();
+            for (Tipohabilitacao tipohabilitacaoCollectionTipohabilitacaoToAttach : condutor.getTipohabilitacaoCollection()) {
+                tipohabilitacaoCollectionTipohabilitacaoToAttach = em.getReference(tipohabilitacaoCollectionTipohabilitacaoToAttach.getClass(), tipohabilitacaoCollectionTipohabilitacaoToAttach.getIdTipoHabilitacao());
+                attachedTipohabilitacaoCollection.add(tipohabilitacaoCollectionTipohabilitacaoToAttach);
             }
+            condutor.setTipohabilitacaoCollection(attachedTipohabilitacaoCollection);
             Collection<Locacao> attachedLocacaoCollection = new ArrayList<Locacao>();
             for (Locacao locacaoCollectionLocacaoToAttach : condutor.getLocacaoCollection()) {
                 locacaoCollectionLocacaoToAttach = em.getReference(locacaoCollectionLocacaoToAttach.getClass(), locacaoCollectionLocacaoToAttach.getIdLocacao());
@@ -66,17 +70,22 @@ public class CondutorJpaController implements Serializable {
                 idCliente.getCondutorCollection().add(condutor);
                 idCliente = em.merge(idCliente);
             }
-            if (idTipoHabilitacao != null) {
-                idTipoHabilitacao.getCondutorCollection().add(condutor);
-                idTipoHabilitacao = em.merge(idTipoHabilitacao);
+            for (Tipohabilitacao tipohabilitacaoCollectionTipohabilitacao : condutor.getTipohabilitacaoCollection()) {
+                Condutor oldIdCondutorHabilitacaoOfTipohabilitacaoCollectionTipohabilitacao = tipohabilitacaoCollectionTipohabilitacao.getIdCondutorHabilitacao();
+                tipohabilitacaoCollectionTipohabilitacao.setIdCondutorHabilitacao(condutor);
+                tipohabilitacaoCollectionTipohabilitacao = em.merge(tipohabilitacaoCollectionTipohabilitacao);
+                if (oldIdCondutorHabilitacaoOfTipohabilitacaoCollectionTipohabilitacao != null) {
+                    oldIdCondutorHabilitacaoOfTipohabilitacaoCollectionTipohabilitacao.getTipohabilitacaoCollection().remove(tipohabilitacaoCollectionTipohabilitacao);
+                    oldIdCondutorHabilitacaoOfTipohabilitacaoCollectionTipohabilitacao = em.merge(oldIdCondutorHabilitacaoOfTipohabilitacaoCollectionTipohabilitacao);
+                }
             }
             for (Locacao locacaoCollectionLocacao : condutor.getLocacaoCollection()) {
-                Condutor oldIdCondutorOfLocacaoCollectionLocacao = locacaoCollectionLocacao.getIdCondutor();
-                locacaoCollectionLocacao.setIdCondutor(condutor);
+                Condutor oldIdCondutorLocacaoOfLocacaoCollectionLocacao = locacaoCollectionLocacao.getIdCondutorLocacao();
+                locacaoCollectionLocacao.setIdCondutorLocacao(condutor);
                 locacaoCollectionLocacao = em.merge(locacaoCollectionLocacao);
-                if (oldIdCondutorOfLocacaoCollectionLocacao != null) {
-                    oldIdCondutorOfLocacaoCollectionLocacao.getLocacaoCollection().remove(locacaoCollectionLocacao);
-                    oldIdCondutorOfLocacaoCollectionLocacao = em.merge(oldIdCondutorOfLocacaoCollectionLocacao);
+                if (oldIdCondutorLocacaoOfLocacaoCollectionLocacao != null) {
+                    oldIdCondutorLocacaoOfLocacaoCollectionLocacao.getLocacaoCollection().remove(locacaoCollectionLocacao);
+                    oldIdCondutorLocacaoOfLocacaoCollectionLocacao = em.merge(oldIdCondutorLocacaoOfLocacaoCollectionLocacao);
                 }
             }
             em.getTransaction().commit();
@@ -95,17 +104,25 @@ public class CondutorJpaController implements Serializable {
             Condutor persistentCondutor = em.find(Condutor.class, condutor.getIdCondutor());
             Cliente idClienteOld = persistentCondutor.getIdCliente();
             Cliente idClienteNew = condutor.getIdCliente();
-            Tipohabilitacao idTipoHabilitacaoOld = persistentCondutor.getIdTipoHabilitacao();
-            Tipohabilitacao idTipoHabilitacaoNew = condutor.getIdTipoHabilitacao();
+            Collection<Tipohabilitacao> tipohabilitacaoCollectionOld = persistentCondutor.getTipohabilitacaoCollection();
+            Collection<Tipohabilitacao> tipohabilitacaoCollectionNew = condutor.getTipohabilitacaoCollection();
             Collection<Locacao> locacaoCollectionOld = persistentCondutor.getLocacaoCollection();
             Collection<Locacao> locacaoCollectionNew = condutor.getLocacaoCollection();
             List<String> illegalOrphanMessages = null;
+            for (Tipohabilitacao tipohabilitacaoCollectionOldTipohabilitacao : tipohabilitacaoCollectionOld) {
+                if (!tipohabilitacaoCollectionNew.contains(tipohabilitacaoCollectionOldTipohabilitacao)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Tipohabilitacao " + tipohabilitacaoCollectionOldTipohabilitacao + " since its idCondutorHabilitacao field is not nullable.");
+                }
+            }
             for (Locacao locacaoCollectionOldLocacao : locacaoCollectionOld) {
                 if (!locacaoCollectionNew.contains(locacaoCollectionOldLocacao)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Locacao " + locacaoCollectionOldLocacao + " since its idCondutor field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Locacao " + locacaoCollectionOldLocacao + " since its idCondutorLocacao field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -115,10 +132,13 @@ public class CondutorJpaController implements Serializable {
                 idClienteNew = em.getReference(idClienteNew.getClass(), idClienteNew.getIdCliente());
                 condutor.setIdCliente(idClienteNew);
             }
-            if (idTipoHabilitacaoNew != null) {
-                idTipoHabilitacaoNew = em.getReference(idTipoHabilitacaoNew.getClass(), idTipoHabilitacaoNew.getIdTipoHabilitacao());
-                condutor.setIdTipoHabilitacao(idTipoHabilitacaoNew);
+            Collection<Tipohabilitacao> attachedTipohabilitacaoCollectionNew = new ArrayList<Tipohabilitacao>();
+            for (Tipohabilitacao tipohabilitacaoCollectionNewTipohabilitacaoToAttach : tipohabilitacaoCollectionNew) {
+                tipohabilitacaoCollectionNewTipohabilitacaoToAttach = em.getReference(tipohabilitacaoCollectionNewTipohabilitacaoToAttach.getClass(), tipohabilitacaoCollectionNewTipohabilitacaoToAttach.getIdTipoHabilitacao());
+                attachedTipohabilitacaoCollectionNew.add(tipohabilitacaoCollectionNewTipohabilitacaoToAttach);
             }
+            tipohabilitacaoCollectionNew = attachedTipohabilitacaoCollectionNew;
+            condutor.setTipohabilitacaoCollection(tipohabilitacaoCollectionNew);
             Collection<Locacao> attachedLocacaoCollectionNew = new ArrayList<Locacao>();
             for (Locacao locacaoCollectionNewLocacaoToAttach : locacaoCollectionNew) {
                 locacaoCollectionNewLocacaoToAttach = em.getReference(locacaoCollectionNewLocacaoToAttach.getClass(), locacaoCollectionNewLocacaoToAttach.getIdLocacao());
@@ -135,22 +155,25 @@ public class CondutorJpaController implements Serializable {
                 idClienteNew.getCondutorCollection().add(condutor);
                 idClienteNew = em.merge(idClienteNew);
             }
-            if (idTipoHabilitacaoOld != null && !idTipoHabilitacaoOld.equals(idTipoHabilitacaoNew)) {
-                idTipoHabilitacaoOld.getCondutorCollection().remove(condutor);
-                idTipoHabilitacaoOld = em.merge(idTipoHabilitacaoOld);
-            }
-            if (idTipoHabilitacaoNew != null && !idTipoHabilitacaoNew.equals(idTipoHabilitacaoOld)) {
-                idTipoHabilitacaoNew.getCondutorCollection().add(condutor);
-                idTipoHabilitacaoNew = em.merge(idTipoHabilitacaoNew);
+            for (Tipohabilitacao tipohabilitacaoCollectionNewTipohabilitacao : tipohabilitacaoCollectionNew) {
+                if (!tipohabilitacaoCollectionOld.contains(tipohabilitacaoCollectionNewTipohabilitacao)) {
+                    Condutor oldIdCondutorHabilitacaoOfTipohabilitacaoCollectionNewTipohabilitacao = tipohabilitacaoCollectionNewTipohabilitacao.getIdCondutorHabilitacao();
+                    tipohabilitacaoCollectionNewTipohabilitacao.setIdCondutorHabilitacao(condutor);
+                    tipohabilitacaoCollectionNewTipohabilitacao = em.merge(tipohabilitacaoCollectionNewTipohabilitacao);
+                    if (oldIdCondutorHabilitacaoOfTipohabilitacaoCollectionNewTipohabilitacao != null && !oldIdCondutorHabilitacaoOfTipohabilitacaoCollectionNewTipohabilitacao.equals(condutor)) {
+                        oldIdCondutorHabilitacaoOfTipohabilitacaoCollectionNewTipohabilitacao.getTipohabilitacaoCollection().remove(tipohabilitacaoCollectionNewTipohabilitacao);
+                        oldIdCondutorHabilitacaoOfTipohabilitacaoCollectionNewTipohabilitacao = em.merge(oldIdCondutorHabilitacaoOfTipohabilitacaoCollectionNewTipohabilitacao);
+                    }
+                }
             }
             for (Locacao locacaoCollectionNewLocacao : locacaoCollectionNew) {
                 if (!locacaoCollectionOld.contains(locacaoCollectionNewLocacao)) {
-                    Condutor oldIdCondutorOfLocacaoCollectionNewLocacao = locacaoCollectionNewLocacao.getIdCondutor();
-                    locacaoCollectionNewLocacao.setIdCondutor(condutor);
+                    Condutor oldIdCondutorLocacaoOfLocacaoCollectionNewLocacao = locacaoCollectionNewLocacao.getIdCondutorLocacao();
+                    locacaoCollectionNewLocacao.setIdCondutorLocacao(condutor);
                     locacaoCollectionNewLocacao = em.merge(locacaoCollectionNewLocacao);
-                    if (oldIdCondutorOfLocacaoCollectionNewLocacao != null && !oldIdCondutorOfLocacaoCollectionNewLocacao.equals(condutor)) {
-                        oldIdCondutorOfLocacaoCollectionNewLocacao.getLocacaoCollection().remove(locacaoCollectionNewLocacao);
-                        oldIdCondutorOfLocacaoCollectionNewLocacao = em.merge(oldIdCondutorOfLocacaoCollectionNewLocacao);
+                    if (oldIdCondutorLocacaoOfLocacaoCollectionNewLocacao != null && !oldIdCondutorLocacaoOfLocacaoCollectionNewLocacao.equals(condutor)) {
+                        oldIdCondutorLocacaoOfLocacaoCollectionNewLocacao.getLocacaoCollection().remove(locacaoCollectionNewLocacao);
+                        oldIdCondutorLocacaoOfLocacaoCollectionNewLocacao = em.merge(oldIdCondutorLocacaoOfLocacaoCollectionNewLocacao);
                     }
                 }
             }
@@ -184,12 +207,19 @@ public class CondutorJpaController implements Serializable {
                 throw new NonexistentEntityException("The condutor with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
+            Collection<Tipohabilitacao> tipohabilitacaoCollectionOrphanCheck = condutor.getTipohabilitacaoCollection();
+            for (Tipohabilitacao tipohabilitacaoCollectionOrphanCheckTipohabilitacao : tipohabilitacaoCollectionOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Condutor (" + condutor + ") cannot be destroyed since the Tipohabilitacao " + tipohabilitacaoCollectionOrphanCheckTipohabilitacao + " in its tipohabilitacaoCollection field has a non-nullable idCondutorHabilitacao field.");
+            }
             Collection<Locacao> locacaoCollectionOrphanCheck = condutor.getLocacaoCollection();
             for (Locacao locacaoCollectionOrphanCheckLocacao : locacaoCollectionOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Condutor (" + condutor + ") cannot be destroyed since the Locacao " + locacaoCollectionOrphanCheckLocacao + " in its locacaoCollection field has a non-nullable idCondutor field.");
+                illegalOrphanMessages.add("This Condutor (" + condutor + ") cannot be destroyed since the Locacao " + locacaoCollectionOrphanCheckLocacao + " in its locacaoCollection field has a non-nullable idCondutorLocacao field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
@@ -198,11 +228,6 @@ public class CondutorJpaController implements Serializable {
             if (idCliente != null) {
                 idCliente.getCondutorCollection().remove(condutor);
                 idCliente = em.merge(idCliente);
-            }
-            Tipohabilitacao idTipoHabilitacao = condutor.getIdTipoHabilitacao();
-            if (idTipoHabilitacao != null) {
-                idTipoHabilitacao.getCondutorCollection().remove(condutor);
-                idTipoHabilitacao = em.merge(idTipoHabilitacao);
             }
             em.remove(condutor);
             em.getTransaction().commit();

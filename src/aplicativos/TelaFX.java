@@ -28,7 +28,7 @@ public class TelaFX extends Application {
         
         scene = new Scene(parent);
         
-        primaryStage.setTitle("Tela Inicial");
+        primaryStage.setTitle("Menu Principal");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -39,5 +39,4 @@ public class TelaFX extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
 }

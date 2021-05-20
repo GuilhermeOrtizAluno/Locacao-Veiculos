@@ -6,7 +6,6 @@
 package DAO;
 
 import controlesJpa.TipohabilitacaoJpaController;
-import controlesJpa.exceptions.IllegalOrphanException;
 import controlesJpa.exceptions.NonexistentEntityException;
 import entidades.Tipohabilitacao;
 import java.util.List;
@@ -36,11 +35,7 @@ public class TipoHabilitacaoDAO extends ClasseDAO<Tipohabilitacao> {
 
     @Override
     public void remove(int id) throws NonexistentEntityException {
-        try {
-            tipoHabilitacaoJpa.destroy( (int)id );
-        } catch (IllegalOrphanException e) {
-            throw new NonexistentEntityException( e.getMessage() );
-        }
+        tipoHabilitacaoJpa.destroy( (int)id );
     }
 
     @Override

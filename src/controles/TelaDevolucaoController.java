@@ -23,5 +23,9 @@ public class TelaDevolucaoController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
+    void inicializaDados() {
+        
+    }
     
 }

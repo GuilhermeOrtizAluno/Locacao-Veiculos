@@ -5,18 +5,15 @@
  */
 package controles;
 
-import DAO.ClienteDAO;
 import DAO.CondutorDAO;
 import DAO.TipoHabilitacaoDAO;
-import entidades.Alerta;
+import controlesJpa.exceptions.NonexistentEntityException;
 import entidades.Cliente;
 import entidades.Condutor;
 import entidades.Tipohabilitacao;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,9 +24,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -40,9 +37,10 @@ import javafx.stage.Stage;
 public class TelaCadastroCliente2Controller implements Initializable {
 
     private Cliente cliente;
+    private ObservableList<Condutor> listaCondutores;
     private CondutorDAO condutorDAO;
     private Condutor condutorSelecionado;
-    private ObservableList<Condutor> listaCondutores;
+    TipoHabilitacaoDAO tipoHabilitacaoDAO;
     
     @FXML
     private VBox root;   
@@ -61,6 +59,7 @@ public class TelaCadastroCliente2Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         condutorDAO = new CondutorDAO();
+        tipoHabilitacaoDAO = new TipoHabilitacaoDAO();
     }    
     
     /**
@@ -74,28 +73,33 @@ public class TelaCadastroCliente2Controller implements Initializable {
     }
 
     @FXML
-    private void cadastrarCliente(ActionEvent event) throws Exception {
-//        try {
-//            for (Condutor condutor : listaCondutores) condutorDAO.add(condutor);
-//        } catch (Exception e) {
-//            Alerta.mostrarCampoInvalido( e.getMessage() );
-//            return;
-//        }
-        cliente.setCondutorCollection(listaCondutores);
-        for (Condutor condutor : listaCondutores) {
-            condutorDAO.add(condutor);
-        }
-        System.out.println("Terminou o cadastro do cliente");
+    private void mudarTelaInicial(ActionEvent event) throws Exception {
+        Parent parent = FXMLLoader.load( 
+            getClass().getClassLoader().getResource("telas/TelaInicial.fxml") 
+        );
+        Stage stage = (Stage) root.getScene().getWindow();
+        stage.setTitle("Menu Principal");
+        stage.setScene( new Scene(parent) );
     }
 
 
     @FXML
     private void editarCondutor(ActionEvent event) {
+        Stage stage = (Stage) root.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
     private void removerCondutor(ActionEvent event) {
+        Object[] habilitacao = condutorSelecionado.getTipohabilitacaoCollection().toArray();
         listaCondutores.remove(condutorSelecionado);
+        try {
+            tipoHabilitacaoDAO.remove(
+                ((Tipohabilitacao) habilitacao[0]).getIdTipoHabilitacao()
+            );
+            condutorDAO.remove( condutorSelecionado.getIdCondutor() );
+        } catch (NonexistentEntityException e) {
+        }
         lvCondutores.getSelectionModel().clearSelection();
         condutorSelecionado = null;
         
@@ -114,30 +118,54 @@ public class TelaCadastroCliente2Controller implements Initializable {
         controller.inicializaDados(cliente);
         
         Stage stage = (Stage) root.getScene().getWindow();
+        stage.setTitle("Cadastro do cliente");
         stage.setScene( new Scene(parent) );
     }
 
     @FXML
     private void mudarTelaCadastroCondutor(ActionEvent event)
-        throws IOException, Exception {
-//        Parent parent = FXMLLoader.load(
-//            getClass().getResource("/./telas/TelaCadastroCondutor.fxml")
-//        );
+        throws IOException, NonexistentEntityException {
+        
+        FXMLLoader fxmlLoader = new FXMLLoader(
+            getClass().getResource("/./telas/TelaCadastroCondutor.fxml")
+        );
+        Parent parent = fxmlLoader.load();
+        
+        TelaCadastroCondutorController controller = fxmlLoader.getController();
+        controller.inicializaDados(cliente, listaCondutores, btCadastrarCliente);
+        
+        Stage janela = new Stage();
+        janela.initModality(Modality.APPLICATION_MODAL);
+        janela.setScene( new Scene(parent) );
+        janela.setTitle("Cadastro do condutor");
+        janela.show();
+
+//        Condutor condutor = new Condutor(
+//            null, "12345678910", "12345678900", "jooj");
+//        condutor.setIdCliente(cliente);
 //        
-//        Stage stage = (Stage) root.getScene().getWindow();
-//        stage.setScene( new Scene(parent) );
-        TipoHabilitacaoDAO tipoHabilitacaoDAO = new TipoHabilitacaoDAO();
-        Tipohabilitacao habilitacao = new Tipohabilitacao();
-        habilitacao.setTipoA(true);
-        tipoHabilitacaoDAO.add(habilitacao);
-        
-        Condutor condutor = new Condutor(
-            null, "12345678910", "12345678900", "jooj");
-        condutor.setIdCliente(cliente);
-        condutor.setIdTipoHabilitacao(habilitacao);
-        
-        listaCondutores.add(condutor);
-        btCadastrarCliente.setDisable(false);
+//        try {
+//            condutorDAO.add(condutor);
+//        } catch (Exception e) {
+//            Alerta.mostrarErroBanco();
+//            return;
+//        }
+//        
+//        Tipohabilitacao habilitacao = new Tipohabilitacao();
+//        habilitacao.setTipoA(true);
+//        habilitacao.setIdCondutorHabilitacao(condutor);
+//        
+//        try {
+//            tipoHabilitacaoDAO.add(habilitacao);
+//        } catch (Exception e) {
+//            Alerta.mostrarErroBanco();
+//            condutorDAO.remove( condutor.getIdCondutor() );
+//            return;
+//        }
+//        condutor.getTipohabilitacaoCollection().add(habilitacao);
+//        cliente.getCondutorCollection().add(condutor);
+//        
+//        listaCondutores.add(condutor);
     }
 
     @FXML

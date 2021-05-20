@@ -3,23 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entidades;
+package entidades.enums;
 
 /**
  *
  * @author luanl
  */
-public enum TipoCliente {
-    FISICA("Física"), JURIDICA("Jurídica");
+public enum TipoFiltragem {
+    QUANTIDADE("Por quantidade"), TEMPO("Por tempo");
     
-    public String pessoa;
+    public String descricao;
 
-    private TipoCliente(String pessoa) {
-        this.pessoa = pessoa;
+    private TipoFiltragem(String pessoa) {
+        this.descricao = pessoa;
     }
 
     @Override
     public String toString() {
-        return this.pessoa;
+        return this.descricao;
     }
 }

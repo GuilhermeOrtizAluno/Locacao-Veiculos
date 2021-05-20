@@ -9,9 +9,9 @@ import DAO.ClienteDAO;
 import controlesJpa.exceptions.NonexistentEntityException;
 import entidades.Alerta;
 import entidades.Cliente;
-import entidades.TipoCliente;
-import entidades.TipoMotivoBloqueio;
-import entidades.TipoStatus;
+import entidades.enums.TipoCliente;
+import entidades.enums.TipoMotivoBloqueio;
+import entidades.enums.TipoStatus;
 import excecoes.EntradaInadequadaException;
 import java.io.IOException;
 import java.net.URL;
@@ -83,6 +83,7 @@ public class TelaCadastroCliente1Controller implements Initializable {
         );
         
         Stage stage = (Stage) root.getScene().getWindow();
+        stage.setTitle("Menu Principal");
         stage.setScene( new Scene(parent) );
     }
 
@@ -116,6 +117,11 @@ public class TelaCadastroCliente1Controller implements Initializable {
         
         Stage stage = (Stage) root.getScene().getWindow();
         stage.setScene( new Scene(parent) );
+        stage.setTitle("Cadastro dos condutores");
+        stage.setOnCloseRequest(e -> {
+            try { clienteDAO.remove( cliente.getIdCliente() ); }
+            catch (NonexistentEntityException ex) {}
+        });
     }
     
     @FXML

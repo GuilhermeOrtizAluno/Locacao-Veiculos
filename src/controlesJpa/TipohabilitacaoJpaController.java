@@ -5,7 +5,6 @@
  */
 package controlesJpa;
 
-import controlesJpa.exceptions.IllegalOrphanException;
 import controlesJpa.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
@@ -14,8 +13,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import entidades.Condutor;
 import entidades.Tipohabilitacao;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -36,28 +33,19 @@ public class TipohabilitacaoJpaController implements Serializable {
     }
 
     public void create(Tipohabilitacao tipohabilitacao) {
-        if (tipohabilitacao.getCondutorCollection() == null) {
-            tipohabilitacao.setCondutorCollection(new ArrayList<Condutor>());
-        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Collection<Condutor> attachedCondutorCollection = new ArrayList<Condutor>();
-            for (Condutor condutorCollectionCondutorToAttach : tipohabilitacao.getCondutorCollection()) {
-                condutorCollectionCondutorToAttach = em.getReference(condutorCollectionCondutorToAttach.getClass(), condutorCollectionCondutorToAttach.getIdCondutor());
-                attachedCondutorCollection.add(condutorCollectionCondutorToAttach);
+            Condutor idCondutorHabilitacao = tipohabilitacao.getIdCondutorHabilitacao();
+            if (idCondutorHabilitacao != null) {
+                idCondutorHabilitacao = em.getReference(idCondutorHabilitacao.getClass(), idCondutorHabilitacao.getIdCondutor());
+                tipohabilitacao.setIdCondutorHabilitacao(idCondutorHabilitacao);
             }
-            tipohabilitacao.setCondutorCollection(attachedCondutorCollection);
             em.persist(tipohabilitacao);
-            for (Condutor condutorCollectionCondutor : tipohabilitacao.getCondutorCollection()) {
-                Tipohabilitacao oldIdTipoHabilitacaoOfCondutorCollectionCondutor = condutorCollectionCondutor.getIdTipoHabilitacao();
-                condutorCollectionCondutor.setIdTipoHabilitacao(tipohabilitacao);
-                condutorCollectionCondutor = em.merge(condutorCollectionCondutor);
-                if (oldIdTipoHabilitacaoOfCondutorCollectionCondutor != null) {
-                    oldIdTipoHabilitacaoOfCondutorCollectionCondutor.getCondutorCollection().remove(condutorCollectionCondutor);
-                    oldIdTipoHabilitacaoOfCondutorCollectionCondutor = em.merge(oldIdTipoHabilitacaoOfCondutorCollectionCondutor);
-                }
+            if (idCondutorHabilitacao != null) {
+                idCondutorHabilitacao.getTipohabilitacaoCollection().add(tipohabilitacao);
+                idCondutorHabilitacao = em.merge(idCondutorHabilitacao);
             }
             em.getTransaction().commit();
         } finally {
@@ -67,44 +55,26 @@ public class TipohabilitacaoJpaController implements Serializable {
         }
     }
 
-    public void edit(Tipohabilitacao tipohabilitacao) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public void edit(Tipohabilitacao tipohabilitacao) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             Tipohabilitacao persistentTipohabilitacao = em.find(Tipohabilitacao.class, tipohabilitacao.getIdTipoHabilitacao());
-            Collection<Condutor> condutorCollectionOld = persistentTipohabilitacao.getCondutorCollection();
-            Collection<Condutor> condutorCollectionNew = tipohabilitacao.getCondutorCollection();
-            List<String> illegalOrphanMessages = null;
-            for (Condutor condutorCollectionOldCondutor : condutorCollectionOld) {
-                if (!condutorCollectionNew.contains(condutorCollectionOldCondutor)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Condutor " + condutorCollectionOldCondutor + " since its idTipoHabilitacao field is not nullable.");
-                }
+            Condutor idCondutorHabilitacaoOld = persistentTipohabilitacao.getIdCondutorHabilitacao();
+            Condutor idCondutorHabilitacaoNew = tipohabilitacao.getIdCondutorHabilitacao();
+            if (idCondutorHabilitacaoNew != null) {
+                idCondutorHabilitacaoNew = em.getReference(idCondutorHabilitacaoNew.getClass(), idCondutorHabilitacaoNew.getIdCondutor());
+                tipohabilitacao.setIdCondutorHabilitacao(idCondutorHabilitacaoNew);
             }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            Collection<Condutor> attachedCondutorCollectionNew = new ArrayList<Condutor>();
-            for (Condutor condutorCollectionNewCondutorToAttach : condutorCollectionNew) {
-                condutorCollectionNewCondutorToAttach = em.getReference(condutorCollectionNewCondutorToAttach.getClass(), condutorCollectionNewCondutorToAttach.getIdCondutor());
-                attachedCondutorCollectionNew.add(condutorCollectionNewCondutorToAttach);
-            }
-            condutorCollectionNew = attachedCondutorCollectionNew;
-            tipohabilitacao.setCondutorCollection(condutorCollectionNew);
             tipohabilitacao = em.merge(tipohabilitacao);
-            for (Condutor condutorCollectionNewCondutor : condutorCollectionNew) {
-                if (!condutorCollectionOld.contains(condutorCollectionNewCondutor)) {
-                    Tipohabilitacao oldIdTipoHabilitacaoOfCondutorCollectionNewCondutor = condutorCollectionNewCondutor.getIdTipoHabilitacao();
-                    condutorCollectionNewCondutor.setIdTipoHabilitacao(tipohabilitacao);
-                    condutorCollectionNewCondutor = em.merge(condutorCollectionNewCondutor);
-                    if (oldIdTipoHabilitacaoOfCondutorCollectionNewCondutor != null && !oldIdTipoHabilitacaoOfCondutorCollectionNewCondutor.equals(tipohabilitacao)) {
-                        oldIdTipoHabilitacaoOfCondutorCollectionNewCondutor.getCondutorCollection().remove(condutorCollectionNewCondutor);
-                        oldIdTipoHabilitacaoOfCondutorCollectionNewCondutor = em.merge(oldIdTipoHabilitacaoOfCondutorCollectionNewCondutor);
-                    }
-                }
+            if (idCondutorHabilitacaoOld != null && !idCondutorHabilitacaoOld.equals(idCondutorHabilitacaoNew)) {
+                idCondutorHabilitacaoOld.getTipohabilitacaoCollection().remove(tipohabilitacao);
+                idCondutorHabilitacaoOld = em.merge(idCondutorHabilitacaoOld);
+            }
+            if (idCondutorHabilitacaoNew != null && !idCondutorHabilitacaoNew.equals(idCondutorHabilitacaoOld)) {
+                idCondutorHabilitacaoNew.getTipohabilitacaoCollection().add(tipohabilitacao);
+                idCondutorHabilitacaoNew = em.merge(idCondutorHabilitacaoNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -123,7 +93,7 @@ public class TipohabilitacaoJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
+    public void destroy(Integer id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -135,16 +105,10 @@ public class TipohabilitacaoJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The tipohabilitacao with id " + id + " no longer exists.", enfe);
             }
-            List<String> illegalOrphanMessages = null;
-            Collection<Condutor> condutorCollectionOrphanCheck = tipohabilitacao.getCondutorCollection();
-            for (Condutor condutorCollectionOrphanCheckCondutor : condutorCollectionOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Tipohabilitacao (" + tipohabilitacao + ") cannot be destroyed since the Condutor " + condutorCollectionOrphanCheckCondutor + " in its condutorCollection field has a non-nullable idTipoHabilitacao field.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
+            Condutor idCondutorHabilitacao = tipohabilitacao.getIdCondutorHabilitacao();
+            if (idCondutorHabilitacao != null) {
+                idCondutorHabilitacao.getTipohabilitacaoCollection().remove(tipohabilitacao);
+                idCondutorHabilitacao = em.merge(idCondutorHabilitacao);
             }
             em.remove(tipohabilitacao);
             em.getTransaction().commit();

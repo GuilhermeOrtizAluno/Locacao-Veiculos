@@ -31,7 +31,7 @@
             <Label styleClass="titulo" text="Cadastro do Cliente" StackPane.alignment="CENTER" />
             <ImageView fitHeight="55.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
                <image>
-                  <Image url="@../../imgs/logo.png" />
+                  <Image url="@../imgs/logo.png" />
                </image>
             </ImageView>
          </children>
