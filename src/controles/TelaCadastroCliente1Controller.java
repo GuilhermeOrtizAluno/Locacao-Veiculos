@@ -6,6 +6,7 @@
 package controles;
 
 import DAO.ClienteDAO;
+import controlesJpa.exceptions.NonexistentEntityException;
 import entidades.Alerta;
 import entidades.Cliente;
 import entidades.TipoCliente;
@@ -45,6 +46,9 @@ import javafx.scene.control.ChoiceDialog;
  */
 public class TelaCadastroCliente1Controller implements Initializable {
 
+    private Cliente cliente;
+    private ClienteDAO clienteDAO;
+    
     @FXML
     private TextField txtNome;
     @FXML
@@ -71,8 +75,6 @@ public class TelaCadastroCliente1Controller implements Initializable {
     private VBox root;
     @FXML
     private Button btAvancar;
-    private Cliente cliente;
-    private ClienteDAO clienteDAO;
 
     @FXML
     private void mudarTelaInicial(ActionEvent event) throws IOException {
@@ -88,10 +90,10 @@ public class TelaCadastroCliente1Controller implements Initializable {
     private void mudarTelaCadastroCliente2(ActionEvent event)
         throws IOException
     {
-        
         try {
             checaEntradasInvalidas();
-            cadastraCliente();
+            preencheDadosCliente();
+            clienteDAO.add(cliente);
         } catch (EntradaInadequadaException e) {
             Alerta.mostrarCampoInvalido( e.getMessage() );
             return;
@@ -147,7 +149,6 @@ public class TelaCadastroCliente1Controller implements Initializable {
         rbFisica.setOnAction( new MudaTipoCadastro("RG (somente dígitos)") );
         rbJuridica.setUserData(TipoCliente.JURIDICA);
         rbJuridica.setOnAction( new MudaTipoCadastro("CNPJ (somente dígitos)") );
-        
         clienteDAO = new ClienteDAO();
     }    
     
@@ -240,6 +241,13 @@ public class TelaCadastroCliente1Controller implements Initializable {
         txtObservacoes.setText(
             cliente.getObservacao() != null ? cliente.getObservacao() : "" 
         );
+        
+        // Removo o cliente do banco se o usuário voltar para essa tela
+        try {
+            clienteDAO.remove(cliente.getIdCliente() );
+        } catch (NonexistentEntityException e) {
+        }
+        
         btAvancar.setText("Avançar");
         btAvancar.setDisable(false);
     }
@@ -257,7 +265,7 @@ public class TelaCadastroCliente1Controller implements Initializable {
         return dialog.getResult();
     }
     
-    private void cadastraCliente() throws Exception {
+    private void preencheDadosCliente() {
         
         TipoMotivoBloqueio motivoBloqueio = null;
         LocalDate data = dateNascimento.getValue();
@@ -295,7 +303,5 @@ public class TelaCadastroCliente1Controller implements Initializable {
         }
         
         if( !observacoes.isBlank() ) cliente.setObservacao( observacoes );
-        
-        clienteDAO.add(cliente);
     }
 }
