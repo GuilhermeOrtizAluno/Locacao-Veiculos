@@ -55,21 +55,6 @@ public class TelaInicialController implements Initializable {
         stage.setScene( new Scene(parent) );
     }
 
-    @FXML
-    private void mudarTelaBuscaCliente(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(
-            getClass().getResource("/./telas/TelaBuscaCliente.fxml")
-        );
-        Parent parent = fxmlLoader.load();
-        
-        TelaBuscaClienteController controller = fxmlLoader.getController();
-        controller.inicializaDados();
-        
-        Stage stage = (Stage) root.getScene().getWindow();
-        stage.setTitle("Busca do cliente");
-        stage.setScene( new Scene(parent) );
-    }
-
     private void mudarTelaBuscaLocacao(boolean isRenovar) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(
             getClass().getResource("/./telas/TelaBuscaLocacao.fxml")
@@ -93,16 +78,6 @@ public class TelaInicialController implements Initializable {
         );
         Stage stage = (Stage) root.getScene().getWindow();
         stage.setTitle("Cadastro de veículo");
-        stage.setScene( new Scene(parent) );
-    }
-
-    @FXML
-    private void mudarTelaBuscaVeiculo(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(
-            getClass().getResource("/./telas/TelaBuscaVeiculo.fxml")
-        );
-        Stage stage = (Stage) root.getScene().getWindow();
-        stage.setTitle("Busca de veículo");
         stage.setScene( new Scene(parent) );
     }
 

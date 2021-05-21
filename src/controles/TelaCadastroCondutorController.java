@@ -17,6 +17,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -24,6 +26,9 @@ import javafx.scene.control.TextField;
  * @author Guilherme Ortiz
  */
 public class TelaCadastroCondutorController implements Initializable {
+
+    @FXML
+    private VBox root;
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Constructor">  
@@ -74,7 +79,6 @@ public class TelaCadastroCondutorController implements Initializable {
                 sTel1, 
                 sTel2
             );
-            cleanFields();
         } catch(EntradaInadequadaException e) {
             Alerta.mostrarCampoInvalido( e.getMessage() );
         }
@@ -135,16 +139,13 @@ public class TelaCadastroCondutorController implements Initializable {
             return;
         }
         
+        cliente.getCondutorCollection().add(condutor);
         listaCondutores.add(condutor);
+        btCadastrarCliente.setDisable(false);
+        
+        Stage stage = (Stage) root.getScene().getWindow();
+        stage.close();
     }
-    
-    public void cleanFields(){
-        tfHabilitacao.setText("");
-        tfEmail.setText("");
-        tfTel1.setText("");
-        tfTel2.setText("");
-    }
-    
     
     public void checaEntradasInvalidas() throws EntradaInadequadaException
     {

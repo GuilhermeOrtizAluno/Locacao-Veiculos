@@ -12,6 +12,8 @@ import excecoes.EntradaInadequadaException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -65,16 +67,16 @@ public class TelaBuscaLocacaoController implements Initializable {
         this.isRenovar = isRenovar;
     }
     
-//    private void checaEntradaInvalida() throws EntradaInadequadaException {
-//        Pattern padrao;
-//        Matcher matcher;
-//        
-//        padrao = Pattern.compile("^[0-9]+$");
-//        matcher = padrao.matcher( txtBusca.getText() );
-//        if( !matcher.find() ) throw new EntradaInadequadaException(
-//            "O código é numérico e deve ter pelo menos um dígito"
-//        );
-//    }
+    private void checaEntradaInvalida() throws EntradaInadequadaException {
+        Pattern padrao;
+        Matcher matcher;
+        
+        padrao = Pattern.compile("^[0-9]+$");
+        matcher = padrao.matcher( txtBusca.getText() );
+        if( !matcher.find() ) throw new EntradaInadequadaException(
+            "O código é numérico e deve ter pelo menos um dígito"
+        );
+    }
     
     private void buscaLocacao() {
         EntityManagerFactory emf =
@@ -85,6 +87,7 @@ public class TelaBuscaLocacaoController implements Initializable {
         
         // Primeiro tento por código da locação
         try {
+            checaEntradaInvalida();
             TypedQuery<Locacao> query = em.createNamedQuery(
                 "Locacao.findByIdLocacao", Locacao.class
             );
@@ -92,17 +95,13 @@ public class TelaBuscaLocacaoController implements Initializable {
             resultado =
                 query.setParameter("idLocacao", codigo).getSingleResult();
             return;
-        } catch (NoResultException | NumberFormatException e) {}
-        
-//        Query query = em.createQuery(
-//                "SELECT * FROM locacao l INNER JOIN condutor co ON co.idCondutor = l.idCondutorLocacao INNER JOIN cliente cl ON cl.idCliente = co.idCliente WHERE cl.nome = :nomeCliente AND l.contratoAberto"
-//            ).setParameter("nomeCliente", busca);
-//        
-//        // Se nao der, tentoo pelo nome do cliente
-//        ArrayList<Locacao> lista = new ArrayList<>(
-//            query.setParameter("nomeCliente", busca).getResultList()
-//        );
-        
+        } catch(NoResultException e) {
+            
+        } catch(EntradaInadequadaException e) {
+            Alerta.mostrarCampoInvalido( e.getMessage() );
+            return;
+        }
+
         Alerta.mostraAlerta(
             "Usuário não encontrado!", "Verifique sua entrada e tente novamente"
         );

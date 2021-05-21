@@ -82,7 +82,6 @@ public class TelaCadastroCliente2Controller implements Initializable {
         stage.setScene( new Scene(parent) );
     }
 
-
     @FXML
     private void editarCondutor(ActionEvent event) {
         Stage stage = (Stage) root.getScene().getWindow();
@@ -106,6 +105,7 @@ public class TelaCadastroCliente2Controller implements Initializable {
         
         btEditarCondutor.setDisable(true);
         btRemoverCondutor.setDisable(true);
+        if( listaCondutores.isEmpty() ) btCadastrarCliente.setDisable(true);
     }
 
     @FXML
@@ -140,33 +140,6 @@ public class TelaCadastroCliente2Controller implements Initializable {
         janela.setScene( new Scene(parent) );
         janela.setTitle("Cadastro do condutor");
         janela.show();
-
-//        Condutor condutor = new Condutor(
-//            null, "12345678910", "12345678900", "jooj");
-//        condutor.setIdCliente(cliente);
-//        
-//        try {
-//            condutorDAO.add(condutor);
-//        } catch (Exception e) {
-//            Alerta.mostrarErroBanco();
-//            return;
-//        }
-//        
-//        Tipohabilitacao habilitacao = new Tipohabilitacao();
-//        habilitacao.setTipoA(true);
-//        habilitacao.setIdCondutorHabilitacao(condutor);
-//        
-//        try {
-//            tipoHabilitacaoDAO.add(habilitacao);
-//        } catch (Exception e) {
-//            Alerta.mostrarErroBanco();
-//            condutorDAO.remove( condutor.getIdCondutor() );
-//            return;
-//        }
-//        condutor.getTipohabilitacaoCollection().add(habilitacao);
-//        cliente.getCondutorCollection().add(condutor);
-//        
-//        listaCondutores.add(condutor);
     }
 
     @FXML

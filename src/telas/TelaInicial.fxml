@@ -19,13 +19,11 @@
             <Menu mnemonicParsing="false" text="Clientes">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#mudarTelaCadastroCliente1" text="Cadastrar" />
-                  <MenuItem mnemonicParsing="false" onAction="#mudarTelaBuscaCliente" text="Editar" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Veículos">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#mudarTelaCadastroVeiculo" text="Cadastrar" />
-                  <MenuItem mnemonicParsing="false" onAction="#mudarTelaBuscaVeiculo" text="Editar" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Locação">
