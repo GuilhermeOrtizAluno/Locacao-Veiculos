@@ -5,6 +5,8 @@
  */
 package controles;
 
+import entidades.Cliente;
+import entidades.Condutor;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -54,6 +57,14 @@ public class TelaBuscaClienteController implements Initializable {
         
         Stage stage = (Stage) root.getScene().getWindow();
         stage.setScene( new Scene(parent) );
+    }
+
+    void inicializaDados(Cliente cliente) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    void inicializaDados(Cliente cliente, ComboBox<Condutor> cbCondutor) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

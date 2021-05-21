@@ -26,55 +26,55 @@
             <Insets left="30.0" right="30.0" />
          </padding>
       </StackPane>
-      <Label layoutX="37.0" layoutY="74.0" text="Marca:  Ford">
+      <Label fx:id="lbMarca" layoutX="37.0" layoutY="74.0" text="Marca:  Ford">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="172.0" layoutY="74.0" text="Modelo: Focus">
+      <Label fx:id="lbModelo" layoutX="172.0" layoutY="74.0" text="Modelo: Focus">
          <font>
             <Font size="14.0" />
          </font></Label>
-      <Label layoutX="38.0" layoutY="100.0" text="Ano: 2011">
+      <Label fx:id="lbAno" layoutX="38.0" layoutY="100.0" text="Ano: 2011">
          <font>
             <Font size="14.0" />
          </font></Label>
-      <Label layoutX="173.0" layoutY="100.0" text="Nº Placa: AIO-5080">
+      <Label fx:id="lbPlaca" layoutX="173.0" layoutY="100.0" text="Nº Placa: AIO-5080">
          <font>
             <Font size="14.0" />
          </font></Label>
-      <Label layoutX="37.0" layoutY="127.0" text="Renavan: 255946520">
+      <Label fx:id="lbRenavan" layoutX="37.0" layoutY="127.0" text="Renavan: 255946520">
          <font>
             <Font size="14.0" />
          </font></Label>
-      <Label layoutX="37.0" layoutY="154.0" text="Quilometragem: 70.000 km">
+      <Label fx:id="lbKm" layoutX="37.0" layoutY="154.0" text="Quilometragem: 70.000 km">
          <font>
             <Font size="14.0" />
          </font></Label>
-      <Label layoutX="38.0" layoutY="182.0" text="Tempo de locação:  1 semana ">
+      <Label fx:id="lbSemana" layoutX="38.0" layoutY="182.0" text="Tempo de locação:  1 semana ">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="35.0" layoutY="230.0" text="Valor da locação: R$ 200,00">
+      <Label fx:id="lbLocacao" layoutX="35.0" layoutY="230.0" text="Valor da locação: R$ 200,00">
          <font>
             <Font size="14.0" />
          </font></Label>
-      <Label layoutX="36.0" layoutY="255.0" text="Valor do seguro: R$ 7,50">
+      <Label fx:id="lbSeguro" layoutX="36.0" layoutY="255.0" text="Valor do seguro: R$ 7,50">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="115.0" layoutY="283.0" prefHeight="26.0" prefWidth="150.0" promptText="R$ 0,00" />
-      <Label layoutX="35.0" layoutY="317.0" text="Valor Total:  207,50">
+      <TextField fx:id="tfAcrescimo" layoutX="115.0" layoutY="283.0" onKeyTyped="#verificaAcrescimo" prefHeight="26.0" prefWidth="150.0" promptText="R$ 0,00" />
+      <Label fx:id="lbTotal" layoutX="35.0" layoutY="317.0" text="Valor Total:  207,50">
          <font>
             <Font size="14.0" />
          </font></Label>
-      <TextArea layoutX="328.0" layoutY="230.0" prefHeight="100.0" prefWidth="233.0" promptText="Observações" />
-      <Button layoutX="35.0" layoutY="349.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="529.0" text="Concluir" />
-      <ImageView fitHeight="131.0" fitWidth="242.0" layoutX="327.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
+      <TextArea fx:id="tfObs" layoutX="328.0" layoutY="230.0" prefHeight="100.0" prefWidth="233.0" promptText="Observações" />
+      <Button fx:id="bConcluir" layoutX="35.0" layoutY="349.0" mnemonicParsing="false" onAction="#hundleConcluir" prefHeight="26.0" prefWidth="529.0" text="Concluir" />
+      <ImageView fx:id="ivCarro" fitHeight="131.0" fitWidth="242.0" layoutX="327.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../imgs/focus.jpg" />
+            <Image url="@../imgs/focus.jpg" />
          </image>
       </ImageView>
       <Label layoutX="35.0" layoutY="286.0" text="Acréscimos:">
