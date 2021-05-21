@@ -44,8 +44,8 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <ComboBox fx:id="cbFiltrarGráfico" layoutX="341.0" layoutY="19.0" prefWidth="150.0" promptText="Filtrar por..." />
-            <BarChart layoutX="7.0" layoutY="49.0" prefHeight="318.0" prefWidth="585.0">
+            <ComboBox fx:id="cbFiltrarGráfico" layoutX="341.0" layoutY="19.0" onAction="#mudarFiltragem" prefWidth="150.0" promptText="Filtrar por..." />
+            <BarChart fx:id="grafico" layoutX="7.0" layoutY="49.0" prefHeight="318.0" prefWidth="585.0">
                <xAxis>
                   <CategoryAxis side="BOTTOM" />
                </xAxis>

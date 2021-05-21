@@ -6,8 +6,7 @@
 package controles;
 
 import entidades.Alerta;
-import entidades.Cliente;
-import entidades.Condutor;
+import entidades.Veiculo;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -21,7 +20,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -30,6 +28,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
@@ -38,54 +37,50 @@ import javax.persistence.TypedQuery;
  *
  * @author luanl
  */
-public class TelaBuscaClienteController implements Initializable {
+public class TelaBuscaVeiculoController implements Initializable {
 
-    private Cliente cliente;
-    private ObservableList<Cliente> listaClientes;
-    private ComboBox<Condutor> cbCondutores;
+    private Veiculo veiculo;
+    private ObservableList<Veiculo> listaVeiculos;
     
     @FXML
     private AnchorPane root;
     @FXML
-    private TextField txtNomeCliente;
-    @FXML
     private Button btBuscar;
     @FXML
-    private ListView<Cliente> lvClientes;
+    private ListView<Veiculo> lvVeiculos;
+    @FXML
+    private TextField txtVeiculo;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        listaClientes = FXCollections.observableArrayList();
-        lvClientes.setItems(listaClientes);
+        listaVeiculos = FXCollections.observableArrayList();
+        lvVeiculos.setItems(listaVeiculos);
     }    
 
-    void inicializaDados(Cliente cliente, ComboBox<Condutor> cbCondutores) {
-        this.cliente = cliente;
-        this.cbCondutores = cbCondutores;
+    /**
+     *
+     */
+    void inicializaDados(Veiculo veiculo) {
+        this.veiculo = veiculo;
     }
 
     @FXML
-    private void buscaCliente(ActionEvent event) {
-        listaClientes.clear();
-        
+    private void buscaVeiculo(ActionEvent event) {
         EntityManagerFactory emf =
             Persistence.createEntityManagerFactory("LocacaoVeiculoPU");
         EntityManager em = emf.createEntityManager();
         
-        TypedQuery<Cliente> query = em.createNamedQuery(
-            "Cliente.findByNome", Cliente.class
-        ).setParameter( "nome", txtNomeCliente.getText() );
+        TypedQuery<Veiculo> query = em.createNamedQuery(
+            "Veiculo.findByPlaca", Veiculo.class
+        ).setParameter( "placa", txtVeiculo.getText() );
         
-        ArrayList<Cliente> resultados =
-            new ArrayList<>( query.getResultList() );
-        
-        if( !resultados.isEmpty() ) {
-            listaClientes.addAll( resultados );
-        }
-        else {
+        try {
+            Veiculo resultado = query.getSingleResult();
+            listaVeiculos.add(resultado);
+        } catch (NoResultException e) {
             Alerta.mostraAlerta(
                 "Usuário não encontrado!", "Verifique sua entrada e tente novamente"
             );
@@ -104,19 +99,13 @@ public class TelaBuscaClienteController implements Initializable {
 
     @FXML
     private void checaEntrada(KeyEvent event) {
-        btBuscar.setDisable( txtNomeCliente.getText().isBlank() );
+        btBuscar.setDisable( txtVeiculo.getText().isBlank() );
     }
 
     @FXML
-    private void checaClienteSelecionado(MouseEvent event) {
-        Cliente cliente = lvClientes.getSelectionModel().getSelectedItem();
-        if(cliente != null)
-        {
-            this.cliente = cliente;
-            cliente.getCondutorCollection().forEach(
-                condutor->cbCondutores.getItems().add(condutor)
-            );
-        }
+    private void checaVeiculoSelecionado(MouseEvent event) {
+        Veiculo veiculo = lvVeiculos.getSelectionModel().getSelectedItem();
+        if(veiculo != null) this.veiculo = veiculo;
         Stage stage = (Stage) root.getScene().getWindow();
         stage.close();
     }

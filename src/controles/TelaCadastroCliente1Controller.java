@@ -11,7 +11,6 @@ import DAO.TipoHabilitacaoDAO;
 import controlesJpa.exceptions.NonexistentEntityException;
 import entidades.Alerta;
 import entidades.Cliente;
-import entidades.Tipohabilitacao;
 import entidades.enums.TipoCliente;
 import entidades.enums.TipoMotivoBloqueio;
 import entidades.enums.TipoStatus;
@@ -41,8 +40,6 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.control.ChoiceDialog;
 /**
  * FXML Controller class
@@ -83,6 +80,186 @@ public class TelaCadastroCliente1Controller implements Initializable {
     @FXML
     private Button btAvancar;
 
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        cbStatus.getItems().addAll( TipoStatus.values() );
+        rbFisica.setUserData(TipoCliente.FISICA);
+        rbFisica.setOnAction( new MudaTipoCadastro("RG (somente dígitos)") );
+        rbJuridica.setUserData(TipoCliente.JURIDICA);
+        rbJuridica.setOnAction( new MudaTipoCadastro("CNPJ (somente dígitos)") );
+        
+        clienteDAO = new ClienteDAO();
+        condutorDAO = new CondutorDAO();
+        tipoHabilitacaoDAO = new TipoHabilitacaoDAO();
+    }
+
+    public void inicializaDados(Cliente cliente)
+    {
+        this.cliente = cliente;
+        txtNome.setText( cliente.getNome() );
+        dateNascimento.setValue(
+            Instant.ofEpochMilli(
+                cliente.getDataNascimento().getTime()
+            ).atZone(ZoneId.systemDefault()).toLocalDate()
+        );
+        txtEndereco.setText( cliente.getEndereco() );
+        cbStatus.setValue(
+            TipoStatus.valueOf( cliente.getStatus().toUpperCase() )
+        );
+
+        if( cliente.getTipoCliente().equals("Física") ) {
+            tgTipoPessoa.selectToggle(rbFisica);
+            MudaTipoCadastro mtc = new MudaTipoCadastro("RG (somente dígitos)");
+            mtc.handle(null);
+            txtRegistro.setText( cliente.getRg() );
+            txtCpf.setText( cliente.getCpf() );
+           
+        }
+        else{
+            tgTipoPessoa.selectToggle(rbJuridica );
+            MudaTipoCadastro mtc = new MudaTipoCadastro("CNPJ (somente dígitos)");
+            mtc.handle(null);
+            txtRegistro.setText( cliente.getCnpj() );
+            txtInscricaoEstadual.setText( cliente.getInscricaoEstadual() );
+        }
+        
+        txtObservacoes.setText(
+            cliente.getObservacao() != null ? cliente.getObservacao() : "" 
+        );
+        
+        // Removo o cliente do banco se o usuário voltar para essa tela
+        try {
+            clienteDAO.remove(cliente.getIdCliente() );
+        } catch (NonexistentEntityException e) {
+        }
+        
+        btAvancar.setText("Avançar");
+        btAvancar.setDisable(false);
+    }
+    
+    /**
+     * Classe de evento para a alteração do tipo de cliente mudar as entradas 
+     * pedidas.
+     */
+    private class MudaTipoCadastro implements EventHandler<ActionEvent> {
+        
+        private final String texto;
+
+        public MudaTipoCadastro(String texto) {
+            this.texto = texto;
+        }
+        
+        @Override
+        public void handle(ActionEvent t) {
+            txtRegistro.clear();
+            txtInscricaoEstadual.setDisable( rbFisica.isSelected() );
+            txtInscricaoEstadual.clear();
+            txtCpf.setDisable( rbJuridica.isSelected() );
+            txtCpf.clear();
+            txtRegistro.setPromptText(texto);
+            checaCamposVazios();
+        }
+        
+    }
+    
+    /**
+     * Confere se um campo de texto está no padrão definido por uma expressão 
+     * regular.
+     * @param regex a expressão regular
+     * @param campo de entrada
+     * @param msgErro mensagem a ser mostrada se o padrão não estiver sendo 
+     * seguido
+     */
+    public void conferePadrao(String regex, TextField campo, String msgErro)
+        throws EntradaInadequadaException
+    {
+        Pattern padrao;
+        Matcher matcher;
+        
+        padrao = Pattern.compile(regex);
+        matcher = padrao.matcher( campo.getText() );
+        if( !matcher.find() ) throw new EntradaInadequadaException(msgErro);
+    }
+    
+    /**
+     * Confere o padrão dos campos de entrada.
+     */
+    public void checaEntradasInvalidas() throws EntradaInadequadaException
+    {
+        if( rbFisica.isSelected() )
+        {
+            conferePadrao("^[0-9]{8}[0-9]?$", txtRegistro, 
+                "O RG deve ter 8 ou 9 dígitos!"
+            );
+            conferePadrao("^[0-9]{11}$", txtCpf, "O CPF deve ter 11 dígitos!");
+        }
+        else
+        {
+            conferePadrao("^[0-9]{10}$", txtRegistro,
+                "O CNPJ deve ter 10 dígitos!"
+            );
+            conferePadrao("^[0-9]{14}$", txtInscricaoEstadual,
+                "A inscrição estadual deve ter 14 dígitos!"
+            );
+        }
+    }
+    
+    private TipoMotivoBloqueio chamarSelecaoMotivoBloqueio() {
+        
+        ChoiceDialog<TipoMotivoBloqueio> dialog = new ChoiceDialog<>(
+            TipoMotivoBloqueio.INADIMPLÊNCIA, TipoMotivoBloqueio.values()
+        );
+        
+        dialog.setTitle("Motivo do bloqueio");
+        dialog.setHeaderText("Selecione o motivo do bloqueio:");
+        dialog.showAndWait();
+        
+        return dialog.getResult();
+    }
+    
+    private void preencheDadosCliente() {
+        
+        TipoMotivoBloqueio motivoBloqueio = null;
+        LocalDate data = dateNascimento.getValue();
+        TipoCliente tipoCliente = (TipoCliente)
+            ( (RadioButton) tgTipoPessoa.getSelectedToggle() ).getUserData();
+        String observacoes = txtObservacoes.getText();
+        
+        if( cbStatus.getValue() == TipoStatus.BLOQUEADO )
+        {
+            motivoBloqueio = chamarSelecaoMotivoBloqueio();
+            if(motivoBloqueio == null) throw new NullPointerException();
+        }
+
+        cliente = new Cliente();
+        
+        cliente.setNome( txtNome.getText() );
+        cliente.setDataNascimento(
+            Date.from(
+                data.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()
+            )
+        );
+        cliente.setEndereco( txtEndereco.getText() );
+        cliente.setStatus( cbStatus.getValue().toString() );
+        if(motivoBloqueio != null)
+            cliente.setMotivoBloqueio(motivoBloqueio.tipo);
+        
+        cliente.setTipoCliente( tipoCliente.pessoa );
+        if(tipoCliente == TipoCliente.FISICA) {
+            cliente.setCpf( txtCpf.getText() );
+            cliente.setRg( txtRegistro.getText() );
+        }
+        else {
+            cliente.setCnpj(txtRegistro.getText() );
+            cliente.setInscricaoEstadual( txtInscricaoEstadual.getText() );
+        }
+        
+        if( !observacoes.isBlank() ) cliente.setObservacao( observacoes );
+    }
+    
     @FXML
     private void mudarTelaInicial(ActionEvent event) throws IOException {
         Parent parent = FXMLLoader.load(
@@ -166,186 +343,5 @@ public class TelaCadastroCliente1Controller implements Initializable {
             btAvancar.setText("Preencha os campos para avançar");
             btAvancar.setDisable(true);
         }
-    }
-    
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        cbStatus.getItems().addAll( TipoStatus.values() );
-        rbFisica.setUserData(TipoCliente.FISICA);
-        rbFisica.setOnAction( new MudaTipoCadastro("RG (somente dígitos)") );
-        rbJuridica.setUserData(TipoCliente.JURIDICA);
-        rbJuridica.setOnAction( new MudaTipoCadastro("CNPJ (somente dígitos)") );
-        
-        clienteDAO = new ClienteDAO();
-        condutorDAO = new CondutorDAO();
-        tipoHabilitacaoDAO = new TipoHabilitacaoDAO();
-        
-        Button botao = new Button("Preencher");
-        botao.setOnAction(e -> {
-            txtNome.setText("Cliente");
-            dateNascimento.setValue( LocalDate.now() );
-            txtEndereco.setText("Rua...");
-            cbStatus.getSelectionModel().select(0);
-            txtRegistro.setText("123456789");
-            txtCpf.setText("12345678910");
-            checaCamposVazios();
-        });
-        root.getChildren().add(botao);
-    }    
-    
-    private class MudaTipoCadastro implements EventHandler<ActionEvent> {
-        
-        private final String texto;
-
-        public MudaTipoCadastro(String texto) {
-            this.texto = texto;
-        }
-        
-        @Override
-        public void handle(ActionEvent t) {
-            txtRegistro.clear();
-            txtInscricaoEstadual.setDisable( rbFisica.isSelected() );
-            txtInscricaoEstadual.clear();
-            txtCpf.setDisable( rbJuridica.isSelected() );
-            txtCpf.clear();
-            txtRegistro.setPromptText(texto);
-            checaCamposVazios();
-        }
-        
-    }
-    
-    public void conferePadrao(String regex, TextField campo, String msgErro)
-        throws EntradaInadequadaException
-    {
-        Pattern padrao;
-        Matcher matcher;
-        
-        padrao = Pattern.compile(regex);
-        matcher = padrao.matcher( campo.getText() );
-        if( !matcher.find() ) throw new EntradaInadequadaException(msgErro);
-    }
-    
-    public void checaEntradasInvalidas() throws EntradaInadequadaException
-    {
-        if( rbFisica.isSelected() )
-        {
-            conferePadrao("^[0-9]{8}[0-9]?$", txtRegistro, 
-                "O RG deve ter 8 ou 9 dígitos!"
-            );
-            conferePadrao("^[0-9]{11}$", txtCpf, "O CPF deve ter 11 dígitos!");
-        }
-        else
-        {
-            conferePadrao("^[0-9]{10}$", txtRegistro,
-                "O CNPJ deve ter 10 dígitos!"
-            );
-            conferePadrao("^[0-9]{14}$", txtInscricaoEstadual,
-                "A inscrição estadual deve ter 14 dígitos!"
-            );
-        }
-    }
-    
-    /**
-     *
-     * @param cliente
-     */
-    public void inicializaDados(Cliente cliente)
-    {
-        this.cliente = cliente;
-        txtNome.setText( cliente.getNome() );
-        dateNascimento.setValue(
-            Instant.ofEpochMilli(
-                cliente.getDataNascimento().getTime()
-            ).atZone(ZoneId.systemDefault()).toLocalDate()
-        );
-        txtEndereco.setText( cliente.getEndereco() );
-        cbStatus.setValue(
-            TipoStatus.valueOf( cliente.getStatus().toUpperCase() )
-        );
-
-        if( cliente.getTipoCliente().equals("Física") ) {
-            tgTipoPessoa.selectToggle(rbFisica);
-            MudaTipoCadastro mtc = new MudaTipoCadastro("RG (somente dígitos)");
-            mtc.handle(null);
-            txtRegistro.setText( cliente.getRg() );
-            txtCpf.setText( cliente.getCpf() );
-           
-        }
-        else{
-            tgTipoPessoa.selectToggle(rbJuridica );
-            MudaTipoCadastro mtc = new MudaTipoCadastro("CNPJ (somente dígitos)");
-            mtc.handle(null);
-            txtRegistro.setText( cliente.getCnpj() );
-            txtInscricaoEstadual.setText( cliente.getInscricaoEstadual() );
-        }
-        
-        txtObservacoes.setText(
-            cliente.getObservacao() != null ? cliente.getObservacao() : "" 
-        );
-        
-        // Removo o cliente do banco se o usuário voltar para essa tela
-        try {
-            clienteDAO.remove(cliente.getIdCliente() );
-        } catch (NonexistentEntityException e) {
-        }
-        
-        btAvancar.setText("Avançar");
-        btAvancar.setDisable(false);
-    }
-    
-    private TipoMotivoBloqueio chamarSelecaoMotivoBloqueio() {
-        
-        ChoiceDialog<TipoMotivoBloqueio> dialog = new ChoiceDialog<>(
-            TipoMotivoBloqueio.INADIMPLÊNCIA, TipoMotivoBloqueio.values()
-        );
-        
-        dialog.setTitle("Motivo do bloqueio");
-        dialog.setHeaderText("Selecione o motivo do bloqueio:");
-        dialog.showAndWait();
-        
-        return dialog.getResult();
-    }
-    
-    private void preencheDadosCliente() {
-        
-        TipoMotivoBloqueio motivoBloqueio = null;
-        LocalDate data = dateNascimento.getValue();
-        TipoCliente tipoCliente = (TipoCliente)
-            ( (RadioButton) tgTipoPessoa.getSelectedToggle() ).getUserData();
-        String observacoes = txtObservacoes.getText();
-        
-        if( cbStatus.getValue() == TipoStatus.BLOQUEADO )
-        {
-            motivoBloqueio = chamarSelecaoMotivoBloqueio();
-            if(motivoBloqueio == null) throw new NullPointerException();
-        }
-
-        cliente = new Cliente();
-        
-        cliente.setNome( txtNome.getText() );
-        cliente.setDataNascimento(
-            Date.from(
-                data.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()
-            )
-        );
-        cliente.setEndereco( txtEndereco.getText() );
-        cliente.setStatus( cbStatus.getValue().toString() );
-        if(motivoBloqueio != null)
-            cliente.setMotivoBloqueio(motivoBloqueio.tipo);
-        
-        cliente.setTipoCliente( tipoCliente.pessoa );
-        if(tipoCliente == TipoCliente.FISICA) {
-            cliente.setCpf( txtCpf.getText() );
-            cliente.setRg( txtRegistro.getText() );
-        }
-        else {
-            cliente.setCnpj(txtRegistro.getText() );
-            cliente.setInscricaoEstadual( txtInscricaoEstadual.getText() );
-        }
-        
-        if( !observacoes.isBlank() ) cliente.setObservacao( observacoes );
     }
 }

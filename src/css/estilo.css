@@ -22,6 +22,10 @@
     -fx-padding: 0 30px 15px 30px;
 }
 
+.chart Label {
+    -fx-text-fill: black;
+}
+
 FlowPane {
     -fx-hgap: 15px;
     -fx-vgap: 15px;

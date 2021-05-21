@@ -5,7 +5,6 @@
  */
 package controles;
 
-import DAO.LocacaoDAO;
 import entidades.Alerta;
 import entidades.Locacao;
 import excecoes.EntradaInadequadaException;
@@ -22,7 +21,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -41,13 +39,11 @@ import javax.persistence.TypedQuery;
 public class TelaBuscaLocacaoController implements Initializable {
 
     private boolean isRenovar;
-    private LocacaoDAO locacaoDAO;
     private Locacao resultado;
     private ObservableList<Locacao> listaLocacoes;
     
     @FXML
     private AnchorPane root;
-    private Button btbuscaLocacao;
     @FXML
     private TextField txtBusca;
     @FXML
@@ -67,6 +63,9 @@ public class TelaBuscaLocacaoController implements Initializable {
         this.isRenovar = isRenovar;
     }
     
+    /**
+     * Verifica se a entrada é numérica e não nula.
+     */
     private void checaEntradaInvalida() throws EntradaInadequadaException {
         Pattern padrao;
         Matcher matcher;
@@ -78,6 +77,9 @@ public class TelaBuscaLocacaoController implements Initializable {
         );
     }
     
+    /**
+     * Busca no banco de dados a locação com base no código recebido do usuário.
+     */
     private void buscaLocacao() {
         EntityManagerFactory emf =
             Persistence.createEntityManagerFactory("LocacaoVeiculoPU");
@@ -85,7 +87,6 @@ public class TelaBuscaLocacaoController implements Initializable {
         
         String busca = txtBusca.getText();
         
-        // Primeiro tento por código da locação
         try {
             checaEntradaInvalida();
             TypedQuery<Locacao> query = em.createNamedQuery(

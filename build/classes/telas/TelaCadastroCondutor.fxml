@@ -2,7 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -11,25 +11,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="444.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaCadastroCondutorController">
+<VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="444.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaCadastroCondutorController">
    <children>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button fx:id="bVoltar" mnemonicParsing="false" onAction="#hundleVoltar" prefHeight="25.0" prefWidth="37.0">
-               <graphic>
-                  <ImageView fitHeight="32.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../imgs/outline_arrow_back_black_24dp.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <HBox.margin>
-                  <Insets left="10.0" right="10.0" top="10.0" />
-               </HBox.margin>
-            </Button>
             <Label prefHeight="35.0" prefWidth="277.0" styleClass="titulo" text="Cadastro de Condutor">
                <HBox.margin>
-                  <Insets top="15.0" />
+                  <Insets left="30.0" top="15.0" />
                </HBox.margin></Label>
             <ImageView fitHeight="70.0" fitWidth="91.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -43,12 +31,16 @@
       </HBox>
       <FlowPane alignment="CENTER" prefHeight="223.0" prefWidth="444.0">
          <children>
-            <TextField fx:id="tfHabilitacao" onKeyTyped="#checaCamposVazios" prefHeight="26.0" prefWidth="179.0" promptText="Número da habilitação" />
-            <ComboBox fx:id="cbTipoHailitacao" prefHeight="26.0" prefWidth="145.0" promptText="Tipo de habilitação" />
-            <TextField fx:id="tfEmail" onKeyTyped="#checaCamposVazios" prefHeight="26.0" prefWidth="338.0" promptText="Email de contato" />
-            <TextField fx:id="tfTel1" onKeyTyped="#checaCamposVazios" prefHeight="26.0" prefWidth="161.0" promptText="Telefone 1" />
-            <TextField fx:id="tfTel2" onKeyTyped="#checaCamposVazios" prefHeight="26.0" prefWidth="165.0" promptText="Telefone 2" />
-            <Button fx:id="bCadastrar" disable="true" mnemonicParsing="false" onAction="#hundleCadastrar" prefHeight="26.0" prefWidth="338.0" text="Concluir" />
+            <TextField fx:id="tfHabilitacao" onKeyTyped="#checaCamposVazios" prefHeight="26.0" prefWidth="173.0" promptText="Número da habilitação" />
+            <TextField fx:id="tfEmail" onKeyTyped="#checaCamposVazios" prefHeight="26.0" prefWidth="182.0" promptText="Email de contato" />
+            <CheckBox fx:id="cbA" mnemonicParsing="false" onAction="#checaCamposVazios" text="Carta A" />
+            <CheckBox fx:id="cbB" mnemonicParsing="false" onAction="#checaCamposVazios" text="Carta B" />
+            <CheckBox fx:id="cbC" mnemonicParsing="false" onAction="#checaCamposVazios" text="Carta C" />
+            <CheckBox fx:id="cbD" mnemonicParsing="false" onAction="#checaCamposVazios" text="Carta D" />
+            <CheckBox fx:id="cbE" mnemonicParsing="false" onAction="#checaCamposVazios" text="Carta E" />
+            <TextField fx:id="tfTel1" onKeyTyped="#checaCamposVazios" prefHeight="26.0" prefWidth="175.0" promptText="Telefone 1" />
+            <TextField fx:id="tfTel2" onKeyTyped="#checaCamposVazios" prefHeight="26.0" prefWidth="175.0" promptText="Telefone 2" />
+            <Button fx:id="bCadastrar" disable="true" mnemonicParsing="false" onAction="#hundleCadastrar" prefHeight="26.0" prefWidth="367.0" text="Concluir" />
          </children>
       </FlowPane>
    </children>
