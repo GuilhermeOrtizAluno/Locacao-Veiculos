@@ -99,6 +99,7 @@ public class TelaCadastroCliente2Controller implements Initializable {
             );
             condutorDAO.remove( condutorSelecionado.getIdCondutor() );
         } catch (NonexistentEntityException e) {
+            return;
         }
         lvCondutores.getSelectionModel().clearSelection();
         condutorSelecionado = null;

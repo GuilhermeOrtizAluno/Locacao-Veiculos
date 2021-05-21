@@ -161,7 +161,7 @@ public class Condutor implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.Condutor[ idCondutor=" + idCondutor + " ]";
+        return "Condutor nº: " + numeroHabilitacao + " Telefone: " + telefone1;
     }
     
 }

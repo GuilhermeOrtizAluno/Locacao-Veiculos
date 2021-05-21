@@ -109,15 +109,14 @@ public class TelaCadastroCondutorController implements Initializable {
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Functions">  
-    public Tipohabilitacao createHabilitacao(Condutor condutor){
+    public Tipohabilitacao createHabilitacao(Condutor condutor) throws Exception{
         
         Tipohabilitacao habilitacao = new Tipohabilitacao();
         habilitacao.setIdCondutorHabilitacao(condutor);
         habilitacao.setTipoA(true);
         
-        //TODO
-        //TipoHabilitacaoDAO tipoHabilitacaoDAO = new TipoHabilitacaoDAO();
-        //tipoHabilitacaoDAO.add(habilitacao);
+        TipoHabilitacaoDAO tipoHabilitacaoDAO = new TipoHabilitacaoDAO();
+        tipoHabilitacaoDAO.add(habilitacao);
         
         return habilitacao;
     }
@@ -133,15 +132,14 @@ public class TelaCadastroCondutorController implements Initializable {
         CondutorDAO condutorDAO = new CondutorDAO();
         try {
             condutorDAO.add(condutor);
+            condutor.getTipohabilitacaoCollection().add( createHabilitacao(condutor) );
         } catch (Exception ex) {
             Alerta.mostrarErroBanco();
             return;
         }
         
-        createHabilitacao(condutor);
-        
-        //TODO
-        //listaCondutores.add(condutor);
+        listaCondutores.add(condutor);
+        btCadastrarCliente.setDisable(false);
     }
     
     public void cleanFields(){

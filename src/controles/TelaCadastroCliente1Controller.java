@@ -6,9 +6,12 @@
 package controles;
 
 import DAO.ClienteDAO;
+import DAO.CondutorDAO;
+import DAO.TipoHabilitacaoDAO;
 import controlesJpa.exceptions.NonexistentEntityException;
 import entidades.Alerta;
 import entidades.Cliente;
+import entidades.Tipohabilitacao;
 import entidades.enums.TipoCliente;
 import entidades.enums.TipoMotivoBloqueio;
 import entidades.enums.TipoStatus;
@@ -38,6 +41,8 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.ChoiceDialog;
 /**
  * FXML Controller class
@@ -48,6 +53,8 @@ public class TelaCadastroCliente1Controller implements Initializable {
 
     private Cliente cliente;
     private ClienteDAO clienteDAO;
+    private CondutorDAO condutorDAO;
+    private TipoHabilitacaoDAO tipoHabilitacaoDAO;
     
     @FXML
     private TextField txtNome;
@@ -119,7 +126,23 @@ public class TelaCadastroCliente1Controller implements Initializable {
         stage.setScene( new Scene(parent) );
         stage.setTitle("Cadastro dos condutores");
         stage.setOnCloseRequest(e -> {
-            try { clienteDAO.remove( cliente.getIdCliente() ); }
+            try {
+                cliente.getCondutorCollection().forEach(condutor -> {
+                    condutor.getTipohabilitacaoCollection().forEach(
+                        habilitacao -> {
+                            try {
+                                tipoHabilitacaoDAO.remove(
+                                        habilitacao.getIdTipoHabilitacao()
+                                );
+                            } catch (NonexistentEntityException ex) {}
+                        }
+                    );
+                    try {
+                        condutorDAO.remove( condutor.getIdCondutor() );
+                    } catch (NonexistentEntityException ex) {}
+                });
+                clienteDAO.remove( cliente.getIdCliente() ); 
+            }
             catch (NonexistentEntityException ex) {}
         });
     }
@@ -155,7 +178,22 @@ public class TelaCadastroCliente1Controller implements Initializable {
         rbFisica.setOnAction( new MudaTipoCadastro("RG (somente dígitos)") );
         rbJuridica.setUserData(TipoCliente.JURIDICA);
         rbJuridica.setOnAction( new MudaTipoCadastro("CNPJ (somente dígitos)") );
+        
         clienteDAO = new ClienteDAO();
+        condutorDAO = new CondutorDAO();
+        tipoHabilitacaoDAO = new TipoHabilitacaoDAO();
+        
+        Button botao = new Button("Preencher");
+        botao.setOnAction(e -> {
+            txtNome.setText("Cliente");
+            dateNascimento.setValue( LocalDate.now() );
+            txtEndereco.setText("Rua...");
+            cbStatus.getSelectionModel().select(0);
+            txtRegistro.setText("123456789");
+            txtCpf.setText("12345678910");
+            checaCamposVazios();
+        });
+        root.getChildren().add(botao);
     }    
     
     private class MudaTipoCadastro implements EventHandler<ActionEvent> {
