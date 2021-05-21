@@ -110,6 +110,8 @@ public class TelaBuscaClienteController implements Initializable {
     private void checaClienteSelecionado(MouseEvent event) {
         Cliente cliente = lvClientes.getSelectionModel().getSelectedItem();
         if(cliente != null) this.cliente = cliente;
+        Stage stage = (Stage) root.getScene().getWindow();
+        stage.close();
     }
     
 }
