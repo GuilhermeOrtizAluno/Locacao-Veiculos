@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="287.0" prefWidth="260.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaLocacao1Controller">
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="287.0" prefWidth="260.0" styleClass="bg-primary" stylesheets="@../css/estilo.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.TelaLocacao1Controller">
    <children>
       <VBox prefHeight="310.0" prefWidth="260.0">
          <children>
@@ -26,13 +26,20 @@
                   <Label styleClass="titulo" text="Nova Locação" StackPane.alignment="CENTER_LEFT" />
                </children>
             </StackPane>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="244.0" text="Selecionar Cliente" />
+            <Button fx:id="bCliente" mnemonicParsing="false" onAction="#hundleCliente" prefHeight="25.0" prefWidth="244.0" text="Selecionar Cliente">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin></Button>
+            <Button fx:id="bVeiculo" mnemonicParsing="false" onAction="#hundleVeiculo" prefHeight="25.0" prefWidth="244.0" text="Selecionar Veiculo">
+               <VBox.margin>
+                  <Insets top="7.0" />
+               </VBox.margin>
+            </Button>
             <ComboBox fx:id="cbCondutor" disable="true" prefHeight="25.0" prefWidth="240.0" promptText="Selecionar Condutor">
                <VBox.margin>
                   <Insets bottom="7.0" top="7.0" />
                </VBox.margin>
             </ComboBox>
-            <TextField fx:id="tfVeiculo" promptText="Insira o nome do veículo" />
             <Label text="Alugar por:">
                <VBox.margin>
                   <Insets top="10.0" />
@@ -40,7 +47,7 @@
             </Label>
             <HBox prefHeight="34.0" prefWidth="240.0">
                <children>
-                  <TextField fx:id="tdQtde" prefHeight="26.0" prefWidth="78.0" promptText="Quantidade">
+                  <TextField fx:id="tfQtde" prefHeight="26.0" prefWidth="78.0" promptText="Quantidade">
                      <HBox.margin>
                         <Insets right="5.0" />
                      </HBox.margin>

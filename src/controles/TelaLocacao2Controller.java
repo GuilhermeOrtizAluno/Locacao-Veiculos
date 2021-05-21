@@ -5,20 +5,20 @@
  */
 package controles;
 
-import entidades.Cliente;
 import entidades.Condutor;
+import entidades.Locacao;
+import entidades.Veiculo;
+import entidades.enums.TipoTempo;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import temp.LocacaoDao;
 
 /**
  * FXML Controller class
@@ -55,45 +55,88 @@ public class TelaLocacao2Controller implements Initializable {
     private Button bConcluir;
     @FXML
     private ImageView ivCarro;
+    
+    private Locacao locacao;
+    private Condutor condutor;
+    private Veiculo veiculo;
+    private TipoTempo tipoTempo;
+    private Double total;
+    private int qtde;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+       
     }    
     
     public void inicializaDados(
-        String sMarca,
-        String sModelo,
-        String sAno,
-        String sPlaca,
-        String sRenavan,
-        String sKm,
-        String sSemana,
-        String sLocacao,
-        String sSeguro,
-        String sTotal,
-        Image iCarro
+        Veiculo veiculo,
+        Condutor condutor,
+        TipoTempo tipoTempo,
+        int qtde
     ) {
-        lbMarca.setText("Marca: "+sMarca);
-        lbModelo.setText("Modelo: "+sModelo);
-        lbAno.setText("Ano: "+sAno);
-        lbPlaca.setText("Nº Placa: "+sPlaca);
-        lbRenavan.setText("Renavan: "+sRenavan);
-        lbKm.setText("Quilometragem: "+sKm);
-        lbSemana.setText("Tempo de locação: "+sSemana);
-        lbLocacao.setText("Valor da locação: "+sLocacao);
-        lbSeguro.setText("Valor do seguro: "+sSeguro);
-        lbTotal.setText("Valor Total: "+sTotal);
-        ivCarro.setImage(iCarro);
+        
+        this.condutor = condutor;
+        this.veiculo = veiculo;
+        this.tipoTempo = tipoTempo;
+        this.qtde = qtde;
+        
+         preencheDados();
+    }
+    
+    private void preencheDados(){
+        double vLocacao = tipoTempo == TipoTempo.DIARIA ? veiculo.getDiaria() : 
+            tipoTempo == TipoTempo.SEMANA ? veiculo.getSemanal() : 
+            tipoTempo == TipoTempo.QUINZENA ? veiculo.getQuinzenal() :
+            veiculo.getMensal();
+        
+        total = veiculo.getValorSeguro() + vLocacao;
+         
+        lbMarca.setText("Marca: "+veiculo.getMarca());
+        lbModelo.setText("Modelo: "+veiculo.getModelo());
+        lbAno.setText("Ano: "+veiculo.getAnoFabricacao());
+        lbPlaca.setText("Nº Placa: "+veiculo.getPlaca());
+        lbRenavan.setText("Renavan: "+ veiculo.getRenavam());
+        lbKm.setText("Quilometragem: "+veiculo.getQuilometragemAtual());
+        lbSemana.setText("Tempo de locação: "+veiculo.getSemanal());
+        lbSeguro.setText("Valor do seguro: "+veiculo.getValorSeguro());
+        //ivCarro.setImage(iCarro);
+        lbLocacao.setText("Valor da locação: "+vLocacao);
+        lbTotal.setText("Valor Total: "+ total);
+    }
+    
+    private void createLocacao(String obs, String acrescimo){
+        locacao = new Locacao(null, true,  veiculo.getDiaria(), 
+            veiculo.getSemanal(), veiculo.getQuinzenal(), veiculo.getMensal(), 
+            veiculo.getValorSeguro(), tipoTempo == TipoTempo.DIARIA ? qtde : 0, 
+            tipoTempo == TipoTempo.SEMANA ? qtde : 0, tipoTempo == TipoTempo.QUINZENA ? qtde : 0, 
+            tipoTempo == TipoTempo.MES ? qtde : 0, null);
+        
+        locacao.setAcresimo(Double.parseDouble(acrescimo));
+        locacao.setTexto(obs);
+        locacao.setIdCondutorLocacao(condutor);
+        locacao.setIdVeiculo(veiculo);
+        
+        LocacaoDao locacaoDao = new LocacaoDao();
+        locacaoDao.create(locacao);
     }
 
     @FXML
     private void hundleConcluir () {
         String sObs = tfObs.getText();
         String sAcrescimo = tfAcrescimo.getText();
+
+        createLocacao(sObs, sAcrescimo);
+    }
+    
+    @FXML
+    private void verificaAcrescimo(){
+        String acrescimo = tfAcrescimo.getText(); 
+        
+        double novoTotal = !acrescimo.isBlank() ? total + Double.parseDouble(acrescimo) : total; 
+        lbTotal.setText("Valor Total: "+novoTotal);
     }
     
 }

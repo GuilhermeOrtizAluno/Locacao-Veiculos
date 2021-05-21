@@ -1,18 +1,22 @@
 package controles;
 
-import DAO.VeiculoDAO;
+import entidades.Veiculo;
 import excecoes.EntradaInadequadaException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import temp.VeiculoDao;
 
 /**
  * FXML Controller class
@@ -49,10 +53,6 @@ public class TelaCadastroVeiculoController implements Initializable {
     @FXML
     private TextField tfIndenizacao;
     @FXML
-    private TextField tfExcedente;
-    @FXML
-    private TextField tfHora;
-    @FXML
     private TextField tfDiaria;
     @FXML
     private TextField tfSemanal;
@@ -61,9 +61,13 @@ public class TelaCadastroVeiculoController implements Initializable {
     @FXML
     private TextField tfMensal;
     @FXML
+    private TextField tfSeguro;
+    @FXML
     private TextArea tfInfo;
     @FXML
     private Button bCadastrar;
+    @FXML
+    private Button bVoltar;
     // </editor-fold>
     
     @SuppressWarnings("unchecked")
@@ -81,17 +85,16 @@ public class TelaCadastroVeiculoController implements Initializable {
         String sImagem = tfImagem.getText();
         LocalDate ldManutencao = dpManutencao.getValue();
         double sIndenizacao = Double.parseDouble(tfIndenizacao.getText());
-        double sExcedente = Double.parseDouble(tfExcedente.getText());
-        double sHora = Double.parseDouble(tfHora.getText());
         double sDiaria = Double.parseDouble(tfDiaria.getText());
         double sSemanal = Double.parseDouble(tfSemanal.getText());
         double sQuinzenal = Double.parseDouble(tfQuinzenal.getText());
         double sMensal = Double.parseDouble(tfMensal.getText());
+        double sSeguro = Double.parseDouble(tfSeguro.getText());
         String sInfo = tfInfo.getText();
         
         try {
             checaEntradasInvalidas();
-            createVeiculo(sRenavan, sDiaria, sSemanal, sQuinzenal, sMensal, sHora, sExcedente, sHora, sPlaca, sMarca, sModelo, sMarca, sIndenizacao, ldManutencao, sQuilometragem, sImagem, sInfo);
+            createVeiculo(sRenavan, sDiaria, sSemanal, sQuinzenal, sMensal, sSeguro, sPlaca, sMarca, sModelo, sAno, sIndenizacao, ldManutencao, sQuilometragem, sImagem, sInfo);
             cleanFields();
             bCadastrar.setDisable(false);
         } catch (Exception e) {
@@ -105,9 +108,6 @@ public class TelaCadastroVeiculoController implements Initializable {
         if(
             !tfAno.getText().isBlank() &&
             !tfDiaria.getText().isBlank() &&
-            !tfExcedente.getText().isBlank() &&
-            !tfHora.getText().isBlank() &&
-            !tfImagem.getText().isBlank() &&
             !tfIndenizacao.getText().isBlank() &&
             !tfInfo.getText().isBlank() &&
             !tfMarca.getText().isBlank() &&
@@ -126,6 +126,11 @@ public class TelaCadastroVeiculoController implements Initializable {
             bCadastrar.setDisable(true);
         }
     }
+    
+    @FXML
+    private void hulndleVoltar() {
+    }
+    
     // </editor-fold>
     
     @SuppressWarnings("unchecked")
@@ -136,8 +141,6 @@ public class TelaCadastroVeiculoController implements Initializable {
         double semanal,
         double quinzenal,
         double mensal,
-        double hora,
-        double horaExcedente,
         double valorSeguro,
         String placa,
         String marca,
@@ -149,11 +152,16 @@ public class TelaCadastroVeiculoController implements Initializable {
         String imagem,
         String informacoesTecnicas
     ){
-        // Veiculo veiculo = new Veiculo(null, renavam, diaria, semanal, quinzenal, mensal, hora, horaExcedente, 0, placa, marca, modelo, anoFabricacao, valorIndenizacao, Date.from(Instant.MIN), quilometragemAtual, informacoesTecnicas, imagem);
+        
+        Date date = Date.from(
+                proximaManutencao.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()
+            );
+        
+         Veiculo veiculo = new Veiculo(null, renavam, diaria, semanal, quinzenal, mensal, valorSeguro, placa, marca, modelo, anoFabricacao, valorIndenizacao, date, quilometragemAtual, informacoesTecnicas, imagem);
         
         //TODO
-        VeiculoDAO veiculoDao = new VeiculoDAO();
-        // veiculoDao.create(veiculo);
+        VeiculoDao veiculoDao = new VeiculoDao();
+         veiculoDao.create(veiculo);
     }
     
     public void cleanFields(){
@@ -166,8 +174,6 @@ public class TelaCadastroVeiculoController implements Initializable {
         tfImagem.setText("");
         //dpManutencao.setValue(LocalDate.MIN);
         tfIndenizacao.setText("");
-        tfExcedente.setText("");
-        tfHora.setText("");
         tfDiaria.setText("");
         tfSemanal.setText("");
         tfQuinzenal.setText("");
@@ -204,5 +210,6 @@ public class TelaCadastroVeiculoController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
     
 }
